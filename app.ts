@@ -21,10 +21,11 @@ export class App {
   camera : FreeCamera ;
   
 
-  constructor(private canvas: HTMLCanvasElement) {
+  constructor(private canvas: HTMLCanvasElement , private doc : Document) {
     this.engine = new Engine(this.canvas, true);
 
     this.scene = this.CreateScene();
+    this.doc=doc;
 
     this.CreateEnvironment();
 
@@ -285,18 +286,19 @@ export class App {
       button1.color = "black";
       button1.fontSize = 50;
       button1.background = "pink";
-      button1.onPointerUpObservable.add(this.ClickOutfit);
+      button1.onPointerUpObservable.add(() => this.ClickOutfit(this));
       advancedTexture2.addControl(button1);
       
     }
-    ClickOutfit():void{
+    ClickOutfit(self : App):void{
       console.log("on est dans ClickOutfit");
-      (document.querySelector(".modal-wrapper-outfit")as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
-      (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
-      (document.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
+      self.doc.getElementById("modal-wrapper-outfit").style.display = "block";  //AFFICHE LA PAGE SHOP
+      console.log("on q passe");
+      (self.doc.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
+      (self.doc.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
       
       function hide() {
-          (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+          (self.doc.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
           }
     }
     CreateCutScene(self : App):void{
