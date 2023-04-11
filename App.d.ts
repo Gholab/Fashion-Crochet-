@@ -1,7 +1,7 @@
-import { Scene, Engine, AbstractMesh, int } from "babylonjs";
+import { Scene, Engine, FreeCamera, AbstractMesh, Mesh, int, StandardMaterial } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
-import { Button, SelectionPanel, TextBlock } from "babylonjs-gui";
+import { SelectionPanel, TextBlock } from "babylonjs-gui";
 export declare class App {
     private canvas;
     scene: Scene;
@@ -13,18 +13,27 @@ export declare class App {
     available1: string;
     timing: int;
     timersec: int;
+    plane: Mesh;
+    matcollect: StandardMaterial;
+    avancement: int;
+    camera: FreeCamera;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
     CreateMouton(): Promise<void>;
-    Mouton1OnClick(self: App, button: Button): void;
+    Mouton1OnClick(self: App): void;
     CreateCptLaine(): void;
-    Timer(self: App, button: Button): void;
-    Waiting(self: App, button: Button): void;
+    Timer(self: App): void;
+    Waiting(self: App): void;
     CreateEnvironment(): Promise<void>;
     CreateController(): void;
     CreateObjects(): void;
     CreateActions(obj: AbstractMesh): void;
     CreateChooseYourOutfit(): void;
     ClickOutfit(): void;
+    CreateCutScene(self: App): void;
+    SecondAnimation(self: App): void;
+    AfterCutScene(self: App): void;
+    CreatePersonnage(): Promise<void>;
+    CreateStartRunway(): void;
 }
