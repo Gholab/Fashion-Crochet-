@@ -18,43 +18,6 @@
                 height: 100%;
                 touch-action: none;
             }
-            </style>
-    </head>
-
-    <body>
-        <canvas id="renderCanvas"></canvas>
-        <template>
-            
-            <div id="modal-wrapper">
-               <div class="modal">
-                   <div class="modal-close">X</div>
-                   <div class="modal-content">
-                       <h2>Let's shop</h2>
-                       <p>Welcome to your Fashion Crochet shop!</p>
-                       <a href="https://www.instagram.com/">Buy in real life!</a>
-                       <button class="AV1">Buy on game</button>
-                   </div>
-               </div>
-           </div>
-           <div class="modal-wrapper-outfit">
-               <div class="modal-outfit">
-                   <div class="modal-close-outfit">X</div>
-                   <div class="modal-content-outfit">
-                       <h2>Choose your outfit</h2>
-                       <p>Welcome to your closet!</p>
-                       <a href="https://www.instagram.com/" target="_blank">Buy in real life!</a>
-                       <button class="AV1-outfit">Buy on game</button>
-                   </div>
-               </div>
-           </div>
-          
-          
-          </template>
-
-          
-        
-        
-        <style>
             #modal-wrapper {
             background: rgba(0, 0, 0, 0.508);
             position: fixed;
@@ -164,8 +127,42 @@
             margin: 10px auto;
             cursor: pointer;
             }
-        </style>
+            </style>
+    </head>
+
+    <body>
+        <canvas id="renderCanvas"></canvas>
+        <template>
+            
+            <div id="modal-wrapper">
+               <div class="modal">
+                   <div class="modal-close">X</div>
+                   <div class="modal-content">
+                       <h2>Let's shop</h2>
+                       <p>Welcome to your Fashion Crochet shop!</p>
+                       <a href="https://www.instagram.com/">Buy in real life!</a>
+                       <button class="AV1">Buy on game</button>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-wrapper-outfit">
+               <div class="modal-outfit">
+                   <div class="modal-close-outfit">X</div>
+                   <div class="modal-content-outfit">
+                       <h2>Choose your outfit</h2>
+                       <p>Welcome to your closet!</p>
+                       <a href="https://www.instagram.com/" target="_blank">Buy in real life!</a>
+                       <button class="AV1-outfit">Buy on game</button>
+                   </div>
+               </div>
+           </div>
+          
+          
+          </template>
+          
+        <script lang="ts">console.log(document.getElementById("modal-wrapper"));</script>
         <script src="dist/index.js"></script>
+        
     </body>
 
 </html>
