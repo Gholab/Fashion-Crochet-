@@ -18,7 +18,7 @@
                 height: 100%;
                 touch-action: none;
             }
-            #modal-wrapper {
+            .modal-wrapper {
             background: rgba(0, 0, 0, 0.508);
             position: fixed;
             top: 0;
@@ -134,7 +134,7 @@
         <canvas id="renderCanvas"></canvas>
         <template>
             
-            <div id="modal-wrapper">
+            <div class="modal-wrapper">
                <div class="modal">
                    <div class="modal-close">X</div>
                    <div class="modal-content">
@@ -159,12 +159,8 @@
           
           
           </template>
-
-        <script lang="ts">
-        window.onload = init;
-        function init(){
-            console.log(document.getElementById("modal-wrapper"));
-        }</script>
+          
+        <script lang="ts">console.log(document.querySelector(".modal-wrapper"));</script>
         <script src="dist/index.js"></script>
         
     </body>
