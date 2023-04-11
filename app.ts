@@ -58,11 +58,12 @@ export class App {
     //this.CreateCutScene();
     this.CreateStartRunway();
 
-    this.engine.runRenderLoop(() => {
-      this.scene.render();
-    });
+    
   }
-  
+  run(){
+    this.engine.runRenderLoop(() => {
+        this.scene.render();
+      });}
 
   CreateScene(): Scene {
     const scene = new Scene(this.engine);
