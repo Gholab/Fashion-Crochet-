@@ -4,7 +4,6 @@ import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
 export declare class App {
     private canvas;
-    private doc;
     scene: Scene;
     engine: Engine;
     cptLaine: int;
@@ -18,7 +17,7 @@ export declare class App {
     matcollect: StandardMaterial;
     avancement: int;
     camera: FreeCamera;
-    constructor(canvas: HTMLCanvasElement, doc: Document);
+    constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
     CreateMouton(): Promise<void>;
@@ -31,7 +30,7 @@ export declare class App {
     CreateObjects(): void;
     CreateActions(obj: AbstractMesh): void;
     CreateChooseYourOutfit(): void;
-    ClickOutfit(self: App): void;
+    ClickOutfit(): void;
     CreateCutScene(self: App): void;
     SecondAnimation(self: App): void;
     AfterCutScene(self: App): void;

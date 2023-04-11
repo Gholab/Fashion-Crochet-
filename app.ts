@@ -21,11 +21,10 @@ export class App {
   camera : FreeCamera ;
   
 
-  constructor(private canvas: HTMLCanvasElement , private doc : Document) {
+  constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
 
     this.scene = this.CreateScene();
-    this.doc=doc;
 
     this.CreateEnvironment();
 
@@ -259,8 +258,8 @@ export class App {
           },
 
           function () {
-              document.getElementById("modal-wrapper").style.display = "block";  //AFFICHE LA PAGE SHOP
-              console.log('on a passe cette ligne!!!');
+            console.log(document.querySelector(".modal-wrapper"));
+              (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
               (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
               (document.querySelector(".AV1") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
 
@@ -286,19 +285,18 @@ export class App {
       button1.color = "black";
       button1.fontSize = 50;
       button1.background = "pink";
-      button1.onPointerUpObservable.add(() => this.ClickOutfit(this));
+      button1.onPointerUpObservable.add(this.ClickOutfit);
       advancedTexture2.addControl(button1);
       
     }
-    ClickOutfit(self : App):void{
-      console.log("on est dans ClickOutfit",self.doc,document);
-      self.doc.getElementById("modal-wrapper-outfit").style.display = "block";  //AFFICHE LA PAGE SHOP
-      console.log("on q passe",self.doc);
-      (self.doc.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
-      (self.doc.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
+    ClickOutfit():void{
+      console.log("on est dans ClickOutfit");
+      (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
+      (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
+      (document.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
       
       function hide() {
-          (self.doc.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+          (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
           }
     }
     CreateCutScene(self : App):void{
