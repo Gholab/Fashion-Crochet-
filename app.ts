@@ -91,7 +91,7 @@ export class App {
     
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
-      "./",
+      "./models/",
       "moutonGwen.glb",
       this.scene
     );
@@ -195,7 +195,7 @@ export class App {
     
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
-      "./",
+      "./models/",
       "withRunway.glb",
       this.scene
     );
@@ -373,7 +373,7 @@ export class App {
     
       const { meshes , animationGroups } = await SceneLoader.ImportMeshAsync(
         "",
-        "./",
+        "./models/",
         "animated.glb",
         this.scene
       );
