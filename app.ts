@@ -291,7 +291,7 @@ export class App {
       
     }
     ClickOutfit(self : App):void{
-      console.log("on est dans ClickOutfit",self.doc);
+      console.log("on est dans ClickOutfit",self.doc,document);
       self.doc.getElementById("modal-wrapper-outfit").style.display = "block";  //AFFICHE LA PAGE SHOP
       console.log("on q passe",self.doc);
       (self.doc.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
