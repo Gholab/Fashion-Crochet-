@@ -159,8 +159,12 @@
           
           
           </template>
-          
-        <script lang="ts">console.log(document.getElementById("modal-wrapper"));</script>
+
+        <script lang="ts">
+        window.onload = init;
+        function init(){
+            console.log(document.getElementById("modal-wrapper"));
+        }</script>
         <script src="dist/index.js"></script>
         
     </body>
