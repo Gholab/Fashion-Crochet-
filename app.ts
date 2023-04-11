@@ -291,9 +291,9 @@ export class App {
       
     }
     ClickOutfit(self : App):void{
-      console.log("on est dans ClickOutfit");
+      console.log("on est dans ClickOutfit",self.doc);
       self.doc.getElementById("modal-wrapper-outfit").style.display = "block";  //AFFICHE LA PAGE SHOP
-      console.log("on q passe");
+      console.log("on q passe",self.doc);
       (self.doc.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
       (self.doc.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
       
