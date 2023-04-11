@@ -259,6 +259,7 @@ export class App {
 
           function () {
               document.getElementById("modal-wrapper").style.display = "block";  //AFFICHE LA PAGE SHOP
+              console.log('on a passe cette ligne!!!');
               (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
               (document.querySelector(".AV1") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
 
