@@ -289,6 +289,7 @@ export class App {
       
     }
     ClickOutfit():void{
+      console.log("on est dans ClickOutfit");
       (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
       (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
       (document.querySelector(".AV1-outfit") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
@@ -298,6 +299,7 @@ export class App {
           }
     }
     CreateCutScene(self : App):void{
+      console.log("on est dans creatCutScene");
       const camKeys = [];
       console.log("Dans la methode",self);
       const fps = 60;
