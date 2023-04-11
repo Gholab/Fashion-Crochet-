@@ -1,0 +1,30 @@
+import { Scene, Engine, AbstractMesh, int } from "babylonjs";
+import "babylonjs-loaders";
+import "babylonjs-gui";
+import { Button, SelectionPanel, TextBlock } from "babylonjs-gui";
+export declare class App {
+    private canvas;
+    scene: Scene;
+    engine: Engine;
+    cptLaine: int;
+    textBox: SelectionPanel;
+    text: TextBlock;
+    mouton1: boolean;
+    available1: string;
+    timing: int;
+    timersec: int;
+    constructor(canvas: HTMLCanvasElement);
+    run(): void;
+    CreateScene(): Scene;
+    CreateMouton(): Promise<void>;
+    Mouton1OnClick(self: App, button: Button): void;
+    CreateCptLaine(): void;
+    Timer(self: App, button: Button): void;
+    Waiting(self: App, button: Button): void;
+    CreateEnvironment(): Promise<void>;
+    CreateController(): void;
+    CreateObjects(): void;
+    CreateActions(obj: AbstractMesh): void;
+    CreateChooseYourOutfit(): void;
+    ClickOutfit(): void;
+}
