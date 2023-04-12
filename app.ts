@@ -267,7 +267,7 @@ export class App {
                   (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
                   }
 
-          })
+               })
       );
     } 
     CreateChooseYourOutfit():void {
@@ -289,6 +289,7 @@ export class App {
       advancedTexture2.addControl(button1);
       
     }
+    
     ClickOutfit():void{
       console.log("on est dans ClickOutfit");
       (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
