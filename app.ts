@@ -1,5 +1,5 @@
 
-import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation } from "babylonjs";
+import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -81,6 +81,11 @@ export class App {
     //enable collisions
     scene.collisionsEnabled=true;
 
+    //Creating the environment using a Skybox
+    const envTex=CubeTexture.CreateFromPrefilteredData("./environment/environment.env", scene);
+    scene.environmentTexture=envTex;
+    scene.createDefaultSkybox(envTex,true);
+    scene.environmentIntensity=0.45; //reducing the environment lighting
 
     this.CreateObjects();
 
