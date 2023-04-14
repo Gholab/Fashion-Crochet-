@@ -285,12 +285,13 @@ export class App {
       button1.color = "black";
       button1.fontSize = 50;
       button1.background = "pink";
-      button1.onPointerUpObservable.add(this.ClickOutfit);
+      button1.onPointerUpObservable.add(() => this.ClickOutfit(this));
       advancedTexture2.addControl(button1);
       
     }
     
-    ClickOutfit():void{
+    ClickOutfit(self : App):void{
+      self.engine.exitPointerlock();
       console.log("on est dans ClickOutfit");
       (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
       (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
@@ -298,6 +299,7 @@ export class App {
       
       function hide() {
           (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+          self.engine.enterPointerlock();
           }
     }
     CreateCutScene(self : App):void{

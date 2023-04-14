@@ -30,7 +30,7 @@ export declare class App {
     CreateObjects(): void;
     CreateActions(obj: AbstractMesh): void;
     CreateChooseYourOutfit(): void;
-    ClickOutfit(): void;
+    ClickOutfit(self: App): void;
     CreateCutScene(self: App): void;
     SecondAnimation(self: App): void;
     AfterCutScene(self: App): void;
