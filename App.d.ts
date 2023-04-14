@@ -29,6 +29,7 @@ export declare class App {
     CreateController(): void;
     CreateObjects(): void;
     CreateActions(obj: AbstractMesh): void;
+    ClickMamie(self: App): void;
     CreateChooseYourOutfit(): void;
     ClickOutfit(self: App): void;
     CreateCutScene(self: App): void;

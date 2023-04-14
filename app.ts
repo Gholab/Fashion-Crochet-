@@ -255,21 +255,20 @@ export class App {
           {
               trigger: ActionManager.OnPickTrigger
 
-          },
-
-          function () {
-            console.log(document.getElementById("modal-wrapper"));
+          },() => this.ClickMamie(this)));
+    } 
+    ClickMamie(self : App){
+      self.engine.exitPointerlock();
+      console.log(document.getElementById("modal-wrapper"));
               (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
               (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
               (document.querySelector(".AV1") as HTMLDivElement).addEventListener("click",hide);   //Clique du bouton ?
 
               function hide() {
                   (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+                  self.engine.enterPointerlock();
                   }
-
-               })
-      );
-    } 
+    }
     CreateChooseYourOutfit():void {
       const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
       plane.position.y = 2;
