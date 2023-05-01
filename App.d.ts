@@ -20,6 +20,7 @@ export declare class App {
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
+    CreateSky(): void;
     CreateMouton(): Promise<void>;
     Mouton1OnClick(self: App): void;
     CreateCptLaine(): void;

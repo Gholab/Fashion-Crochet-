@@ -1,5 +1,5 @@
 
-import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture } from "babylonjs";
+import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -27,6 +27,7 @@ export class App {
     this.scene = this.CreateScene();
 
     this.CreateEnvironment();
+    this.CreateSky();
 
     this.camera=new FreeCamera("camera",new Vector3(0,10,0),this.scene);
 
@@ -82,14 +83,22 @@ export class App {
     scene.collisionsEnabled=true;
 
     //Creating the environment using a Skybox
-    const envTex=CubeTexture.CreateFromPrefilteredData("./environment/environment.env", scene);
+    /*const envTex=CubeTexture.CreateFromPrefilteredData("./environment/environment.env", scene);
     scene.environmentTexture=envTex;
     scene.createDefaultSkybox(envTex,true);
-    scene.environmentIntensity=0.45; //reducing the environment lighting
+    scene.environmentIntensity=0.45; //reducing the environment lighting*/
 
     this.CreateObjects();
 
     return scene;
+  }
+  CreateSky(){
+    const dome = new PhotoDome(
+      "testdome",
+      "./environment/sky3.png",
+      {},
+      this.scene
+  );
   }
 
   async CreateMouton(): Promise<void> {
@@ -241,7 +250,7 @@ export class App {
 
     }
   
-    CreateObjects():void {
+  CreateObjects():void {
       const ball = MeshBuilder.CreateSphere("ball",{diameter : 1} , this.scene);
       ball.physicsImpostor = new PhysicsImpostor(
           ball,
