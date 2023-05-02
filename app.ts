@@ -241,7 +241,7 @@ export class App {
   CreateController(): void {
     //const camera=new FreeCamera("camera",new Vector3(0,10,0),this.scene); //without a camera we can't see anything
     //static camera unless we attach control
-    this.camera.attachControl();
+    /* this.camera.attachControl();
 
 
     this.camera.applyGravity = true; //applies gravity to the camera which is our controller
@@ -261,6 +261,7 @@ export class App {
     this.camera.keysRight.push(68); //65: d
     this.camera.keysDown.push(83);//83:s
     this.camera.keysLeft.push(81);//81:q
+    */ 
 
 
 
@@ -385,22 +386,23 @@ export class App {
   }
 
   AfterCutScene(self: App) {
-    self.camera.position = new Vector3(-10, 2, -29);
-    self.camera.attachControl();
-    self.camera.applyGravity = true; //applies gravity to the camera which is our controller
-    self.camera.checkCollisions = true;
+    const FreeCam=new FreeCamera("FreeCam", new Vector3(0, 10, 0), this.scene);
+    FreeCam.position = new Vector3(-10, 2, -29);
+    FreeCam.attachControl();
+    FreeCam.applyGravity = true; //applies gravity to the camera which is our controller
+    FreeCam.checkCollisions = true;
     //but this will not work unless we can "detect" the camera, we need to create a 'body' for the camera => elipsoid 
 
-    self.camera.ellipsoid = new Vector3(1, 1, 1);
+    FreeCam.ellipsoid = new Vector3(1, 1, 1);
 
-    self.camera.minZ = 0.45; //this allows us to not get very close to the objects and see through them
-    self.camera.speed = 0.5;
-    self.camera.angularSensibility = 4000; //rotate more slowly
-    self.camera.keysUp.push(87); //keycode for W is 87 check https://www.toptal.com/developers/keycode
-    self.camera.keysUp.push(90); // 90 : z pour les azerty : dsl hajar
-    self.camera.keysRight.push(68); //65: d
-    self.camera.keysDown.push(83);//83:s
-    self.camera.keysLeft.push(81);//81:q
+    FreeCam.minZ = 0.45; //this allows us to not get very close to the objects and see through them
+    FreeCam.speed = 0.5;
+    FreeCam.angularSensibility = 4000; //rotate more slowly
+    FreeCam.keysUp.push(87); //keycode for W is 87 check https://www.toptal.com/developers/keycode
+    FreeCam.keysUp.push(90); // 90 : z pour les azerty : dsl hajar
+    FreeCam.keysRight.push(68); //65: d
+    FreeCam.keysDown.push(83);//83:s
+    FreeCam.keysLeft.push(81);//81:q
 
   }
 

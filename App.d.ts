@@ -1,4 +1,4 @@
-import { Scene, Engine, FreeCamera, AbstractMesh, Mesh, int, StandardMaterial } from "babylonjs";
+import { Scene, Engine, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -16,7 +16,7 @@ export declare class App {
     plane: Mesh;
     matcollect: StandardMaterial;
     avancement: int;
-    camera: FreeCamera;
+    camera: ArcRotateCamera;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
