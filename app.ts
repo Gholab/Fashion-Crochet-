@@ -23,6 +23,7 @@ export class App {
   wardrobe: Cloth[];
   currentoutfit: string;
   alreadyRunwayOutfit :string[];
+  heroPath: string;
 
 
   constructor(private canvas: HTMLCanvasElement) {
@@ -32,6 +33,7 @@ export class App {
 
     this.CreateEnvironment();
     this.CreateSky();
+    this.heroPath="";
 
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
     this.camera=new ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new Vector3(0, 1, 0), this.scene);
@@ -50,7 +52,7 @@ export class App {
     light2.position = new Vector3(0, 5, 5);
     this.CreateSky();
     this.CreateEnvironment();
-    this.CreateCharacter();
+    this.CreateCharacter("init.glb",Vector3.Zero());
     //this.CreateCharacter();
 
     this.CreateChooseYourOutfit();
@@ -130,7 +132,7 @@ export class App {
       this.scene
     );
   }
-  async CreateCharacter(){
+  async CreateCharacter(path:string, pos:Vector3){
     // Keyboard events
   const inputMap: { [id: string] : boolean} = {}
   this.scene.actionManager = new ActionManager(this.scene);
@@ -141,9 +143,9 @@ export class App {
       inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
   }));
 
-  const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./models/","persoTopBleuFleur.glb");
+  const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./animated/",path);
   const hero=meshes[0];
-  hero.position=new Vector3(0,0,0);
+  hero.position=pos;
   hero.scaling.scaleInPlace(2.5);
   this.camera.lockedTarget=hero;
 

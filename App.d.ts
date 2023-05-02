@@ -1,4 +1,4 @@
-import { Scene, Engine, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
+import { Scene, Engine, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -21,11 +21,12 @@ export declare class App {
     wardrobe: Cloth[];
     currentoutfit: string;
     alreadyRunwayOutfit: string[];
+    heroPath: string;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
     CreateSky(): void;
-    CreateCharacter(): Promise<void>;
+    CreateCharacter(path: string, pos: Vector3): Promise<void>;
     CreateMouton(mouton: Mouton): Promise<void>;
     Mouton1OnClick(self: App, mouton: Mouton): void;
     CreateCptLaine(): void;
