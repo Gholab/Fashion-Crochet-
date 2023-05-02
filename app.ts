@@ -2,6 +2,7 @@
 import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin, CubeMapToSphericalPolynomialTools } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
+
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
 //import setAndStartTimer from "@babylonjs/Misc/timer";
 
@@ -30,7 +31,7 @@ export class App {
     this.engine = new Engine(this.canvas, true);
 
     this.scene = this.CreateScene();
-    this.scene.enablePhysics(null,new CannonJSPlugin());
+    //this.scene.enablePhysics(null,new CannonJSPlugin());
 
     this.CreateEnvironment();
     this.CreateSky();
@@ -55,8 +56,8 @@ export class App {
     this.CreateEnvironment();
 
     //ground avec de la physique
-    const ground=MeshBuilder.CreateGround("ground",{width:50,height:50});
-    ground.physicsImpostor=new PhysicsImpostor(ground,PhysicsImpostor.BoxImpostor,{mass:0},this.scene);
+    //const ground=MeshBuilder.CreateGround("ground",{width:50,height:50});
+    //ground.physicsImpostor=new PhysicsImpostor(ground,PhysicsImpostor.BoxImpostor,{mass:0},this.scene);
 
     this.CreateCharacter("init.glb",Vector3.Zero());
     //this.CreateCharacter();
@@ -153,7 +154,7 @@ export class App {
   const hero=meshes[0];
   this.heroMesh=hero;
   //mettre de la physique sur le perso
-  this.heroMesh.physicsImpostor=new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor,{mass:0.1},this.scene);
+  //this.heroMesh.physicsImpostor=new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor,{mass:0.1},this.scene);
 
   console.log(this.heroMesh);
 
