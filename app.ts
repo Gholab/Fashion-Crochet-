@@ -218,7 +218,7 @@ export class App {
 ChangePerso(new_path:string){
   const getPos=this.heroMesh.position;
   console.log("c'est la nouvelle position :"+getPos);
-  this.heroMesh.dispose;
+  this.heroMesh.dispose();
   this.CreateCharacter(new_path,getPos);
 
 }
