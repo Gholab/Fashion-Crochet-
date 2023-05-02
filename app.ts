@@ -454,7 +454,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
-        const new_path="./animated/"+id+".glb";
+        const new_path=id+".glb";
         self.ChangePerso(new_path);
         console.log("on va changer d'outfit");
       }
