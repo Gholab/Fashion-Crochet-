@@ -130,7 +130,7 @@ export class App {
 
   const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./models/","persoTopBleuFleur.glb");
   const hero=meshes[0];
-  hero.position=new Vector3(0,1,0);
+  hero.position=new Vector3(0,0,0);
   hero.scaling.scaleInPlace(2.5);
   this.camera.lockedTarget=hero;
 
