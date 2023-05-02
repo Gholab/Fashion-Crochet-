@@ -23,7 +23,7 @@ export class App {
   wardrobe: Cloth[];
   currentoutfit: string;
   alreadyRunwayOutfit :string[];
-  heroPath: string;
+  heroMesh:AbstractMesh;
 
 
   constructor(private canvas: HTMLCanvasElement) {
@@ -33,7 +33,7 @@ export class App {
 
     this.CreateEnvironment();
     this.CreateSky();
-    this.heroPath="";
+    this.heroMesh;
 
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
     this.camera=new ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new Vector3(0, 1, 0), this.scene);
@@ -145,6 +145,9 @@ export class App {
 
   const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./animated/",path);
   const hero=meshes[0];
+  this.heroMesh=hero;
+  console.log(this.heroMesh);
+
   hero.position=pos;
   hero.scaling.scaleInPlace(2.5);
   this.camera.lockedTarget=hero;
@@ -210,6 +213,13 @@ export class App {
       }
   });
   
+
+}
+ChangePerso(new_path:string){
+  const getPos=this.heroMesh.position;
+  console.log("c'est la nouvelle position :"+getPos);
+  this.heroMesh.dispose;
+  this.CreateCharacter(new_path,getPos);
 
 }
 async CreateMouton(mouton : Mouton): Promise<void> {
@@ -444,6 +454,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
+        const new_path="./animated/"+id+".glb";
+        this.ChangePerso(new_path);
       }
       else{
         alert("You dont own that outfit for the moment :(");

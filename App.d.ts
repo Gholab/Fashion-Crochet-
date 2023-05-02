@@ -21,12 +21,13 @@ export declare class App {
     wardrobe: Cloth[];
     currentoutfit: string;
     alreadyRunwayOutfit: string[];
-    heroPath: string;
+    heroMesh: AbstractMesh;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
     CreateSky(): void;
     CreateCharacter(path: string, pos: Vector3): Promise<void>;
+    ChangePerso(new_path: string): void;
     CreateMouton(mouton: Mouton): Promise<void>;
     Mouton1OnClick(self: App, mouton: Mouton): void;
     CreateCptLaine(): void;
