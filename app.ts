@@ -521,8 +521,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
           (document.querySelector("#etoile"+i+"Half") as HTMLImageElement).style.display = "none" ;
           (document.querySelector("#etoile"+i+"Obtenue") as HTMLImageElement).style.display = "block" ;
         }
-        (document.querySelector("#etoile"+(this.cptFashion-1)) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
-        (document.querySelector("#etoile"+(this.cptFashion-1)+"Half") as HTMLImageElement).style.display = "block" ;
+        (document.querySelector("#etoile"+((this.cptFashion-1)/2)) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
+        (document.querySelector("#etoile"+((this.cptFashion-1)/2)+"Half") as HTMLImageElement).style.display = "block" ;
         console.log("dans le else", this.cptFashion);
       }
       
