@@ -17,19 +17,21 @@ export declare class App {
     matcollect: StandardMaterial;
     avancement: int;
     camera: ArcRotateCamera;
+    cptFashion: int;
+    wardrobe: Cloth[];
+    currentoutfit: string;
+    alreadyRunwayOutfit: string[];
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
     CreateSky(): void;
     CreateCharacter(): Promise<void>;
-    CreateMouton(): Promise<void>;
-    Mouton1OnClick(self: App): void;
+    CreateMouton(mouton: Mouton): Promise<void>;
+    Mouton1OnClick(self: App, mouton: Mouton): void;
     CreateCptLaine(): void;
-    Timer(self: App): void;
-    Waiting(self: App): void;
+    Timer(self: App, mouton: Mouton): void;
+    Waiting(self: App, mouton: Mouton): void;
     CreateEnvironment(): Promise<void>;
-    CreateController(): void;
-    CreateObjects(): void;
     CreateActions(obj: AbstractMesh): void;
     ClickMamie(self: App): void;
     CreateChooseYourOutfit(): void;
@@ -39,4 +41,22 @@ export declare class App {
     AfterCutScene(self: App): void;
     CreatePersonnage(): Promise<void>;
     CreateStartRunway(): void;
+    CreateMamie(): Promise<void>;
+    Shop(self: App): void;
 }
+declare class Mouton {
+    timer: int;
+    avancement: int;
+    available: boolean;
+    path: string;
+    plane: Mesh;
+    constructor(path: string);
+}
+declare class Cloth {
+    name: string;
+    price: int;
+    worn: boolean;
+    owned: boolean;
+    constructor(n: string, p: int);
+}
+export {};
