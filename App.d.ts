@@ -21,6 +21,7 @@ export declare class App {
     run(): void;
     CreateScene(): Scene;
     CreateSky(): void;
+    CreateCharacter(): Promise<void>;
     CreateMouton(): Promise<void>;
     Mouton1OnClick(self: App): void;
     CreateCptLaine(): void;

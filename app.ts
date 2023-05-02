@@ -116,7 +116,85 @@ export class App {
       this.scene
     );
   }
+  async CreateCharacter(){
+    // Keyboard events
+  const inputMap: { [id: string] : boolean} = {}
+  this.scene.actionManager = new ActionManager(this.scene);
+  this.scene.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnKeyDownTrigger, function (evt) {
+      inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+  }));
+  this.scene.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnKeyUpTrigger, function (evt) {
+      inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+  }));
 
+  const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./models/","persoTopBleuFleur.glb");
+  const hero=meshes[0];
+  hero.scaling.scaleInPlace(2.5);
+  this.camera.lockedTarget=hero;
+
+  const heroSpeed = 0.15;
+  const heroSpeedBackwards = 0.15;
+  const heroRotationSpeed = 0.05;
+
+  const idle=animationGroups[1];   
+  const walking=animationGroups[3];
+  const collect=animationGroups[0];
+  let animating=true;
+  this.scene.onBeforeRenderObservable.add(() => {
+      let keydown = false;
+      //Manage the movements of the character (e.g. position, direction)
+      if (inputMap["w"]) {
+          hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
+          keydown = true;
+      }
+      if (inputMap["s"]) {
+          hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
+          keydown = true;
+      }
+      if (inputMap["a"]) {
+          hero.rotate(Vector3.Up(), -heroRotationSpeed);
+          keydown = true;
+      }
+      if (inputMap["d"]) {
+          hero.rotate(Vector3.Up(), heroRotationSpeed);
+          keydown = true;
+      }
+      if (inputMap["b"]) {
+          keydown = true;
+      }
+
+      //Manage animations to be played  
+      if (keydown) {
+          if (!animating) {
+              animating = true;
+              if (inputMap["s"]) {
+                  //Walk backwards
+                  walking.start(true, 1.0, walking.from, walking.to, false);
+              }
+              else {
+                  //Walk
+                  walking.start(true, 1.0, walking.from, walking.to, false);
+              }
+          }
+      }
+      else {
+
+          if (animating) {
+              //Default animation is idle when no key is down     
+              idle.start(true, 1.0, idle.from, idle.to, false);
+
+              //Stop all animations besides Idle Anim when no key is down
+              
+              walking.stop();
+
+              //Ensure animation are played only once per rendering loop
+              animating = false;
+          }
+      }
+  });
+  
+
+}
   async CreateMouton(): Promise<void> {
 
     const { meshes } = await SceneLoader.ImportMeshAsync(
