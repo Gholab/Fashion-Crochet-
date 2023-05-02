@@ -46,6 +46,7 @@ export class App {
     light2.position = new Vector3(0, 5, 5);
     this.CreateSky();
     this.CreateEnvironment();
+    this.CreateCharacter();
     //this.CreateCharacter();
 
     this.CreateChooseYourOutfit();
