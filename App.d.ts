@@ -22,6 +22,7 @@ export declare class App {
     currentoutfit: string;
     alreadyRunwayOutfit: string[];
     heroMesh: AbstractMesh;
+    runway: boolean;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
