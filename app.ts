@@ -586,6 +586,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
     timer.onEachCountObservable.add(() => function(){
       this.heroMesh.position=this.heroMesh.position.add(new Vector3(-1,0,0));
+      console.log("runway");
     })
     timer.start(8* fps*18);
 
