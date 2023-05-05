@@ -37,10 +37,10 @@ export class App {
 
     //partie Physics
     this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
-    const ground = MeshBuilder.CreateGround('ground', {width: 50, height: 50});
-    ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
+    const ground1 = MeshBuilder.CreateGround('ground', {width: 50, height: 50});
+    ground1.physicsImpostor = new PhysicsImpostor(ground1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
     
-
+    this.scene.debugLayer.show();
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
     this.camera=new ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new Vector3(0, 1, 0), this.scene);
     this.scene.activeCamera = this.camera;
@@ -155,7 +155,7 @@ export class App {
   console.log(this.heroMesh);
   this.heroMesh.showBoundingBox=true;
   this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-
+  this.heroMesh.position=new Vector3(0,1,0);
   hero.position=pos;
   hero.scaling.scaleInPlace(2.5);
   this.camera.lockedTarget=hero;
