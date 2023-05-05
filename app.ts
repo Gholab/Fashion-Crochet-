@@ -37,9 +37,9 @@ export class App {
 
     //partie Physics
     this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
-    const ground = Mesh.CreateGround("ground1", 50, 50, 2, this.scene);
-    ground.position=new Vector3(0,-3,0);
-    ground.physicsImpostor = new PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
+    const ground = MeshBuilder.CreateGround('ground', {width: 50, height: 50});
+    ground.position=new Vector3(0,-10,0);
+    ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
     
 
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
