@@ -552,9 +552,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     this.heroMesh.rotate(Vector3.Up(),Math.PI/2);
     this.heroMesh.position = new Vector3(-15,1.65,-26.5);
     this.runway=true;
-    for(let i=0;i<850;i++){
-      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
-    }
+    //this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
+    
 
 
     // ------ Manip camera cut scene -----
@@ -585,6 +584,9 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     self.scene.beginAnimation(FreeCam, 0,8* fps);
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
+    timer.onEachCountObservable.add(() => function(){
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-1,0,0));
+    })
     timer.start(8* fps*18);
 
 
