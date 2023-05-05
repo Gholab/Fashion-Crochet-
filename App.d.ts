@@ -1,4 +1,4 @@
-import { Scene, Engine, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
+import { Scene, Engine, FreeCamera, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -39,8 +39,8 @@ export declare class App {
     CreateChooseYourOutfit(): void;
     ClickOutfit(self: App): void;
     CreateCutScene(self: App): void;
-    SecondAnimation(self: App): void;
-    AfterCutScene(self: App): void;
+    SecondAnimation(self: App, FreeCam: FreeCamera): void;
+    AfterCutScene(self: App, FreeCam: FreeCamera): void;
     CreatePersonnage(): Promise<void>;
     CreateStartRunway(): void;
     CreateMamie(): Promise<void>;

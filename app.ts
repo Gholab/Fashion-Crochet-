@@ -36,9 +36,10 @@ export class App {
     this.heroMesh;
 
     //partie Physics
-    this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
-    const ground1 = MeshBuilder.CreateGround('ground', {width: 50, height: 50});
-    ground1.physicsImpostor = new PhysicsImpostor(ground1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
+    //this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
+    ///const ground1 = MeshBuilder.CreateGround('ground1', {width: 50, height: 50});
+    //console.log(ground1);
+    //ground1.physicsImpostor = new PhysicsImpostor(ground1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
     
     this.scene.debugLayer.show();
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
@@ -59,7 +60,6 @@ export class App {
     this.CreateSky();
     this.CreateEnvironment();
     this.CreateCharacter("init.glb",Vector3.Zero());
-    //this.CreateCharacter();
 
     this.CreateChooseYourOutfit();
 
@@ -153,10 +153,12 @@ export class App {
   const hero=meshes[0];
   this.heroMesh=hero;
   console.log(this.heroMesh);
-  this.heroMesh.showBoundingBox=true;
-  this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-  this.heroMesh.position=new Vector3(0,1,0);
+  //this.heroMesh.showBoundingBox=true;
+  //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
+  //this.heroMesh.position=new Vector3(0,1,0);
+  
   hero.position=pos;
+  console.log(pos);
   hero.scaling.scaleInPlace(2.5);
   this.camera.lockedTarget=hero;
 
@@ -537,6 +539,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     }
     console.log("sortie du if ", this.cptFashion);
 
+    const FreeCam=new FreeCamera("FreeCam", new Vector3(0, 10, 0), this.scene);
     const camKeys = [];
     console.log("Dans la methode",self);
     const fps = 60;
@@ -553,18 +556,19 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     //camKeys.push({frame:8* fps +1 , value: new Vector3(-28,4,-23)});
     //camKeys.push({frame:16* fps , value: new Vector3(-15,4,-23)});
     camAnim.setKeys(camKeys);
-    self.camera.detachControl();
-    self.camera.position = new Vector3(-15,3,-20);
-    self.camera.rotation = new Vector3(0,Math.PI,0);
-    self.camera.minZ=0.45; //this allows us to not get very close to the objects and see through them
-    self.camera.speed=0.5;
-    self.camera.animations.push(camAnim);
-    self.scene.beginAnimation(self.camera, 0,8* fps);
+    this.camera.detachControl();
+    this.scene.activeCamera = FreeCam ;
+    FreeCam.position = new Vector3(-15,3,-20);
+    FreeCam.rotation = new Vector3(0,Math.PI,0);
+    FreeCam.minZ=0.45; //this allows us to not get very close to the objects and see through them
+    FreeCam.speed=0.5;
+    FreeCam.animations.push(camAnim);
+    self.scene.beginAnimation(FreeCam, 0,8* fps);
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
-    timer.onTimerEndedObservable.add(() => self.SecondAnimation(self));
+    timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
     timer.start(8* fps*18);
   }
-  SecondAnimation(self: App) {
+  SecondAnimation(self: App,FreeCam : FreeCamera) {
     const fps = 60;
     const camKeys = [];
     const camAnim = new Animation(
@@ -578,19 +582,18 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     camKeys.push({ frame: 2 * fps, value: new Vector3(-40, 5.5, -26) });
     camKeys.push({ frame: 10 * fps, value: new Vector3(-20, 5.5, -26) });
     camAnim.setKeys(camKeys);
-    self.camera.rotation = new Vector3(Math.PI / 8, Math.PI / 2, 0);
-    self.camera.position = new Vector3(-40, 5.5, -26);
-    self.camera.animations.slice(0, self.camera.animations.length);
-    self.camera.animations.push(camAnim);
-    self.scene.beginAnimation(self.camera, 0, 10 * fps);
+    FreeCam.rotation = new Vector3(Math.PI / 8, Math.PI / 2, 0);
+    FreeCam.position = new Vector3(-40, 5.5, -26);
+    FreeCam.animations.slice(0, FreeCam.animations.length);
+    FreeCam.animations.push(camAnim);
+    self.scene.beginAnimation(FreeCam, 0, 10 * fps);
     const timer = new AdvancedTimer({ timeout: 8 * fps, contextObservable: self.scene.onBeforeRenderObservable });  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
-    timer.onTimerEndedObservable.add(() => self.AfterCutScene(self));
+    timer.onTimerEndedObservable.add(() => self.AfterCutScene(self,FreeCam));
     timer.start(10 * fps * 18);
   }
 
-  AfterCutScene(self: App) {
-    const FreeCam=new FreeCamera("FreeCam", new Vector3(0, 10, 0), this.scene);
-    FreeCam.position = new Vector3(-10, 2, -29);
+  AfterCutScene(self: App,FreeCam : FreeCamera) {
+    /*FreeCam.position = new Vector3(-10, 2, -29);
     FreeCam.attachControl();
     FreeCam.applyGravity = true; //applies gravity to the camera which is our controller
     FreeCam.checkCollisions = true;
@@ -605,7 +608,9 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     FreeCam.keysUp.push(90); // 90 : z pour les azerty : dsl hajar
     FreeCam.keysRight.push(68); //65: d
     FreeCam.keysDown.push(83);//83:s
-    FreeCam.keysLeft.push(81);//81:q
+    FreeCam.keysLeft.push(81);//81:q*/
+    this.scene.activeCamera = this.camera;
+    this.camera.attachControl();
 
   }
 
