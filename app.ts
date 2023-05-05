@@ -552,8 +552,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     this.heroMesh.rotate(Vector3.Up(),Math.PI/2);
     this.heroMesh.position = new Vector3(-15,1.65,-26.5);
     this.runway=true;
-    for(let i=0;i<65;i++){
-      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.2,0,0));
+    for(let i=0;i<850;i++){
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
     }
 
 
