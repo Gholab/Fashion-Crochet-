@@ -41,7 +41,6 @@ export declare class App {
     CreateCutScene(self: App): void;
     SecondAnimation(self: App, FreeCam: FreeCamera): void;
     AfterCutScene(self: App, FreeCam: FreeCamera): void;
-    CreatePersonnage(): Promise<void>;
     CreateStartRunway(): void;
     CreateMamie(): Promise<void>;
     Shop(self: App): void;

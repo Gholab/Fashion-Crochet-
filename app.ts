@@ -91,7 +91,7 @@ export class App {
     this.CreateMouton(new Mouton("moutonGwen4.glb"));
     this.CreateMouton(new Mouton("moutonGwen5.glb"));
 
-    this.CreatePersonnage();
+    //this.CreatePersonnage();
     this.CreateMamie();
 
     //this.CreateCutScene();
@@ -503,7 +503,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
   }
   
   CreateCutScene(self : App):void{
-      
+    // ------ partie etoiles  -----
     console.log("dans cutscene", this.cptFashion);
     let alreadyWorn = false;
     for(let i=0; i<=this.alreadyRunwayOutfit.length; i++){
@@ -539,6 +539,16 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     }
     console.log("sortie du if ", this.cptFashion);
 
+    //-------- deplacer le perso sur le runway-----------
+    this.heroMesh.rotate(Vector3.Up(),Math.PI/2);
+    this.heroMesh.position = new Vector3(-15,1.65,-26.5);
+
+    for(let i=0;i<65;i++){
+      this.heroMesh.position.add(new Vector3(-0.2,0,0));
+    }
+
+
+    // ------ Manip camera cut scene -----
     const FreeCam=new FreeCamera("FreeCam", new Vector3(0, 10, 0), this.scene);
     const camKeys = [];
     console.log("Dans la methode",self);
@@ -567,6 +577,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
     timer.start(8* fps*18);
+
+
   }
   SecondAnimation(self: App,FreeCam : FreeCamera) {
     const fps = 60;
@@ -614,7 +626,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
   }
 
-  async CreatePersonnage(): Promise<void> {
+  /*async CreatePersonnage(): Promise<void> {
     
     const { meshes , animationGroups } = await SceneLoader.ImportMeshAsync(
       "",
@@ -630,7 +642,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
     animationGroups[0].stop();
     animationGroups[2].play(true);
-  }
+  }*/
 
   CreateStartRunway():void {
     const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
