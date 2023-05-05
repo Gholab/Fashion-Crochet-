@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
-    "scripts": {
-      "build": "webpack"
+  "scripts": {
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -16,8 +15,10 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
+    "@types/cannon": "^0.1.8",
     "babylonjs": "^5.54.0",
     "babylonjs-gui": "^5.54.0",
-    "babylonjs-loaders": "^5.54.0"
+    "babylonjs-loaders": "^5.54.0",
+    "cannon": "^0.6.2"
   }
 }

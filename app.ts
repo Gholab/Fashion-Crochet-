@@ -1,10 +1,10 @@
 
-import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight } from "babylonjs";
+import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
 //import setAndStartTimer from "@babylonjs/Misc/timer";
-
+import * as CANNON from "cannon";
 export class App {
   scene: Scene;
   engine: Engine;
@@ -34,6 +34,12 @@ export class App {
     this.CreateEnvironment();
     this.CreateSky();
     this.heroMesh;
+
+    //partie Physics
+    this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
+    const ground = Mesh.CreateGround("ground1", 50, 50, 2, this.scene);
+    ground.physicsImpostor = new PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
+    
 
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
     this.camera=new ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new Vector3(0, 1, 0), this.scene);
@@ -147,6 +153,8 @@ export class App {
   const hero=meshes[0];
   this.heroMesh=hero;
   console.log(this.heroMesh);
+  this.heroMesh.showBoundingBox=true;
+  this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
 
   hero.position=pos;
   hero.scaling.scaleInPlace(2.5);

@@ -1,0 +1,35 @@
+{
+    "name": "@types/cannon",
+    "version": "0.1.8",
+    "description": "TypeScript definitions for cannon",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/cannon",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Clark Stevenson",
+            "url": "https://github.com/clark-stevenson",
+            "githubUsername": "clark-stevenson"
+        },
+        {
+            "name": "Grzegorz Rozdzialik",
+            "url": "https://github.com/Gelio",
+            "githubUsername": "Gelio"
+        },
+        {
+            "name": "Sean Bradley",
+            "url": "https://github.com/Sean-Bradley",
+            "githubUsername": "Sean-Bradley"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/cannon"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "b2e90d3d0ec4378f51ab34b61e182039fe054da5612ca5c7bff6b1e16e139584",
+    "typeScriptVersion": "3.8"
+}
