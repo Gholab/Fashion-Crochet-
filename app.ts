@@ -24,6 +24,7 @@ export class App {
   currentoutfit: string;
   alreadyRunwayOutfit :string[];
   heroMesh:AbstractMesh;
+  runway:boolean;
 
 
   constructor(private canvas: HTMLCanvasElement) {
@@ -34,6 +35,7 @@ export class App {
     this.CreateEnvironment();
     this.CreateSky();
     this.heroMesh;
+    this.runway=false;
 
     //partie Physics
     //this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
@@ -166,7 +168,8 @@ export class App {
   const heroSpeedBackwards = 0.15;
   const heroRotationSpeed = 0.05;
 
-  const idle=animationGroups[1];   
+  const idle=animationGroups[1]; 
+  const catWalking=animationGroups[2];
   const walking=animationGroups[3];
   const collect=animationGroups[0];
   let animating=true;
@@ -220,6 +223,12 @@ export class App {
               //Ensure animation are played only once per rendering loop
               animating = false;
           }
+        if (this.runway){
+          animating=false;
+          walking.stop();
+          idle.stop();
+          catWalking.start(true);
+        }
       }
   });
   
@@ -542,9 +551,9 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     //-------- deplacer le perso sur le runway-----------
     this.heroMesh.rotate(Vector3.Up(),Math.PI/2);
     this.heroMesh.position = new Vector3(-15,1.65,-26.5);
-
+    this.runway=true;
     for(let i=0;i<65;i++){
-      this.heroMesh.position.add(new Vector3(-0.2,0,0));
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.2,0,0));
     }
 
 
