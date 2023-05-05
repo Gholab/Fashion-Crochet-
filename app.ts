@@ -585,7 +585,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
     timer.onEachCountObservable.add(() => {
-      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-1,0,0));
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
       console.log("runway");
     })
     timer.start(8* fps*18);
