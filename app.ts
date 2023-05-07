@@ -41,8 +41,8 @@ export class App {
     this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
     const box =MeshBuilder.CreateBox("Box",{width:50,height:.1,depth:50},this.scene);
     box.physicsImpostor=new PhysicsImpostor(box,PhysicsImpostor.BoxImpostor,{mass:0,restitution:0},this.scene);
-    box.position=new Vector3(0,0,0);
-    box.isVisible=false;
+    box.position=new Vector3(0,0.5,0);
+    //box.isVisible=false;
     
     
     this.scene.debugLayer.show();
@@ -120,10 +120,10 @@ export class App {
       if (evt.button === 0) this.engine.enterPointerlock();
       if (evt.button === 1) this.engine.exitPointerlock();
     }
-    const framesPerSecond = 60;
-    const gravity = -9.81;
+    //onst framesPerSecond = 60;
+    //const gravity = -9.81;
     //gravity on the y axis
-    scene.gravity = new Vector3(0, gravity / framesPerSecond, 0);
+    //scene.gravity = new Vector3(0, gravity / framesPerSecond, 0);
     //enable collisions
     scene.collisionsEnabled = true;
 
@@ -161,7 +161,7 @@ export class App {
   console.log(this.heroMesh);
   this.heroMesh.showBoundingBox=true;
   this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-  this.heroMesh.position=new Vector3(0,1,0);
+  this.heroMesh.position=new Vector3(0,2,0);
   
   hero.position=pos;
   console.log(pos);
