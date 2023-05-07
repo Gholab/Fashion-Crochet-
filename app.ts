@@ -38,10 +38,12 @@ export class App {
     this.runway=false;
 
     //partie Physics
-    //this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
-    ///const ground1 = MeshBuilder.CreateGround('ground1', {width: 50, height: 50});
-    //console.log(ground1);
-    //ground1.physicsImpostor = new PhysicsImpostor(ground1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
+    this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
+    const box =MeshBuilder.CreateBox("Box",{width:50,height:.1,depth:50},this.scene);
+    box.physicsImpostor=new PhysicsImpostor(box,PhysicsImpostor.BoxImpostor,{mass:0,restitution:0},this.scene);
+    box.position=new Vector3(0,0,0);
+    box.isVisible=false;
+    
     
     this.scene.debugLayer.show();
     //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
@@ -51,6 +53,8 @@ export class App {
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 10;
     this.camera.wheelDeltaPercentage = 0.01;
+    this.camera.lowerBetaLimit = -Math.PI / 2;
+    this.camera.upperBetaLimit = Math.PI / 2;
 
     //this.CreateController();
     const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
@@ -155,9 +159,9 @@ export class App {
   const hero=meshes[0];
   this.heroMesh=hero;
   console.log(this.heroMesh);
-  //this.heroMesh.showBoundingBox=true;
-  //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-  //this.heroMesh.position=new Vector3(0,1,0);
+  this.heroMesh.showBoundingBox=true;
+  this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
+  this.heroMesh.position=new Vector3(0,1,0);
   
   hero.position=pos;
   console.log(pos);
