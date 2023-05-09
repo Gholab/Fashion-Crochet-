@@ -275,27 +275,25 @@ export class App {
   const collect=animationGroups[0];
   this.PersoAnim[0]=collect;
   let animating=true;
+  collect.stop();
+  idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
       //Manage the movements of the character (e.g. position, direction)
       if (inputMap["w"]||this.up||inputMap["z"]) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
-          this.up=false;
           keydown = true;
       }
       if (inputMap["s"]||this.down) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
-          this.down=false;
           keydown = true;
       }
       if (inputMap["a"]||this.left||inputMap["q"]) {
           hero.rotate(Vector3.Up(), -heroRotationSpeed);
-          this.left=false;
           keydown = true;
       }
       if (inputMap["d"]||this.right) {
           hero.rotate(Vector3.Up(), heroRotationSpeed);
-          this.right=false;
           keydown = true;
       }
       
@@ -918,10 +916,15 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
       })
       
-      document.querySelector("#flecheU").addEventListener("click",() => this.up=true);
-      document.querySelector("#flecheD").addEventListener("click",() => this.down=true);
-      document.querySelector("#flecheL").addEventListener("click",() => this.left=true);
-      document.querySelector("#flecheR").addEventListener("click",() => this.right=true);
+      document.querySelector("#flecheU").addEventListener("mouseenter",() => this.up=true);
+      document.querySelector("#flecheD").addEventListener("mouseenter",() => this.down=true);
+      document.querySelector("#flecheL").addEventListener("mouseenter",() => this.left=true);
+      document.querySelector("#flecheR").addEventListener("mouseenter",() => this.right=true);
+
+      document.querySelector("#flecheU").addEventListener("mouseleave",() => this.up=false);
+      document.querySelector("#flecheD").addEventListener("mouseleave",() => this.down=false);
+      document.querySelector("#flecheL").addEventListener("mouseleave",() => this.left=false);
+      document.querySelector("#flecheR").addEventListener("mouseleave",() => this.right=false);
       //Affichier la page de départ avec les regles/explication
   
     }
