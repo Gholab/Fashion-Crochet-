@@ -1,5 +1,5 @@
 
-import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin } from "babylonjs";
+import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin, Sound } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -25,10 +25,17 @@ export class App {
   alreadyRunwayOutfit :string[];
   heroMesh:AbstractMesh;
   runway:boolean;
+  up: boolean;
+  left: boolean;
+  down: boolean;
+  right: boolean;
+  runwayMusic : Sound;
+  background : Sound;
 
 
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
+    this.engine.displayLoadingUI(); //page de chargement
 
     this.scene = this.CreateScene();
 
@@ -89,6 +96,11 @@ export class App {
     this.currentoutfit = "";
     this.alreadyRunwayOutfit = [];
     this.cptFashion = 0;
+    //A AJOUTER
+    this.up=false;
+    this.left=false;
+    this.down=false;
+    this.right=false;
 
     this.CreateCptLaine();
     this.CreateMouton(new Mouton("moutonGwen.glb"));
@@ -97,11 +109,18 @@ export class App {
     this.CreateMouton(new Mouton("moutonGwen4.glb"));
     this.CreateMouton(new Mouton("moutonGwen5.glb"));
 
-    //this.CreatePersonnage();
-    this.CreateMamie();
+    
 
     //this.CreateCutScene();
     this.CreateStartRunway();
+    //partie son
+    this.SoundMamie();
+    this.SoundMouton();
+    this.background = new Sound("background","./audio/background.mp3",this.scene,null,{volume:0.3, autoplay : true});
+    this.runwayMusic = new Sound("runway", "./audio/runway.mp3", this.scene,null,{volume:0.6});
+    this.CreateMamie(); //Laisser ça comme le dernier pour l'ecran de chargement
+    
+    this.EndOfLoading();
 
 
   }
@@ -115,11 +134,13 @@ export class App {
     const scene = new Scene(this.engine);
     //const light = new HemisphericLight("light", new Vector3(0, 1, 0), this.scene);
 
-    scene.onPointerDown = (evt) => {
+    scene.onPointerDown=(evt)=>{
       //for the mouse settings, 0:left click,1:middle mouse button,2:right click
-      if (evt.button === 0) this.engine.enterPointerlock();
-      if (evt.button === 1) this.engine.exitPointerlock();
-    }
+      if (getComputedStyle(document.querySelector("#laineMobile")! as HTMLDivElement).display=="none"){ //On est pas en version mobile
+        if (evt.button===0) this.engine.enterPointerlock();
+        if (evt.button===1) this.engine.exitPointerlock();
+      }
+  }
     //onst framesPerSecond = 60;
     //const gravity = -9.81;
     //gravity on the y axis
@@ -136,6 +157,77 @@ export class App {
 
     return scene;
   }
+  SoundMamie(){
+    const music = new Sound("mamie","./audio/knitting.mp3",this.scene, null, {
+      loop: true,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:10,
+    });
+    music.setPosition(new Vector3(-40, 0, 25));
+  }
+
+  SoundMouton(){
+    /*
+    const plane = MeshBuilder.CreatePlane("plane");
+    plane.position = new Vector3(36,2,10);
+    const plane1 = MeshBuilder.CreatePlane("plane");
+    plane1.position = new Vector3(45,2,1);
+    const plane2 = MeshBuilder.CreatePlane("plane");
+    plane2.position = new Vector3(45,2,-8);
+    const plane3 = MeshBuilder.CreatePlane("plane");
+    plane3.position = new Vector3(50,2,18);
+    const plane4 = MeshBuilder.CreatePlane("plane");
+    plane4.position = new Vector3(55,2,10);
+    */
+
+    const mouton1 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
+      loop: true,
+      volume:0.5,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:8,
+    });  // LE NOM DED MOUTONS MATCH PAS AVEC LES FICHIER BLENDER
+    mouton1.setPosition(new Vector3(36,2,10));
+
+    const mouton2 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
+      loop: true,
+      volume:0.5,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:8,
+    });  // LE NOM DED MOUTONS MATCH PAS AVEC LES FICHIER BLENDER
+    mouton2.setPosition(new Vector3(45,2,1));
+
+    const mouton3 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
+      loop: true,
+      volume:0.5,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:8,
+    });  // LE NOM DED MOUTONS MATCH PAS AVEC LES FICHIER BLENDER
+    mouton3.setPosition(new Vector3(45,2,-8));
+
+    const mouton4 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
+      loop: true,
+      volume:0.5,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:8,
+    });  // LE NOM DED MOUTONS MATCH PAS AVEC LES FICHIER BLENDER
+    mouton4.setPosition(new Vector3(50,2,18));
+
+    const mouton5 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
+      loop: true,
+      volume:0.5,
+      autoplay: true,
+      spatialSound: true,
+      maxDistance:8,
+    });  // LE NOM DED MOUTONS MATCH PAS AVEC LES FICHIER BLENDER
+    mouton5.setPosition(new Vector3(55,2,10));
+
+  }
+
   CreateSky() {
     const dome = new PhotoDome(
       "testdome",
@@ -295,7 +387,8 @@ async CreateMouton(mouton : Mouton): Promise<void> {
 Mouton1OnClick(self : App, mouton : Mouton):void{
   if (mouton.available){
     self.cptLaine+=1;
-    self.text.text = "laine : "+self.cptLaine;
+    document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
+      document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
     mouton.available=false;
     console.log("Juste avant timer");
     //button.textBlock!.text = "Please wait to collect your yarn";
@@ -550,14 +643,18 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       }
       
     }
-    console.log("sortie du if ", this.cptFashion);
+    // ________ music ________
+    this.background.pause();
+    this.runwayMusic.play();
 
-    //-------- deplacer le perso sur le runway-----------
-    this.heroMesh.rotate(Vector3.Up(),Math.PI/2);
-    this.heroMesh.position = new Vector3(-15,1.65,-26.5);
+    //------- avancement -----------
     this.runway=true;
-    //this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
-    
+    console.log((document.querySelector("#laine")! as HTMLDivElement).style.display=="block");
+    (document.querySelector("#overlay") as HTMLImageElement).style.display = "none" ;
+    const i =0;
+    const timer1 = new AdvancedTimer({timeout:14,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
+    timer1.onTimerEndedObservable.add(() => this.Move1(i));
+    timer1.start(14);
 
 
     // ------ Manip camera cut scene -----
@@ -573,8 +670,9 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       true);
 
     camKeys.push({frame:0 , value: new Vector3(-15,3,-20)});
+    camKeys.push({frame:6* fps , value: new Vector3(-23.5,3,-20)});
     //camKeys.push({frame:5* fps , value: new Vector3(-35,2,-20)});
-    camKeys.push({frame:8* fps , value: new Vector3(-28,3,-20)});
+    camKeys.push({frame:12* fps , value: new Vector3(-32,3,-20)});
     //camKeys.push({frame:8* fps +1 , value: new Vector3(-28,4,-23)});
     //camKeys.push({frame:16* fps , value: new Vector3(-15,4,-23)});
     camAnim.setKeys(camKeys);
@@ -583,19 +681,36 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     FreeCam.position = new Vector3(-15,3,-20);
     FreeCam.rotation = new Vector3(0,Math.PI,0);
     FreeCam.minZ=0.45; //this allows us to not get very close to the objects and see through them
-    FreeCam.speed=0.5;
+    FreeCam.speed=0.01;
     FreeCam.animations.push(camAnim);
-    self.scene.beginAnimation(FreeCam, 0,8* fps);
+    self.scene.beginAnimation(FreeCam, 0,12* fps);
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
-    timer.onEachCountObservable.add(() => {
-      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.02,0,0));
-      console.log("runway");
-    })
-    timer.start(8* fps*18);
+    timer.start(18000);
 
 
   }
+
+  Move1(i : any){
+    if (i<170){
+      const timer1 = new AdvancedTimer({timeout:14,contextObservable: this.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
+      timer1.onTimerEndedObservable.add(() => this.Move1(i));
+      timer1.start(50);
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.1,0,0));
+      i++;
+    }
+  }
+
+  Move2(i : any){
+    if (i<170){
+      const timer1 = new AdvancedTimer({timeout:14,contextObservable: this.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
+      timer1.onTimerEndedObservable.add(() => this.Move2(i));
+      timer1.start(50);
+      this.heroMesh.position=this.heroMesh.position.add(new Vector3(0.1,0,0));
+      i++;
+    }
+  }
+
   SecondAnimation(self: App,FreeCam : FreeCamera) {
     const fps = 60;
     const camKeys = [];
@@ -608,31 +723,22 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
     camKeys.push({ frame: 0, value: new Vector3(-40, 5.5, -26) });
     camKeys.push({ frame: 2 * fps, value: new Vector3(-40, 5.5, -26) });
-    camKeys.push({ frame: 10 * fps, value: new Vector3(-20, 5.5, -26) });
+    camKeys.push({ frame: 10 * fps, value: new Vector3(-26, 5.5, -26) });
     camAnim.setKeys(camKeys);
     FreeCam.rotation = new Vector3(Math.PI / 8, Math.PI / 2, 0);
     FreeCam.position = new Vector3(-40, 5.5, -26);
     FreeCam.animations.slice(0, FreeCam.animations.length);
     FreeCam.animations.push(camAnim);
+    self.camera.speed=0.001;
     self.scene.beginAnimation(FreeCam, 0, 10 * fps);
     const timer = new AdvancedTimer({ timeout: 8 * fps, contextObservable: self.scene.onBeforeRenderObservable });  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
-    timer.onTimerEndedObservable.add(() => self.AfterCutScene(self,FreeCam));
-    let i=0;
-    timer.onEachCountObservable.add(() => {
-      i++;
-      if(i<150){
-        this.runway=false;
-      }
-      else if (i< 210){
-        this.runway=true;
-        this.heroMesh.rotate(Vector3.Up(),Math.PI/60)
-      }
-      else{ 
-        this.heroMesh.position=this.heroMesh.position.add(new Vector3(0.02,0,0));
-        console.log("runway2");
-      }
-    })
-    timer.start(10 * fps * 18);
+    timer.onTimerEndedObservable.add(() => {
+      (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
+      self.AfterCutScene(self,FreeCam);
+      this.runwayMusic.pause();
+      this.background.play();
+      });
+    timer.start(19000);
   }
 
   AfterCutScene(self: App,FreeCam : FreeCamera) {
@@ -716,6 +822,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     //meshes[0].rotate(Vector3.Up(),Math.PI/2);
     meshes[0].position = new Vector3(-40,0,25);
     meshes[0].scaling = new Vector3(2,2,2);
+
+    this.engine.hideLoadingUI(); //la page a fini de charger
   }
   Shop(self : App){
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
@@ -763,7 +871,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
           const cloth = new Cloth(name, price);
           if((self.cptLaine >= cloth.price)){
             self.cptLaine = self.cptLaine-cloth.price;
-            self.text.text = "laine : "+self.cptLaine;
+            document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
+            document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
             alert("You just bought "+cloth.name);
@@ -786,6 +895,15 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         }
         return false;
       }
+    }
+
+    EndOfLoading() {
+      document.querySelector(".modal-close-beginning")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
+      })
+  
+      //Affichier la page de départ avec les regles/explication
+  
     }
 }
 class Mouton{

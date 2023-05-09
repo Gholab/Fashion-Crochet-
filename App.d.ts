@@ -1,4 +1,4 @@
-import { Scene, Engine, FreeCamera, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera } from "babylonjs";
+import { Scene, Engine, FreeCamera, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera, Sound } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -23,9 +23,17 @@ export declare class App {
     alreadyRunwayOutfit: string[];
     heroMesh: AbstractMesh;
     runway: boolean;
+    up: boolean;
+    left: boolean;
+    down: boolean;
+    right: boolean;
+    runwayMusic: Sound;
+    background: Sound;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
+    SoundMamie(): void;
+    SoundMouton(): void;
     CreateSky(): void;
     CreateCharacter(path: string, pos: Vector3): Promise<void>;
     ChangePerso(new_path: string): void;
@@ -40,11 +48,14 @@ export declare class App {
     CreateChooseYourOutfit(): void;
     ClickOutfit(self: App): void;
     CreateCutScene(self: App): void;
+    Move1(i: any): void;
+    Move2(i: any): void;
     SecondAnimation(self: App, FreeCam: FreeCamera): void;
     AfterCutScene(self: App, FreeCam: FreeCamera): void;
     CreateStartRunway(): void;
     CreateMamie(): Promise<void>;
     Shop(self: App): void;
+    EndOfLoading(): void;
 }
 declare class Mouton {
     timer: int;
