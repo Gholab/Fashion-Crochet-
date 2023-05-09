@@ -161,7 +161,7 @@ export class App {
   console.log(this.heroMesh);
   this.heroMesh.showBoundingBox=true;
   this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-  this.heroMesh.position=new Vector3(0,2,0);
+  this.heroMesh.position=new Vector3(0,5,0);
   
   hero.position=pos;
   console.log(pos);
