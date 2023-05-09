@@ -62,7 +62,7 @@ export class App {
     light.specular = Color3.Black();
 
     const light2 = new DirectionalLight("dir01", new Vector3(0, -0.5, -1.0), this.scene);
-    light2.position = new Vector3(0, 5, 5);
+    light2.position = new Vector3(0, 1, 5);
     this.CreateSky();
     this.CreateEnvironment();
     this.CreateCharacter("init.glb",Vector3.Zero());
@@ -161,7 +161,7 @@ export class App {
   console.log(this.heroMesh);
   this.heroMesh.showBoundingBox=true;
   this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
-  this.heroMesh.position=new Vector3(0,5,0);
+  this.heroMesh.position=new Vector3(0,20,0);
   
   hero.position=pos;
   console.log(pos);
