@@ -8,37 +8,63 @@
     <body>
         <canvas id="renderCanvas"></canvas>
             
-        <div id="fashion">
-            <div>
-              <img id ="etoile0" src="./fashion/starBlack65.png" class = "etoile" alt="">
-              <img id ="etoile0Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
-              <img id ="etoile0Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
-            </div>
-            <div>
-              <img id ="etoile1" src="./fashion/starBlack65.png" class = "etoile" alt="">
-              <img id ="etoile1Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
-              <img id ="etoile1Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
-            </div>
-            <div>
-              <img id ="etoile2" src="./fashion/starBlack65.png" class = "etoile" alt="">
-              <img id ="etoile2Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
-              <img id ="etoile2Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
-            </div>
-            <div>
-              <img id ="etoile3" src="./fashion/starBlack65.png" class = "etoile" alt="">
-              <img id ="etoile3Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
-              <img id ="etoile3Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
-            </div>
-            <div>
-              <img id ="etoile4" src="./fashion/starBlack65.png" class = "etoile" alt="">
-              <img id ="etoile4Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
-              <img id ="etoile4Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
-            </div>
-            <div>
+        <div id="overlay">
+            <div id="fashion">
+              <div>
+                <img id ="etoile0" src="./fashion/starBlack65.png" class = "etoile" alt="">
+                <img id ="etoile0Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
+                <img id ="etoile0Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
+              </div>
+              <div>
+                <img id ="etoile1" src="./fashion/starBlack65.png" class = "etoile" alt="">
+                <img id ="etoile1Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
+                <img id ="etoile1Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
+              </div>
+              <div>
+                <img id ="etoile2" src="./fashion/starBlack65.png" class = "etoile" alt="">
+                <img id ="etoile2Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
+                <img id ="etoile2Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
+              </div>
+              <div>
+                <img id ="etoile3" src="./fashion/starBlack65.png" class = "etoile" alt="">
+                <img id ="etoile3Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
+                <img id ="etoile3Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
+              </div>
+              <div>
+                <img id ="etoile4" src="./fashion/starBlack65.png" class = "etoile" alt="">
+                <img id ="etoile4Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
+                <img id ="etoile4Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
+              </div>
+              <div>
                 <img id ="etoile5" src="./fashion/starBlack65.png" class = "etoile" alt="">
                 <img id ="etoile5Half" src="./fashion/starHalf65.png" class = "etoileHalf" alt="">
                 <img id ="etoile5Obtenue" src="./fashion/star65.png" class = "etoileObtenue" alt="">
               </div>
+            </div>
+        
+            <div id="laine">
+              <h1 class="cptLaine" id="cptLaineO">0</h1>
+              <img src="./textures/laine.png" alt="laine :">
+            </div>
+            <div id="laineMobile">
+                <h1 class="cptLaine" id="cptLaineM">0</h1>
+                <img id="imgLaineM" src="./textures/laineMobile.png" alt="laine :">
+            </div>
+        
+            <div id="fleches">
+                <div id="flecheU" class="fleche">
+                    <img src="./textures/Up.png" alt="Up">
+                </div>
+                <div id="flecheL" class="fleche">
+                    <img src="./textures/Left.png" alt="Left">
+                </div>
+                <div id="flecheD" class="fleche">
+                    <img src="./textures/Down.png" alt="Down">
+                </div>
+                <div id="flecheR" class="fleche">
+                    <img src="./textures/Right.png" alt="Right">
+                </div>
+            </div>
           </div>
           <div class="modal-wrapper">
              <div class="modal">
@@ -50,7 +76,6 @@
                         <button class="bog" id="manche">Buy on game</button>
                         <button><a href="https://www.instagram.com/">Buy irl !</a></button>
                     </div>
-        
                     <div id="deux">
                         <img class="img" src="./image/newpose_top_fleur_blanc.png">
                         <button class="bog" id="fleur_blanc">Buy on game</button>
@@ -80,8 +105,6 @@
                         <button class="bog" id="bob">Buy on game</button>
                         <button><a href="https://www.instagram.com/">Buy irl !</a></button>
                     </div>
-        
-                
                  </div>
              </div>
          </div>
@@ -93,7 +116,6 @@
                     <h2 id="titre-cyo">Choose your outfit !</h2>
                     <div id="current-outfit"><img id="imgoutfit" src="./image/outfit/initial.png"></div>
                     <div id="choose">
-        
                         <div id="out-un">
                             <img class="outimg" src="./image/horizontal/manche.png">
                             <button class="wto" id="./image/horizontal/manche.png">Wear</button>
@@ -144,10 +166,45 @@
                             <img class="outimg" src="./image/horizontal/initial_bob.png">
                             <button class="wto" id="./image/horizontal/initial_bob.png">Wear</button>
                         </div>
-                    </div>
+                      </div>
                 </div>
             </div>
         </div>
+        
+          <div class="modal-wrapper-beginning">
+            <div class="modal-beginning">
+              <div class="modal-close-beginning">X</div>
+              <div class="modal-content-beginning">
+                <h1 id="titre-beginning">Welcome to Fashion Crochet world!</h1>
+                <div id="gauche">
+                  <h2 class="sousTitre">The game</h2>
+                  <h2>Your goal in this game is to have your fashion level at it's maximun</h2>
+                  <h2>Your fashion level is the number of star you have on the buttom of your screen <br>It reprensent how many outfit you own and have done a runway with </h2>
+                  <h2>To buy cloth you need to collect woll<br>Then, once you have enough wool you can go on the shop and buy the cloth you want</h2>
+                  <h2>To do that you have to click on the grandma who is sitting, she is your saleswoman</h2>
+                  <h2>With that cloth on your posession you can click on "change your outfit" to dress with your new cloth</h2>
+                  <h2>Then go on the runway to be even more fashion!</h2>
+                </div>
+                <div id="droite">
+                  <h2 class="sousTitre">How to play</h2>
+                  <h2>Move:</h2>
+                  <div id="beginMobile">
+                    <img src="./textures/fleches.png">
+                    <h2>Control your camera by sliding on your screen</h2>
+                    <h2>To interact with object you can directly tap on your screen</h2>
+                  </div>
+                  <div id="beginOrdi">
+                    <img src="./textures/ZQSD.png">
+                    <h2>Click one time on the scren to control your point of vue thanks to your mouse</h2>
+                    <h2>It can be hard to click on object with that mode, on can either click on echap or click on your mouse's scroll button</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="phone">
+            <h1 id="turn">Please turn your device to play</h1>
+          </div>
         
         <script lang="ts">window.addEventListener('DOMContentLoaded', () => {
             console.log(document.querySelector(".modal-wrapper"));
@@ -173,24 +230,70 @@
             height: 100%;
             
         }
-        #fashion{
-    background: rgba(216, 93, 93, 0);
-    position: fixed;
-    bottom: 0%;
-    left : 35%;
-    height: 65px;
-    width: 390px;
-    display: grid;
-    grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
-    border: 5px solid rgb(236, 240, 24);
-    border-radius: 20px;
+        @media only screen and (orientation: portrait )and (max-width: 1180px) {
+#phone{
+  display:block;
+  background: rgba(0, 0, 0, 0.945);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
-.etoileObtenue{
-  display : none;
+#turn{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 30px;
+  margin-top: 40%;
+  color: rgb(255, 255, 255);
 }
-.etoileHald{
+#overlay{
   display:none;
 }
+.modal-wrapper{
+  display:none;
+}
+.modal-wrapper-outfit{
+  display:none;
+}
+.modal-wrapper-beginning{
+  display: none;
+}
+}
+
+/*Css pour les tel en horizontal */
+@media only screen and (orientation: landscape)and (max-width :1180px) {
+#phone{
+  display:none;
+  
+}
+#laine{
+  display:none;
+}
+#laineMobile{
+  background: rgba(39, 39, 39, 0.836);
+  position: fixed;
+  top : 2%;
+  right : 0%;
+  height: 70px;
+  width: 95px;
+  display: grid;
+  padding: 0px 5px;
+  margin-right: 10px;
+  grid-template: 1fr / 1fr 60px ;
+  border: 5px solid rgba(255, 255, 255, 0);
+  border-radius: 20px;
+}
+.cptLaine{
+  font-size: 30px;
+  color: rgb(207, 226, 255);
+  margin-top: 18px;
+  width: 30px;
+}
+
+#imgLaineM{
+  margin-top: 5px;
+}
+
 .modal-wrapper {
   background: rgba(0, 0, 0, 0.508);
   position: fixed;
@@ -200,18 +303,21 @@
   width: 100%;
   display: none;
 }
+
+
 .modal {
   text-align: center;
-  max-width: 800px;
+  max-width: 500px;
   width: 100%;
   background: rgb(183, 194, 207);
   padding: 20px;
   margin: auto;
   margin-top: 20px;
-  height: 600px;
+  height: 80%;
   border-radius: 5px;
   position: relative;
 }
+
 .modal a {
   text-decoration: none;
   background: rgb(197, 34, 66);
@@ -219,21 +325,26 @@
   padding: 5px 10px;
   border-radius: 5px;
   margin: 10px;
+
 }
+
 .modal-content {
   display: grid;
-  grid-template-rows: 40px 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 40px 1fr 1fr 1fr 1fr;
+  grid-template-columns:  1fr 1fr;
   gap: 5px;
-  height: 600px;
+  height: 320px;
+  overflow:scroll;
 }
+
 #titre-shop{
-    grid-column: 2;
+    grid-column: 1/3;
     grid-row: 1;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: auto;
     color: rgb(109, 12, 32);
 }
+
 .modal-close {
   color: rgb(197, 34, 66);
   border: 1px solid black;
@@ -244,6 +355,8 @@
   width: 20px;
   border-radius: 5px;
 }
+
+
 button{
     outline: 0;
     grid-gap: 8px;
@@ -268,10 +381,12 @@ button{
     width: 75px;
     height: 20px;
 }
+
 button:hover {
     box-shadow: 4px 4px 0 #000;
     transform: translate(-4px,-4px);
 }
+
 button:focus-visible{
     outline-offset: 1px;
 }
@@ -282,11 +397,13 @@ button:focus-visible{
     width: 150px;
     margin: auto;
 }
+
 .bog{
     
     margin-right: 0px;
     margin-left: 55px;
 }
+
 #un{
     grid-row: 2;
     grid-column: 1;
@@ -295,6 +412,7 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
 #deux{
     grid-row: 2;
     grid-column: 2;
@@ -303,6 +421,487 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
+#trois{
+    grid-row: 3;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
+#quatre{
+    grid-row: 3;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
+#cinq{
+    grid-row: 4;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
+#six{
+    grid-row: 4;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
+
+
+/*Pour le choose your outfit */
+
+.modal-wrapper-outfit {
+  background: rgba(0, 0, 0, 0.508);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+.modal-outfit {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  background: rgb(183, 194, 207);
+  padding: 20px;
+  margin: auto;
+  margin-top: 20px;
+  height: 80%;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal-close-outfit {
+  color: red;
+  border: 1px solid black;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  width: 20px;
+  border-radius: 5px;
+}
+
+.modal-content-outfit{
+    display: grid;
+    grid-template-rows: 60px 450px 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 2px;
+    height: 320px;
+    overflow:scroll;
+    z-index: 1;
+}
+
+/*#choose{
+    grid-column: 1;
+    grid-row: 1/3;
+    display: grid;
+    grid-template-rows: repeat(11,145px);
+    overflow-y: auto;
+    height: 580px;
+}*/
+
+#out-un{
+    grid-row: 3;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin-top: 35px;
+    padding: 10px;
+}
+
+#out-deux{
+    grid-row: 3;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-trois{
+    grid-row: 4;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-quatre{
+    grid-row: 4;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-cinq{
+    grid-row: 5;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-six{
+    grid-row: 5;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 10px;
+}
+
+#out-sept{
+    grid-row: 6;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+
+#out-huit{
+    grid-row: 6;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-neuf{
+    grid-row: 7;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-dix{
+    grid-row: 7;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+#out-onze{
+    grid-row: 8;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+
+.outimg{
+  grid-column: 1;
+  grid-row: 1;
+  margin:auto;
+  width: 150px;
+}
+
+
+#titre-cyo{
+    grid-row:1;
+    font-size:25px;
+    height: 30px;
+}
+
+.wto{
+    grid-column:2;
+    margin-top:30%;
+}
+
+#current-outfit{
+    grid-row: 2;
+    margin-left:10px;
+    margin-right: 10px;
+    margin-bottom: auto;
+    margin-top:1px;
+      
+}
+
+#imgoutfit{
+    margin:auto;
+}
+
+#fashion{
+  position: fixed;
+  top: 2%;
+  left : 2%;
+  height: 65px;
+  width: 390px;
+  display: grid;
+  padding: 3px 3px;
+  margin-bottom: 10px;
+  grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
+  border: 5px solid rgba(255, 255, 255, 0);
+  border-radius: 20px;
+}
+.etoileObtenue{
+  display : none;
+}
+.etoileHalf{
+  display:none;
+}
+
+.modal-wrapper-beginning {
+  background: rgba(0, 0, 0, 0.508);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
+  z-index: 0.5;
+}
+.modal-beginning {
+  text-align: center;
+  /*max-width: 800px; */
+  width: 80%;
+  background: rgb(183, 194, 207);
+  padding: 20px;
+  margin: auto;
+  margin-top: 3%;
+  height: 78%;
+  border-radius: 5px;
+  position: relative;
+}
+.modal-content-beginning {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  height: 97%;
+  font-size: 8px;
+  display: grid;
+  grid-template: 30px 1fr/ 70% 30%;
+}
+
+
+#titre-beginning{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  grid-row : 1 ;
+  grid-column : 1/3 ;
+  margin: auto;
+  color: rgb(109, 12, 32);
+  font-size: large;
+  padding : 3px;
+}
+.modal-close-beginning {
+  color: rgb(197, 34, 66);
+  border: 1px solid black;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  width: 20px;
+  border-radius: 5px;
+}
+
+#fleches{
+  display:grid;
+  position: fixed;
+  grid-template: 1fr 1f / 1fr 1fr 1fr;
+  bottom: 3%;
+  left:3%;
+  gap:3px;
+  width: 230px;
+  height : 150px;
+}
+.fleche{
+  background-color: rgba(39, 39, 39, 0.836);
+  border: 5px solid rgba(255, 255, 255, 0);
+  border-radius: 20px;
+  text-align:center;
+  padding-top : 16px;
+}
+.fleche :hover{
+  background-color: rgba(104, 104, 104, 0.678);
+}
+
+#flecheU{
+  grid-row: 1;
+  grid-column: 2;
+}
+#flecheL{
+  grid-row: 2;
+  grid-column: 1;
+}
+#flecheD{
+  grid-row: 2;
+  grid-column: 2;
+}
+#flecheR{
+  grid-row: 2;
+  grid-column: 3;
+}
+.sousTitre{
+  font-size: medium;
+  color: brown;
+}
+#gauche{
+  grid-row:2;
+  grid-column:1;
+  overflow-y:scroll;
+  padding-right: 5px;
+}
+#droite{
+  grid-row:2;
+  grid-column:2;
+  overflow-y:scroll;
+}
+#beginOrdi{
+  display:none;
+}
+}
+
+
+/* Css pour les ordis*/
+@media only screen and (min-width : 1181px) {
+#phone{
+  display:none;
+}
+
+  #laineMoblie{
+    display: none;
+  }
+.modal-wrapper {
+  background: rgba(0, 0, 0, 0.508);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+
+
+.modal {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  background: rgb(183, 194, 207);
+  padding: 20px;
+  margin: auto;
+  margin-top: 20px;
+  height: 600px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal a {
+  text-decoration: none;
+  background: rgb(197, 34, 66);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 10px;
+
+}
+
+.modal-content {
+  display: grid;
+  grid-template-rows: 40px 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  height: 600px;
+}
+
+#titre-shop{
+    grid-column: 2;
+    grid-row: 1;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: auto;
+    color: rgb(109, 12, 32);
+}
+
+.modal-close {
+  color: rgb(197, 34, 66);
+  border: 1px solid black;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  width: 20px;
+  border-radius: 5px;
+}
+
+
+button{
+    outline: 0;
+    grid-gap: 8px;
+    align-items: center;
+    background-color: rgb(197, 34, 66);
+    color: white;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 10px;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.5;
+    overflow: hidden;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all .14s ease-out;
+    white-space: nowrap;
+    width: 75px;
+    height: 20px;
+}
+
+button:hover {
+    box-shadow: 4px 4px 0 #000;
+    transform: translate(-4px,-4px);
+}
+
+button:focus-visible{
+    outline-offset: 1px;
+}
+            
+.img{
+    grid-row: 1;
+    grid-column: 1/3;
+    width: 150px;
+    margin: auto;
+}
+
+.bog{
+    
+    margin-right: 0px;
+    margin-left: 55px;
+}
+
+#un{
+    grid-row: 2;
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
+#deux{
+    grid-row: 2;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    gap: 10px;
+}
+
 #trois{
     grid-row: 2;
     grid-column: 3;
@@ -311,6 +910,7 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
 #quatre{
     grid-row: 3;
     grid-column: 1;
@@ -319,6 +919,7 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
 #cinq{
     grid-row: 3;
     grid-column: 2;
@@ -327,6 +928,7 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
 #six{
     grid-row: 3;
     grid-column: 3;
@@ -335,7 +937,11 @@ button:focus-visible{
     grid-template-rows: 4fr 1fr;
     gap: 10px;
 }
+
+
+
 /*Pour le choose your outfit */
+
 .modal-wrapper-outfit {
   background: rgba(0, 0, 0, 0.508);
   position: fixed;
@@ -357,6 +963,7 @@ button:focus-visible{
   border-radius: 5px;
   position: relative;
 }
+
 .modal-close-outfit {
   color: red;
   border: 1px solid black;
@@ -367,6 +974,7 @@ button:focus-visible{
   width: 20px;
   border-radius: 5px;
 }
+
 .modal-content-outfit{
     display: grid;
     grid-template-rows: 1fr 7fr;
@@ -374,6 +982,7 @@ button:focus-visible{
     gap: 10px;
     z-index: 1;
 }
+
 #choose{
     grid-column: 1;
     grid-row: 1/3;
@@ -382,77 +991,105 @@ button:focus-visible{
     overflow-y: auto;
     height: 580px;
 }
+
 #out-un{
     grid-row: 1;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-deux{
     grid-row: 2;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-trois{
     grid-row: 3;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-quatre{
     grid-row: 4;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-cinq{
     grid-row: 5;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-six{
     grid-row: 6;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
+
 }
+
 #out-sept{
     grid-row: 7;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
+
 #out-huit{
     grid-row: 8;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-neuf{
     grid-row: 9;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-dix{
     grid-row: 10;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 #out-onze{
     grid-row: 11;
     display: grid;
     grid-template-columns: 2fr 1fr;
+
 }
+
 .outimg{
   grid-column: 1;
   margin:auto;
   width: 150px;
 }
+
+
 #titre-cyo{
     grid-row:1;
     grid-column:2;
     font-size:25px;
     height: 30px;
 }
+
 .wto{
     grid-column:2;
     margin:auto;
 }
+
 #current-outfit{
     grid-column: 2;
     grid-row: 2;
@@ -462,10 +1099,136 @@ button:focus-visible{
     margin-top:1px;
       
 }
+
 #imgoutfit{
     margin:auto;
 }
 
-        </style>
+#fashion{
+  background: rgba(39, 39, 39, 0.836);
+  position: fixed;
+  bottom: 0%;
+  left : 35%;
+  height: 65px;
+  width: 390px;
+  display: grid;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+  grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
+  border: 5px solid rgba(255, 255, 255, 0);
+  border-radius: 20px;
+}
+.etoileObtenue{
+  display : none;
+}
+.etoileHalf{
+  display:none;
+}
+
+.modal-wrapper-beginning {
+  background: rgba(0, 0, 0, 0.508);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
+  z-index: 0.5;
+}
+.modal-beginning {
+  text-align: center;
+  /*max-width: 800px; */
+  width: 80%;
+  background: rgb(183, 194, 207);
+  padding: 20px;
+  margin: auto;
+  margin-top: 5%;
+  height: 75%;
+  border-radius: 5px;
+  position: relative;
+}
+.modal-content-beginning {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  padding: 10px;
+  height: 97%;
+  font-size: smaller;
+  display: grid;
+  grid-template: 60px 1fr/ 70% 30%;
+}
+
+
+#titre-beginning{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  grid-row:1;
+  grid-column:1/3;  
+  margin: auto;
+  color: rgb(109, 12, 32);
+  font-size: xx-large;
+  padding : 10px;
+}
+.sousTitre{
+  font-size: x-large;
+  color: brown;
+}
+#gauche{
+  grid-row:2;
+  grid-column:1;
+  overflow-y:scroll;
+}
+#droite{
+  grid-row:2;
+  grid-column:2;
+  overflow-y:scroll;
+}
+#beginMobile{
+  display:none;
+}
+
+.modal-close-beginning {
+  color: rgb(197, 34, 66);
+  border: 1px solid black;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  width: 20px;
+  border-radius: 5px;
+}
+
+#laine{
+  background: rgba(39, 39, 39, 0.836);
+  position: fixed;
+  top : 0%;
+  right : 0%;
+  height: 100px;
+  width: 170px;
+  display: grid;
+  padding: 0px 10px;
+  margin-top: 20px;
+  margin-right: 20px;
+  grid-template: 1fr / 1fr 100px ;
+  border: 5px solid rgba(255, 255, 255, 0);
+  border-radius: 20px;
+}
+
+#laineMobile{
+  display:none;
+}
+.cptLaine{
+  font-size: 60px;
+  color: rgb(207, 226, 255);
+  margin-top: 18px;
+}
+
+#fleches{
+  display:none;
+}
+
+}
+
+
+
+</style>
 
 </html>
