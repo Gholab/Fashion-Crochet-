@@ -41,7 +41,7 @@ export class App {
     this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
     const box =MeshBuilder.CreateBox("Box",{width:50,height:.1,depth:50},this.scene);
     box.physicsImpostor=new PhysicsImpostor(box,PhysicsImpostor.BoxImpostor,{mass:0,restitution:0},this.scene);
-    box.position=new Vector3(0,0.5,0);
+    box.position=new Vector3(0,1,0);
     //box.isVisible=false;
     
     
