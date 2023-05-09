@@ -1,5 +1,5 @@
 
-import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin, Sound } from "babylonjs";
+import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin, Sound, AnimationGroup } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -29,6 +29,7 @@ export class App {
   left: boolean;
   down: boolean;
   right: boolean;
+  PersoAnim: AnimationGroup[];
   runwayMusic : Sound;
   background : Sound;
 
@@ -42,7 +43,8 @@ export class App {
     this.CreateEnvironment();
     this.CreateSky();
     this.heroMesh;
-    this.runway=false;
+    //this.runway=false;
+    this.PersoAnim;
 
     //partie Physics
     this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
@@ -252,6 +254,8 @@ export class App {
   console.log(this.heroMesh);
   //this.heroMesh.showBoundingBox=true;
   //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
+  
+  
   this.heroMesh.position=new Vector3(0,0,0);
   
   hero.position=pos;
@@ -262,11 +266,14 @@ export class App {
   const heroSpeed = 0.15;
   const heroSpeedBackwards = 0.15;
   const heroRotationSpeed = 0.05;
-
   const idle=animationGroups[1]; 
+  this.PersoAnim[1]=idle;
   const catWalking=animationGroups[2];
+  this.PersoAnim[2]=catWalking;
   const walking=animationGroups[3];
+  this.PersoAnim[3]=walking;
   const collect=animationGroups[0];
+  this.PersoAnim[0]=collect;
   let animating=true;
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
@@ -291,9 +298,7 @@ export class App {
           this.right=false;
           keydown = true;
       }
-      if (inputMap["b"]) {
-          keydown = true;
-      }
+      
 
       //Manage animations to be played  
       if (keydown) {
@@ -322,12 +327,12 @@ export class App {
               //Ensure animation are played only once per rendering loop
               animating = false;
           }
-        if (this.runway){
-          animating=false;
-          walking.stop();
-          idle.stop();
-          catWalking.start(true);
-        }
+        //if (this.runway){
+          //animating=false;
+          //walking.stop();
+          //idle.stop();
+          //catWalking.start(true);
+        //}
       }
   });
   
@@ -636,7 +641,11 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     this.runwayMusic.play();
 
     //------- avancement -----------
-    this.runway=true;
+    //this.runway=true;
+    this.PersoAnim[3].stop();
+    this.PersoAnim[1].stop();
+    this.PersoAnim[2].play();
+    this.heroMesh.position = new Vector3(-15,1.65,-26.5);
     console.log((document.querySelector("#laine")! as HTMLDivElement).style.display=="block");
     (document.querySelector("#overlay") as HTMLImageElement).style.display = "none" ;
     const i =0;
@@ -673,7 +682,10 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     FreeCam.animations.push(camAnim);
     self.scene.beginAnimation(FreeCam, 0,12* fps);
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
-    timer.onTimerEndedObservable.add(() => self.SecondAnimation(self,FreeCam));
+    timer.onTimerEndedObservable.add(() => {
+      this.PersoAnim[2].stop();
+      this.PersoAnim[1].play();
+      self.SecondAnimation(self,FreeCam)});
     timer.start(18000);
 
 
@@ -708,6 +720,19 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       fps, Animation.ANIMATIONTYPE_VECTOR3,
       Animation.ANIMATIONLOOPMODE_CONSTANT,
       true);
+    
+
+      const i =0;
+      const timer1 = new AdvancedTimer({timeout:14,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
+      timer1.onTimerEndedObservable.add(() => {
+        //Mettre idle animation
+        this.heroMesh.rotate(Vector3.Up(),Math.PI);
+        this.PersoAnim[2].stop();
+        this.PersoAnim[1].play();
+        this.Move2(i)
+      });
+      timer1.start(2400);
+
 
     camKeys.push({ frame: 0, value: new Vector3(-40, 5.5, -26) });
     camKeys.push({ frame: 2 * fps, value: new Vector3(-40, 5.5, -26) });
@@ -725,6 +750,9 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       self.AfterCutScene(self,FreeCam);
       this.runwayMusic.pause();
       this.background.play();
+      this.PersoAnim[1].stop();
+      this.PersoAnim[2].stop();
+      this.PersoAnim[3].play();
       });
     timer.start(19000);
   }

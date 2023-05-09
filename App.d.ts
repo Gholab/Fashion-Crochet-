@@ -1,4 +1,4 @@
-import { Scene, Engine, FreeCamera, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera, Sound } from "babylonjs";
+import { Scene, Engine, FreeCamera, Vector3, AbstractMesh, Mesh, int, StandardMaterial, ArcRotateCamera, Sound, AnimationGroup } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
 import { SelectionPanel, TextBlock } from "babylonjs-gui";
@@ -27,6 +27,7 @@ export declare class App {
     left: boolean;
     down: boolean;
     right: boolean;
+    PersoAnim: AnimationGroup[];
     runwayMusic: Sound;
     background: Sound;
     constructor(canvas: HTMLCanvasElement);
