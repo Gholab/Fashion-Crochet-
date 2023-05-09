@@ -39,7 +39,6 @@ export declare class App {
     ChangePerso(new_path: string): void;
     CreateMouton(mouton: Mouton): Promise<void>;
     Mouton1OnClick(self: App, mouton: Mouton): void;
-    CreateCptLaine(): void;
     Timer(self: App, mouton: Mouton): void;
     Waiting(self: App, mouton: Mouton): void;
     CreateEnvironment(): Promise<void>;

@@ -102,7 +102,6 @@ export class App {
     this.down=false;
     this.right=false;
 
-    this.CreateCptLaine();
     this.CreateMouton(new Mouton("moutonGwen.glb"));
     this.CreateMouton(new Mouton("moutonGwen2.glb"));
     this.CreateMouton(new Mouton("moutonGwen3.glb"));
@@ -272,20 +271,24 @@ export class App {
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
       //Manage the movements of the character (e.g. position, direction)
-      if (inputMap["w"]) {
+      if (inputMap["w"]||this.up||inputMap["z"]) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
+          this.up=false;
           keydown = true;
       }
-      if (inputMap["s"]) {
+      if (inputMap["s"]||this.down) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
+          this.down=false;
           keydown = true;
       }
-      if (inputMap["a"]) {
+      if (inputMap["a"]||this.left||inputMap["q"]) {
           hero.rotate(Vector3.Up(), -heroRotationSpeed);
+          this.left=false;
           keydown = true;
       }
-      if (inputMap["d"]) {
+      if (inputMap["d"]||this.right) {
           hero.rotate(Vector3.Up(), heroRotationSpeed);
+          this.right=false;
           keydown = true;
       }
       if (inputMap["b"]) {
@@ -402,21 +405,6 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
 }
 
-  CreateCptLaine(): void {
-    const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-    this.textBox.width = 0.25;
-    this.textBox.height = 0.10;
-    this.textBox.background = "#1388AF";
-    this.textBox.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-    this.textBox.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-
-    this.text.text = "laine : " + this.cptLaine;
-    this.text.color = "white";
-    this.text.fontSize = 30;
-    this.textBox.addControl(this.text);
-    advancedTexture.addControl(this.textBox);
-  }
 
   Timer(self :App,mouton : Mouton) : void{
     mouton.available=true;
@@ -901,7 +889,11 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       document.querySelector(".modal-close-beginning")!.addEventListener("click",() => {
         (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
       })
-  
+      
+      document.querySelector("#flecheU").addEventListener("click",() => this.up=true);
+      document.querySelector("#flecheD").addEventListener("click",() => this.down=true);
+      document.querySelector("#flecheL").addEventListener("click",() => this.left=true);
+      document.querySelector("#flecheR").addEventListener("click",() => this.right=true);
       //Affichier la page de départ avec les regles/explication
   
     }
