@@ -278,6 +278,8 @@ export class App {
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
       this.heroMesh.position.y=0;
+      console.log("position:"+this.heroMesh.position);
+      console.log("positioneny "+this.heroMesh.position.y);
       //Manage the movements of the character (e.g. position, direction)
       if (inputMap["w"]||this.up||inputMap["z"]) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
