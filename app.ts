@@ -277,6 +277,7 @@ export class App {
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
+      this.heroMesh.position.y=0;
       //Manage the movements of the character (e.g. position, direction)
       if (inputMap["w"]||this.up||inputMap["z"]) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
