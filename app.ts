@@ -266,6 +266,7 @@ export class App {
   const heroSpeed = 0.15;
   const heroSpeedBackwards = 0.15;
   const heroRotationSpeed = 0.05;
+  this.PersoAnim=animationGroups;
   const idle=animationGroups[1]; 
   this.PersoAnim[1]=idle;
   const catWalking=animationGroups[2];
@@ -394,7 +395,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
   if (mouton.available){
     self.cptLaine+=1;
     document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
-      document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
+    document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
     mouton.available=false;
     console.log("Juste avant timer");
     //button.textBlock!.text = "Please wait to collect your yarn";
