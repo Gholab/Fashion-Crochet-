@@ -277,13 +277,15 @@ export class App {
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
-      this.heroMesh.position.y=0;
+      //this.heroMesh.position.y=0;
       console.log("position:"+this.heroMesh.position);
       console.log("positioneny "+this.heroMesh.position.y);
       //Manage the movements of the character (e.g. position, direction)
+      
       if (inputMap["w"]||this.up||inputMap["z"]) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
           keydown = true;
+      
       }
       if (inputMap["s"]||this.down) {
           hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
