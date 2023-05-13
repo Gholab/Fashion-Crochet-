@@ -76,11 +76,11 @@ export class App {
     //Setup pour le cpt de Laine
     this.textBox = new SelectionPanel("textBox");
     this.text = new TextBlock();
+
     if (localStorage.getItem("cptLaine")){
-      //let Laine= localStorage.getItem("cptLaine") as unknown;
-      //let numbLaine=Laine as number;
       this.cptLaine=JSON.parse(localStorage.getItem("cptLaine"));
-      
+      document.getElementById("cptLaineM")!.innerHTML = this.cptLaine+"" ;
+      document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
     }
     else{
       this.cptLaine = 0;
@@ -146,18 +146,10 @@ export class App {
         if (evt.button===1) this.engine.exitPointerlock();
       }
   }
-    //onst framesPerSecond = 60;
-    //const gravity = -9.81;
-    //gravity on the y axis
-    //scene.gravity = new Vector3(0, gravity / framesPerSecond, 0);
-    //enable collisions
+   
     scene.collisionsEnabled = true;
 
-    //Creating the environment using a Skybox
-    /*const envTex=CubeTexture.CreateFromPrefilteredData("./environment/environment.env", scene);
-    scene.environmentTexture=envTex;
-    scene.createDefaultSkybox(envTex,true);
-    scene.environmentIntensity=0.45; //reducing the environment lighting*/
+    
 
 
     return scene;
@@ -360,23 +352,7 @@ async CreateMouton(mouton : Mouton): Promise<void> {
 
   })
 
-  //Plan 2D qui donne des infos au dessus
-  //const plane = Mesh.CreatePlane("plane",2,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
-  //plane.parent = meshes[0];
-  //plane.position.y = 2;
-
-  
-  //const matcollect = new StandardMaterial("",this.scene);
-  //matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");   ////./textures/timer/collect.png
-  //textures pour la barres qui augmente
-  //const matbarre = new StandardMaterial("",this.scene);             CES DEUX LIGNE ELLES SONT UTILS ??
-  //matbarre.diffuseTexture = new Texture("./textures/timer/barre1.png");
-  
-  
-  //const f = new Vector4(0,0, 1 , 1); // front image = half the whole image along the width 
-  //const b = new Vector4(1,0, 1, 1); // back image = second half along the width
-  
-  //const plane = MeshBuilder.CreatePlane("plane", {frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE});
+ 
   mouton.plane.parent = meshes[1];
   mouton.plane.position.y = 2;
   mouton.plane.scaling.x=4;
