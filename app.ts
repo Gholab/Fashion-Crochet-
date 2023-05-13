@@ -101,7 +101,34 @@ export class App {
     this.wardrobe = [];
     this.currentoutfit = "";
     this.alreadyRunwayOutfit = [];
-    this.cptFashion = 0;
+
+    
+    if (localStorage.getItem("cptFashion")){
+      this.cptFashion=JSON.parse(localStorage.getItem("cptFashion"));
+      if (this.cptFashion%2==0){
+        for (let i =0 ; i< this.cptFashion/2 ; i++){
+          (document.querySelector("#etoile"+i) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
+          (document.querySelector("#etoile"+i+"Half") as HTMLImageElement).style.display = "none" ;
+          (document.querySelector("#etoile"+i+"Obtenue") as HTMLImageElement).style.display = "block" ;
+        }
+        console.log("dans le if", this.cptFashion);
+      }
+      else{
+        for (let i =0 ; i< (this.cptFashion-1)/2 ; i++){
+          (document.querySelector("#etoile"+i) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
+          (document.querySelector("#etoile"+i+"Half") as HTMLImageElement).style.display = "none" ;
+          (document.querySelector("#etoile"+i+"Obtenue") as HTMLImageElement).style.display = "block" ;
+        }
+        (document.querySelector("#etoile"+((this.cptFashion-1)/2)) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
+        (document.querySelector("#etoile"+((this.cptFashion-1)/2)+"Half") as HTMLImageElement).style.display = "block" ;
+        console.log("dans le else", this.cptFashion);
+      }
+      
+    }
+    else{
+      this.cptFashion = 0;
+    }
+    
     //A AJOUTER
     this.up=false;
     this.left=false;
@@ -589,6 +616,8 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       this.alreadyRunwayOutfit.push(this.currentoutfit);
       console.log("pas worn", this.cptFashion,"already warn :",alreadyWorn);
       this.cptFashion+=1;
+      localStorage.setItem("cptFashion",JSON.stringify(this.cptFashion));
+
       if (this.cptFashion%2==0){
         for (let i =0 ; i< this.cptFashion/2 ; i++){
           (document.querySelector("#etoile"+i) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
