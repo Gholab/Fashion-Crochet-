@@ -76,10 +76,12 @@ export class App {
     //Setup pour le cpt de Laine
     this.textBox = new SelectionPanel("textBox");
     this.text = new TextBlock();
-    //if (localStorage.getItem("cptLaine")){
-      //this.cptLaine=localStorage.getItem("cptLaine");
+    if (localStorage.getItem("cptLaine")){
+      //let Laine= localStorage.getItem("cptLaine") as unknown;
+      //let numbLaine=Laine as number;
+      this.cptLaine=JSON.parse(localStorage.getItem("cptLaine"));
       
-    //}
+    }
     console.log("local Storage "+localStorage.getItem("cptLaine"));
     this.cptLaine = 0;
     this.mouton1 = true;
