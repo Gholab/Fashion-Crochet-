@@ -76,6 +76,11 @@ export class App {
     //Setup pour le cpt de Laine
     this.textBox = new SelectionPanel("textBox");
     this.text = new TextBlock();
+    //if (localStorage.getItem("cptLaine")){
+      //this.cptLaine=localStorage.getItem("cptLaine");
+      
+    //}
+    console.log(localStorage.getItem("cptLaine"));
     this.cptLaine = 0;
     this.mouton1 = true;
     this.available1 = "Collect your yarn !";
