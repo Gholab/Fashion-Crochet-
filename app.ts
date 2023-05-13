@@ -98,9 +98,25 @@ export class App {
     this.matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");
 
     //pour les vetements:
-    this.wardrobe = [];
-    this.currentoutfit = "";
-    this.alreadyRunwayOutfit = [];
+    if (localStorage.getItem("wardrobe")){
+      this.wardrobe=JSON.parse(localStorage.getItem("wardrobe"));
+    }
+    else{
+      this.wardrobe = [];
+    }
+
+    if (localStorage.getItem("currentoutfit")){
+      this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
+    }
+    else{
+      this.currentoutfit = "";
+    }
+    if (localStorage.getItem("alreadyRunwayOutfit")){
+      this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
+    }
+    else{
+      this.alreadyRunwayOutfit = [];
+    }
 
     
     if (localStorage.getItem("cptFashion")){
@@ -453,34 +469,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
   }
 
-  //CreateController(): void {
-    //const camera=new FreeCamera("camera",new Vector3(0,10,0),this.scene); //without a camera we can't see anything
-    //static camera unless we attach control
-    /* this.camera.attachControl();
-
-
-    this.camera.applyGravity = true; //applies gravity to the camera which is our controller
-    this.camera.checkCollisions = true;
-    //but this will not work unless we can "detect" the camera, we need to create a 'body' for the camera => elipsoid 
-
-    this.camera.ellipsoid = new Vector3(1, 1, 1);
-
-    this.camera.minZ = 0.45; //this allows us to not get very close to the objects and see through them
-    this.camera.speed = 0.5;
-    this.camera.angularSensibility = 4000; //rotate more slowly
-
-    //personalize the keys for the controller movement
-    //we can still use arrows keys for movement donc both options are available
-    this.camera.keysUp.push(87); //keycode for W is 87 check https://www.toptal.com/developers/keycode
-    this.camera.keysUp.push(90); // 90 : z pour les azerty : dsl hajar
-    this.camera.keysRight.push(68); //65: d
-    this.camera.keysDown.push(83);//83:s
-    this.camera.keysLeft.push(81);//81:q
-    */ 
-
-
-
-  //}
+  
 
  
 
@@ -560,6 +549,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       }
       if(wearable == true){
         self.currentoutfit = "./outfit/"+id+".png";
+        localStorage.setItem("currentoutfit",self.currentoutfit);
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
@@ -589,16 +579,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
         }
 
-    ///////// Debut du cpt de fashion ///////////////
-    ///Mettre dans un event Listener on a changé d'outfit
-    /*
-    for (let i =0 ; i<= self.fashionLevel ; i++){
-      (document.querySelector("#etoile"+i) as HTMLImageElement).style.display = "none" ;//  ../../public/fashion/star65.png Mettre ca pour l'hebergement je pense
-      (document.querySelector("#etoile"+i+"Obtenue") as HTMLImageElement).style.display = "block" ;
-    }
     
-    self.fashionLevel += 0.5;
-    */
   }
   
   CreateCutScene(self : App):void{
@@ -614,6 +595,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
     if(!alreadyWorn){
       this.alreadyRunwayOutfit.push(this.currentoutfit);
+      localStorage.setItem("alreadyRunwayOutfit",JSON.stringify(this.alreadyRunwayOutfit));
       console.log("pas worn", this.cptFashion,"already warn :",alreadyWorn);
       this.cptFashion+=1;
       localStorage.setItem("cptFashion",JSON.stringify(this.cptFashion));
@@ -862,6 +844,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
+            localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
             alert("You just bought "+cloth.name);
             }
            
