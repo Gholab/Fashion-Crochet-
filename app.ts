@@ -169,19 +169,7 @@ export class App {
   }
 
   SoundMouton(){
-    /*
-    const plane = MeshBuilder.CreatePlane("plane");
-    plane.position = new Vector3(36,2,10);
-    const plane1 = MeshBuilder.CreatePlane("plane");
-    plane1.position = new Vector3(45,2,1);
-    const plane2 = MeshBuilder.CreatePlane("plane");
-    plane2.position = new Vector3(45,2,-8);
-    const plane3 = MeshBuilder.CreatePlane("plane");
-    plane3.position = new Vector3(50,2,18);
-    const plane4 = MeshBuilder.CreatePlane("plane");
-    plane4.position = new Vector3(55,2,10);
-    */
-
+    
     const mouton1 = new Sound("mouton","./audio/mouton.mp3",this.scene, null, {
       loop: true,
       volume:0.5,
@@ -249,54 +237,54 @@ export class App {
   }));
 
   const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./animated/",path);
-  const hero=meshes[0];
-  this.heroMesh=hero;
+  this.heroMesh=meshes[0];
   console.log(this.heroMesh);
   //this.heroMesh.showBoundingBox=true;
   //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
   
+  this.heroMesh.ellipsoid=new Vector3(1,0.1,1);
+  this.heroMesh.position=new Vector3(0,0.1,0);
   
-  this.heroMesh.position=new Vector3(0,0,0);
-  
-  hero.position=pos;
-  console.log(pos);
-  hero.scaling.scaleInPlace(2.5);
-  this.camera.lockedTarget=hero;
+  this.heroMesh.position=pos;
+  //console.log(pos);
+  this.heroMesh.scaling.scaleInPlace(2.5);
+  this.camera.lockedTarget=this.heroMesh;
 
   const heroSpeed = 0.15;
   const heroSpeedBackwards = 0.15;
   const heroRotationSpeed = 0.05;
   this.PersoAnim=animationGroups;
-  console.log(this.PersoAnim);
+
   const idle=this.PersoAnim[1]; 
   const catWalking=this.PersoAnim[2];
   const walking=this.PersoAnim[3];
   const collect=this.PersoAnim[0];
+
   let animating=true;
   collect.stop();
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
       //this.heroMesh.position.y=0;
-      console.log("position:"+this.heroMesh.position);
+      //console.log("position:"+this.heroMesh.position);
       console.log("positioneny "+this.heroMesh.position.y);
       //Manage the movements of the character (e.g. position, direction)
       
       if (inputMap["w"]||this.up||inputMap["z"]) {
-          hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
+          this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(heroSpeed));
           keydown = true;
       
       }
       if (inputMap["s"]||this.down) {
-          hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
+          this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(-heroSpeedBackwards));
           keydown = true;
       }
       if (inputMap["a"]||this.left||inputMap["q"]) {
-          hero.rotate(Vector3.Up(), -heroRotationSpeed);
+          this.heroMesh.rotate(Vector3.Up(), -heroRotationSpeed);
           keydown = true;
       }
       if (inputMap["d"]||this.right) {
-          hero.rotate(Vector3.Up(), heroRotationSpeed);
+          this.heroMesh.rotate(Vector3.Up(), heroRotationSpeed);
           keydown = true;
       }
       
