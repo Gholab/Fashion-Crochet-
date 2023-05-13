@@ -80,7 +80,7 @@ export class App {
       //this.cptLaine=localStorage.getItem("cptLaine");
       
     //}
-    console.log(localStorage.getItem("cptLaine"));
+    console.log("local Storage "+localStorage.getItem("cptLaine"));
     this.cptLaine = 0;
     this.mouton1 = true;
     this.available1 = "Collect your yarn !";
@@ -385,7 +385,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     self.cptLaine+=1;
     //localStorage
     localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
-
+    console.log("local Storage "+localStorage.getItem("cptLaine"));
 
     document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
     document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
