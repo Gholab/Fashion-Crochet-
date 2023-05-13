@@ -24,7 +24,6 @@ export class App {
   currentoutfit: string;
   alreadyRunwayOutfit :string[];
   heroMesh:AbstractMesh;
-  runway:boolean;
   up: boolean;
   left: boolean;
   down: boolean;
@@ -43,19 +42,14 @@ export class App {
     this.CreateEnvironment();
     this.CreateSky();
     this.heroMesh;
-    //this.runway=false;
+    
     this.PersoAnim;
 
-    //partie Physics
-    this.scene.enablePhysics(new Vector3(0,-9.81,0),new CannonJSPlugin(true,10,CANNON));
-    //const box =MeshBuilder.CreateBox("Box",{width:50,height:.1,depth:50},this.scene);
-    //box.physicsImpostor=new PhysicsImpostor(box,PhysicsImpostor.BoxImpostor,{mass:0,restitution:0},this.scene);
-    //box.position=new Vector3(0,1,0);
-    //box.isVisible=false;
+    
     
     
     //this.scene.debugLayer.show();
-    //this.camera = new FreeCamera("camera", new Vector3(0, 10, 0), this.scene);
+    
     this.camera=new ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new Vector3(0, 1, 0), this.scene);
     this.scene.activeCamera = this.camera;
     this.scene.activeCamera.attachControl(this.canvas, true);
@@ -267,7 +261,7 @@ export class App {
       let keydown = false;
       //this.heroMesh.position.y=0;
       //console.log("position:"+this.heroMesh.position);
-      console.log("positioneny "+this.heroMesh.position.y);
+      //console.log("positioneny "+this.heroMesh.position.y);
       //Manage the movements of the character (e.g. position, direction)
       
       if (inputMap["w"]||this.up||inputMap["z"]) {
@@ -384,6 +378,10 @@ async CreateMouton(mouton : Mouton): Promise<void> {
 Mouton1OnClick(self : App, mouton : Mouton):void{
   if (mouton.available){
     self.cptLaine+=1;
+    //localStorage
+    localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
+
+
     document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
     document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
     mouton.available=false;
@@ -747,45 +745,14 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
   }
 
   AfterCutScene(self: App,FreeCam : FreeCamera) {
-    /*FreeCam.position = new Vector3(-10, 2, -29);
-    FreeCam.attachControl();
-    FreeCam.applyGravity = true; //applies gravity to the camera which is our controller
-    FreeCam.checkCollisions = true;
-    //but this will not work unless we can "detect" the camera, we need to create a 'body' for the camera => elipsoid 
-
-    FreeCam.ellipsoid = new Vector3(1, 1, 1);
-
-    FreeCam.minZ = 0.45; //this allows us to not get very close to the objects and see through them
-    FreeCam.speed = 0.5;
-    FreeCam.angularSensibility = 4000; //rotate more slowly
-    FreeCam.keysUp.push(87); //keycode for W is 87 check https://www.toptal.com/developers/keycode
-    FreeCam.keysUp.push(90); // 90 : z pour les azerty : dsl hajar
-    FreeCam.keysRight.push(68); //65: d
-    FreeCam.keysDown.push(83);//83:s
-    FreeCam.keysLeft.push(81);//81:q*/
+    
     this.scene.activeCamera = this.camera;
     this.camera.attachControl();
-    this.runway = false;
+    
 
   }
 
-  /*async CreatePersonnage(): Promise<void> {
-    
-    const { meshes , animationGroups } = await SceneLoader.ImportMeshAsync(
-      "",
-      "./animated/",
-      "long_marron.glb",
-      this.scene
-    );
-    meshes[0].rotate(Vector3.Up(),Math.PI/2);
-    meshes[0].position = new Vector3(-15,1.65,-26.5);
-    meshes[0].scaling = new Vector3(2,2,2);
-    
-    //console.log("Animation group : ", animationGroups);
-
-    animationGroups[0].stop();
-    animationGroups[2].play(true);
-  }*/
+  
 
   CreateStartRunway():void {
     const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size

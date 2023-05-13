@@ -22,7 +22,6 @@ export declare class App {
     currentoutfit: string;
     alreadyRunwayOutfit: string[];
     heroMesh: AbstractMesh;
-    runway: boolean;
     up: boolean;
     left: boolean;
     down: boolean;
