@@ -82,8 +82,11 @@ export class App {
       this.cptLaine=JSON.parse(localStorage.getItem("cptLaine"));
       
     }
+    else{
+      this.cptLaine = 0;
+    }
     console.log("local Storage "+localStorage.getItem("cptLaine"));
-    this.cptLaine = 0;
+    console.log("compteur de laine:"+this.cptLaine);
     this.mouton1 = true;
     this.available1 = "Collect your yarn !";
     this.timing = 0;
