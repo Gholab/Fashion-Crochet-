@@ -43,6 +43,7 @@ export declare class App {
     limiteerreurs: int;
     enjeu: boolean;
     dico: string[];
+    rotation: int;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;

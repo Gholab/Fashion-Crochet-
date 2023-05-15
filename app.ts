@@ -48,6 +48,8 @@ export class App {
   enjeu :boolean;
   dico :string[];
 
+  rotation : int;
+
 
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
@@ -191,6 +193,9 @@ export class App {
     this.enjeu = false;
     this.dico = ["WOOL","CROCHET","FASHION"];
     this.CreatePendu();
+
+    //rotation
+    this.rotation=0;
 
 
     this.CreateMouton(new Mouton("moutonGwen.glb"));
@@ -363,10 +368,12 @@ export class App {
       if (inputMap["a"]||this.left||inputMap["q"]) {
           this.heroMesh.rotate(Vector3.Up(), -heroRotationSpeed);
           keydown = true;
+          this.rotation--;
       }
       if (inputMap["d"]||this.right) {
           this.heroMesh.rotate(Vector3.Up(), heroRotationSpeed);
           keydown = true;
+          this.rotation++;
       }
       
 
@@ -696,7 +703,7 @@ Waiting(self : App,mouton : Mouton) : void{
     //this.runway=true;
     this.PersoAnim[3].stop();
     this.PersoAnim[1].stop();
-    this.PersoAnim[2].play(); //catWalk
+    this.PersoAnim[2].play(true); //catWalk
     this.heroMesh.position = new Vector3(-15,1.65,-26.5);
     console.log((document.querySelector("#laine")! as HTMLDivElement).style.display=="block");
     (document.querySelector("#overlay") as HTMLImageElement).style.display = "none" ;
@@ -736,7 +743,7 @@ Waiting(self : App,mouton : Mouton) : void{
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => {
       this.PersoAnim[2].stop();
-      this.PersoAnim[1].play(); // etre en idle
+      this.PersoAnim[1].play(true); // etre en idle
       self.SecondAnimation(self,FreeCam)});
     timer.start(17000);
 
@@ -750,9 +757,6 @@ Waiting(self : App,mouton : Mouton) : void{
       timer1.start(50);
       this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.1,0,0));
       i++;
-      if(i%28==0){
-        this.PersoAnim[2].play();
-      }
     }
   }
 
@@ -763,9 +767,6 @@ Waiting(self : App,mouton : Mouton) : void{
       timer1.start(50);
       this.heroMesh.position=this.heroMesh.position.add(new Vector3(0.1,0,0));
       i++;
-      if(i%28==0){
-        this.PersoAnim[2].play();
-      }
     }
   }
 
@@ -786,7 +787,7 @@ Waiting(self : App,mouton : Mouton) : void{
         //Mettre idle animation
         this.heroMesh.rotate(Vector3.Up(),Math.PI);
         this.PersoAnim[1].stop();
-        this.PersoAnim[2].play(); //remettre en catWalk
+        this.PersoAnim[2].play(true); //remettre en catWalk
         this.Move2(i)
       });
       timer1.start(2400);
@@ -812,7 +813,7 @@ Waiting(self : App,mouton : Mouton) : void{
       this.background.play();
       this.PersoAnim[3].stop();
       this.PersoAnim[2].stop();
-      this.PersoAnim[1].play();
+      this.PersoAnim[1].play(true);
       });
     timer.start(19000);
   }
