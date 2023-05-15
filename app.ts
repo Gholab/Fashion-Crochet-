@@ -68,7 +68,7 @@ export class App {
     light2.position = new Vector3(0, 1, 5);
     this.CreateSky();
     this.CreateEnvironment();
-    this.CreateCharacter("init.glb",Vector3.Zero());
+    
 
     this.CreateChooseYourOutfit();
 
@@ -104,9 +104,11 @@ export class App {
 
     if(localStorage.getItem("currentoutfit")){
       this.currentoutfit=JSON.stringify(localStorage.getItem("currentoutfit"));
+      this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
     }
     else{
       this.currentoutfit = "";
+      this.CreateCharacter("init.glb",Vector3.Zero());
     }
     
     //if (localStorage.getItem("alreadyRunwayOutfit")){
@@ -546,7 +548,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         }
       }
       if(wearable == true){
-        self.currentoutfit = "./outfit/"+id+".png";
+        self.currentoutfit = id;
         localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
