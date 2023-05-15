@@ -102,10 +102,12 @@ export class App {
     this.wardrobe = [];
    
 
-    
-    //this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
-   
-    this.currentoutfit = "";
+    if(localStorage.getItem("currentoutfit")){
+      this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
+    }
+    else{
+      this.currentoutfit = "";
+    }
     
     //if (localStorage.getItem("alreadyRunwayOutfit")){
       //this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
@@ -545,7 +547,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       }
       if(wearable == true){
         self.currentoutfit = "./outfit/"+id+".png";
-        //localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
+        localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
