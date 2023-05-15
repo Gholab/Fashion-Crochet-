@@ -98,8 +98,12 @@ export class App {
     this.matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");
 
     //pour les vetements:
-    
+    if(localStorage.getItem("wardrobe")){
+      this.wardrobe=JSON.parse(localStorage.getItem("wardrobe"));
+    }
+    else{
     this.wardrobe = [];
+    }
    
 
     if(localStorage.getItem("currentoutfit")){
@@ -842,11 +846,12 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
           const cloth = new Cloth(name, price);
           if((self.cptLaine >= cloth.price)){
             self.cptLaine = self.cptLaine-cloth.price;
+            localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
             document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
-            //localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
+            localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
             alert("You just bought "+cloth.name);
             }
            
