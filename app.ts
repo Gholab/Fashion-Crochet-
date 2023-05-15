@@ -696,7 +696,7 @@ Waiting(self : App,mouton : Mouton) : void{
     //this.runway=true;
     this.PersoAnim[3].stop();
     this.PersoAnim[1].stop();
-    this.PersoAnim[2].play();
+    this.PersoAnim[2].play(); //catWalk
     this.heroMesh.position = new Vector3(-15,1.65,-26.5);
     console.log((document.querySelector("#laine")! as HTMLDivElement).style.display=="block");
     (document.querySelector("#overlay") as HTMLImageElement).style.display = "none" ;
@@ -736,9 +736,9 @@ Waiting(self : App,mouton : Mouton) : void{
     const timer = new AdvancedTimer({timeout:8* fps,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => {
       this.PersoAnim[2].stop();
-      this.PersoAnim[1].play();
+      this.PersoAnim[1].play(); // etre en idle
       self.SecondAnimation(self,FreeCam)});
-    timer.start(18000);
+    timer.start(17000);
 
 
   }
@@ -779,8 +779,8 @@ Waiting(self : App,mouton : Mouton) : void{
       timer1.onTimerEndedObservable.add(() => {
         //Mettre idle animation
         this.heroMesh.rotate(Vector3.Up(),Math.PI);
-        this.PersoAnim[2].stop();
-        this.PersoAnim[1].play();
+        this.PersoAnim[1].stop();
+        this.PersoAnim[2].play(); //remettre en catWalk
         this.Move2(i)
       });
       timer1.start(2400);
@@ -798,8 +798,10 @@ Waiting(self : App,mouton : Mouton) : void{
     self.scene.beginAnimation(FreeCam, 0, 10 * fps);
     const timer = new AdvancedTimer({ timeout: 8 * fps, contextObservable: self.scene.onBeforeRenderObservable });  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add(() => {
+      // FIN DU RUNWAY
       (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
       self.AfterCutScene(self,FreeCam);
+      this.heroMesh.position = new Vector3(-10,2,-31);
       this.runwayMusic.pause();
       this.background.play();
       this.PersoAnim[1].stop();
