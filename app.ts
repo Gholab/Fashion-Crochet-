@@ -106,7 +106,7 @@ export class App {
       this.currentoutfit=JSON.stringify(localStorage.getItem("currentoutfit"));
       this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
       //this.CreateCharacter("init.glb",Vector3.Zero());
-      console.log(this.currentoutfit);
+      console.log("currentoutfit"+this.currentoutfit.toString());
     }
     else{
       this.currentoutfit = "";
