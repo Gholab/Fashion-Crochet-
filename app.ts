@@ -183,7 +183,15 @@ export class App {
     this.memoTries=10;
     this.memoWait=false;
     this.memoWin=0;
-    this.cptFood = 0;
+    if (localStorage.getItem("cptFood")){
+      this.cptFood=JSON.parse(localStorage.getItem("cptFood"));
+      
+      //document.getElementById("cptLaineM")!.innerHTML = this.cptLaine+"" ;
+      //document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
+    }
+    else{
+      this.cptFood = 0;
+    }
     // PENDU
     this.nberreurs=1;
     this.motadecouvrir ="";
@@ -488,6 +496,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     self.cptFood-=1;
     mouton.load=true;
     document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
+    localStorage.setItem("cptFood",JSON.stringify(self.cptFood));
     const timer = new AdvancedTimer({timeout:10,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add((evt) => self.Timer(self,mouton));
     timer.onEachCountObservable.add((evt) => self.Waiting(self,mouton));   /// CA FAIT UN PTN DE NB DE FOIS ALEATOIRE
@@ -745,7 +754,7 @@ Waiting(self : App,mouton : Mouton) : void{
       this.PersoAnim[2].stop();
       this.PersoAnim[1].play(true); // etre en idle
       self.SecondAnimation(self,FreeCam)});
-    timer.start(17000);
+    timer.start(15000);  // timer fin 1ere avancement
 
 
   }
@@ -1120,6 +1129,7 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementById("triesMemo")!.innerHTML = "Congratulation you have won! You own 3 more carrots to feed your sheep with";
         this.memoryPlaying=false;
         this.cptFood+=3;
+        localStorage.setItem("cptFood",JSON.stringify(this.cptFood));
         document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
         this.Alert("You have "+this.cptFood+" carrots now, go feed your sheep!");
       }
@@ -1279,6 +1289,7 @@ Waiting(self : App,mouton : Mouton) : void{
               document.getElementById("pendu-text")!.textContent = "You just won 3 carrots to feed the sheeps ";
               self.enjeu = false;
               self.cptFood+=3;
+              localStorage.setItem("cptFood",JSON.stringify(self.cptFood));
               document.getElementById("cptFood")!.innerHTML = self.cptFood+"" ;
             }
         }
