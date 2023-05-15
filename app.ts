@@ -98,25 +98,21 @@ export class App {
     this.matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");
 
     //pour les vetements:
-    if (localStorage.getItem("wardrobe")){
-      this.wardrobe=JSON.parse(localStorage.getItem("wardrobe"));
-    }
-    else{
-      this.wardrobe = [];
-    }
+    
+    this.wardrobe = [];
+   
 
-    if (localStorage.getItem("currentoutfit")){
-      this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
-    }
-    else{
-      this.currentoutfit = "";
-    }
-    if (localStorage.getItem("alreadyRunwayOutfit")){
-      this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
-    }
-    else{
+    
+    //this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
+   
+    this.currentoutfit = "";
+    
+    //if (localStorage.getItem("alreadyRunwayOutfit")){
+      //this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
+    //}
+    //else{
       this.alreadyRunwayOutfit = [];
-    }
+    //}
 
     
     if (localStorage.getItem("cptFashion")){
@@ -549,7 +545,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       }
       if(wearable == true){
         self.currentoutfit = "./outfit/"+id+".png";
-        localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
+        //localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
@@ -595,7 +591,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
     if(!alreadyWorn){
       this.alreadyRunwayOutfit.push(this.currentoutfit);
-      localStorage.setItem("alreadyRunwayOutfit",JSON.stringify(this.alreadyRunwayOutfit));
+      //localStorage.setItem("alreadyRunwayOutfit",JSON.stringify(this.alreadyRunwayOutfit));
       console.log("pas worn", this.cptFashion,"already warn :",alreadyWorn);
       this.cptFashion+=1;
       localStorage.setItem("cptFashion",JSON.stringify(this.cptFashion));
@@ -844,7 +840,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
-            localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
+            //localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
             alert("You just bought "+cloth.name);
             }
            
