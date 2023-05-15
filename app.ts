@@ -103,7 +103,7 @@ export class App {
    
 
     if(localStorage.getItem("currentoutfit")){
-      this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
+      this.currentoutfit=JSON.stringify(localStorage.getItem("currentoutfit"));
     }
     else{
       this.currentoutfit = "";
