@@ -851,7 +851,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
-            localStorage.setItem("wardrobe",JSON.stringify(this.wardrobe));
+            localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));
             alert("You just bought "+cloth.name);
             }
            
