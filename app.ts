@@ -104,8 +104,8 @@ export class App {
 
     if(localStorage.getItem("currentoutfit")){
       this.currentoutfit=JSON.stringify(localStorage.getItem("currentoutfit"));
-      //this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
-      this.CreateCharacter("init.glb",Vector3.Zero());
+      this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
+      //this.CreateCharacter("init.glb",Vector3.Zero());
     }
     else{
       this.currentoutfit = "";
