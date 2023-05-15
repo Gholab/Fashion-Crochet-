@@ -29,6 +29,20 @@ export declare class App {
     PersoAnim: AnimationGroup[];
     runwayMusic: Sound;
     background: Sound;
+    memoryPlaying: boolean;
+    memoCartes: any[];
+    memo1: int;
+    memoTries: int;
+    memoWait: boolean;
+    memoWin: int;
+    cptFood: int;
+    nberreurs: int;
+    motadecouvrir: string;
+    currentmot: string[];
+    currentmotjoli: string[];
+    limiteerreurs: int;
+    enjeu: boolean;
+    dico: string[];
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
@@ -55,6 +69,11 @@ export declare class App {
     CreateMamie(): Promise<void>;
     Shop(self: App): void;
     EndOfLoading(): void;
+    CreateMemoryPlane(): void;
+    Memory(position: int): void;
+    Alert(message: string): void;
+    CreatePendu(): Promise<void>;
+    ClickPendu(self: App): void;
 }
 declare class Mouton {
     timer: int;

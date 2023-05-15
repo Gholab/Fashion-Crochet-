@@ -32,6 +32,22 @@ export class App {
   runwayMusic : Sound;
   background : Sound;
 
+  memoryPlaying : boolean;
+  memoCartes : any[];
+  memo1 : int;
+  memoTries : int;
+  memoWait :boolean;
+  memoWin : int;
+  cptFood :int;
+
+  nberreurs :int;
+  motadecouvrir :string;
+  currentmot:string[];
+  currentmotjoli :string[];
+  limiteerreurs :int;
+  enjeu :boolean;
+  dico :string[];
+
 
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
@@ -156,6 +172,26 @@ export class App {
     this.left=false;
     this.down=false;
     this.right=false;
+
+    // 2e merge
+    this.CreateMemoryPlane()
+    this.memoryPlaying=false;
+    this.memoCartes = ["bobimg","bobimg","manches","manches","fleurBleu","fleurBleu","fleurBlanc","fleurBlanc","longBlanc","longBlanc","longMarron","longMarron"];
+    this.memo1=-1;
+    this.memoTries=10;
+    this.memoWait=false;
+    this.memoWin=0;
+    this.cptFood = 0;
+    // PENDU
+    this.nberreurs=1;
+    this.motadecouvrir ="";
+    this.currentmot = [];
+    this.currentmotjoli =[];
+    this.limiteerreurs =10;
+    this.enjeu = false;
+    this.dico = ["WOOL","CROCHET","FASHION"];
+    this.CreatePendu();
+
 
     this.CreateMouton(new Mouton("moutonGwen.glb"));
     this.CreateMouton(new Mouton("moutonGwen2.glb"));
@@ -811,6 +847,13 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
         (document.querySelector("#long_blanc") as HTMLButtonElement)!.addEventListener("click",(evt) => buy("long_blanc",self,evt));
         (document.querySelector("#long_marron") as HTMLButtonElement)!.addEventListener("click",(evt) => buy("long_marron",self,evt));
         (document.querySelector("#bob") as HTMLButtonElement)!.addEventListener("click",(evt) => buy("bob", self,evt));
+
+        document.getElementsByClassName("recycle")[0].addEventListener("click",(evt)=>recycle("manche",self,evt));
+        document.getElementsByClassName("recycle")[1].addEventListener("click",(evt)=>recycle("fleur_blanc",self,evt));
+        document.getElementsByClassName("recycle")[2].addEventListener("click",(evt)=>recycle("fleur_bleu",self,evt));
+        document.getElementsByClassName("recycle")[3].addEventListener("click",(evt)=>recycle("long_blanc",self,evt));
+        document.getElementsByClassName("recycle")[4].addEventListener("click",(evt)=>recycle("long_marron",self,evt));
+        document.getElementsByClassName("recycle")[5].addEventListener("click",(evt)=>recycle("bob",self,evt));
       /*
         document.getElementById("./image/horizontal/manche.png")!.addEventListener("click", (evt)=>wear("manche",evt));
         document.getElementById("./image/horizontal/manche_bob.png")!.addEventListener("click", (evt)=>wear("manche_bob",evt));
@@ -829,13 +872,38 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
           (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
           }
 
+      // RECYCLE
+      function recycle(name:string, self: App,evt:Event){
+        if(isOwned(name) && (self.currentoutfit.indexOf(name)==-1)){
+          if(name=="bob"){
+              self.cptLaine +=1;
+              self.text.text = "laine : "+self.cptLaine;
+          }
+          else{
+              self.cptLaine +=3;
+                  self.text.text = "laine : "+self.cptLaine;
+          }
+          self.wardrobe = self.wardrobe.filter((cloth)=>cloth.name!=name);
+          self.Alert("you just recycled "+name);
+          document.getElementsByClassName(name)[0].classList.add("notOwned");
+          if(isOwned("bob") && name!="bob"){
+            document.getElementsByClassName(name+"_bob")[0].classList.add("notOwned");
+          }
+        }
+        else{
+            self.Alert("You cant recycle this item");
+        }
+        evt.stopImmediatePropagation();
+      }
       
 
+
+      
       //fonction pour obtenir un vetement
 
       function buy(name: string, self: App,evt:Event){
         if(isOwned(name)==true){
-          alert("You already own "+name);
+          self.Alert("You already own "+name);
         }
         else{
           console.log(name);
@@ -846,17 +914,15 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
           const cloth = new Cloth(name, price);
           if((self.cptLaine >= cloth.price)){
             self.cptLaine = self.cptLaine-cloth.price;
-            localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
             document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
-            localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));
-            alert("You just bought "+cloth.name);
+            self.Alert("You just bought "+cloth.name);
             }
            
           else{
-             alert("You dont have enought wool, soory :(");
+             self.Alert("You dont have enought wool, soory :(");
           }
         }
         evt.stopImmediatePropagation();
@@ -877,19 +943,352 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     EndOfLoading() {
       document.querySelector(".modal-close-beginning")!.addEventListener("click",() => {
         (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
-      })
-      
-      document.querySelector("#flecheU").addEventListener("mouseenter",() => this.up=true);
-      document.querySelector("#flecheD").addEventListener("mouseenter",() => this.down=true);
-      document.querySelector("#flecheL").addEventListener("mouseenter",() => this.left=true);
-      document.querySelector("#flecheR").addEventListener("mouseenter",() => this.right=true);
-
-      document.querySelector("#flecheU").addEventListener("mouseleave",() => this.up=false);
-      document.querySelector("#flecheD").addEventListener("mouseleave",() => this.down=false);
-      document.querySelector("#flecheL").addEventListener("mouseleave",() => this.left=false);
-      document.querySelector("#flecheR").addEventListener("mouseleave",() => this.right=false);
-      //Affichier la page de départ avec les regles/explication
+      });
+      document.querySelector(".modal-close-memo")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-memo") as HTMLDivElement).style.display = "none";
+        (document.querySelector("#memo-right") as HTMLDivElement).style.display = "none";
+        (document.querySelector("#triesMemo") as HTMLDivElement).style.display = "none";
+        (document.querySelector("#memo-start") as HTMLDivElement).style.display = "block";
+        (document.querySelector("#reset") as HTMLDivElement).style.display = "none";
+      });
+      document.querySelector(".buttonMemo")!.addEventListener("click",() => {
+        // ----------- On affiche la page du jeu --------------
+        (document.querySelector("#memo-right") as HTMLDivElement).style.display = "grid";
+        (document.querySelector("#triesMemo") as HTMLDivElement).style.display = "block";
+        (document.querySelector("#memo-start") as HTMLDivElement).style.display = "none";
+        (document.querySelector("#reset") as HTMLDivElement).style.display = "block";
+        // ---------- On remet tout à 0 (au cas où on y avait joué et on réouvre le jeu) ---------
+        this.memoTries=10;
+        this.memo1=-1;
+        this.memoWait=false;
+        this.memoWin=0;
+        this.memoryPlaying=false;
+        document.getElementById("triesMemo")!.innerHTML = "You have 10 tries left" ;
+        (document.querySelector("#memo0")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo1")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo2")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo3")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo4")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo5")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo6")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo7")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo8")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo9")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo10")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo11")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+      });
   
+      document.querySelector("#resetbtn")!.addEventListener("click",() => {
+        // ---------- On remet tout à 0  ---------
+        this.memoTries=10;
+        this.memo1=-1;
+        this.memoWait=false;
+        this.memoWin=0;
+        this.memoryPlaying=false;
+        document.getElementById("triesMemo")!.innerHTML = "You have 10 tries left" ;
+        (document.querySelector("#memo0")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo1")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo2")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo3")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo4")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo5")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo6")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo7")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo8")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo9")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo10")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        (document.querySelector("#memo11")! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+      });
+  
+      document.querySelector("#memo0")!.addEventListener("click",() => this.Memory(0));
+      document.querySelector("#memo1")!.addEventListener("click",() => this.Memory(1));
+      document.querySelector("#memo2")!.addEventListener("click",() => this.Memory(2));
+      document.querySelector("#memo3")!.addEventListener("click",() => this.Memory(3));
+      document.querySelector("#memo4")!.addEventListener("click",() => this.Memory(4));
+      document.querySelector("#memo5")!.addEventListener("click",() => this.Memory(5));
+      document.querySelector("#memo6")!.addEventListener("click",() => this.Memory(6));
+      document.querySelector("#memo7")!.addEventListener("click",() => this.Memory(7));
+      document.querySelector("#memo8")!.addEventListener("click",() => this.Memory(8));
+      document.querySelector("#memo9")!.addEventListener("click",() => this.Memory(9));
+      document.querySelector("#memo10")!.addEventListener("click",() => this.Memory(10));
+      document.querySelector("#memo11")!.addEventListener("click",() => this.Memory(11));
+      //Affichier la page de départ avec les regles/explication
+      
+      console.log((document.getElementById("memo1") as HTMLImageElement).src,"he oh");
+    }
+
+    CreateMemoryPlane():void {
+      const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
+      plane.position.y = 2;
+      plane.position.x = 20;
+      plane.position.z = 28;
+      plane.rotate(new Vector3(0,1,0),-1.5708);
+  
+      const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
+  
+      const button1 = Button.CreateSimpleButton("butMemory", "Start a memory game!");
+      button1.width = 1;
+      button1.height = 0.4;
+      button1.color = "black";
+      button1.fontSize = 50;
+      button1.background = "pink";
+      button1.onPointerUpObservable.add(() => {
+        (document.querySelector(".modal-wrapper-memo") as HTMLDivElement)!.style.display ="block";
+        this.memoryPlaying=false;
+      });
+      advancedTexture2.addControl(button1);
+      
+    }
+  
+    Memory(position : int){
+      console.log((document.getElementById(this.memoCartes[0]) as HTMLImageElement).src);
+      if (!this.memoryPlaying){ //Le debut du jeu, on met random les images
+        const shuffle = (array: any[]) => {
+        array.sort(() => Math.random() - 0.5);
+        }
+        shuffle(this.memoCartes);
+        this.memoryPlaying=true;
+      }
+      if(!this.memoWait&&this.memoWin<this.memoCartes.length/2&&this.memoTries>0){
+        if (this.memo1==-1){ //On est en train de choisir la 1ere carte
+          this.memo1=position;
+          (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
+        }
+        else if (position!=this.memo1){ //On est en train de choisir la 2ere carte qui n'est pas la meme que la 1ere
+          //this.memo2=position;
+          (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
+          if (this.memoCartes[position]!=this.memoCartes[this.memo1]){ //C'est pas les mm et il nous reste des tries
+            this.memoTries--; //tentative qui diminue
+            this.memoWait=true;  //pour empecher de cliquer autre part pendant que nos 2 cartes sont retournées
+            document.getElementById("triesMemo")!.innerHTML = "You have "+this.memoTries+" tries left" ;
+            const timer = new AdvancedTimer({timeout:8 ,contextObservable: this.scene.onBeforeRenderObservable}); 
+            timer.onTimerEndedObservable.add(() => {
+              (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+              (document.getElementById("memo"+this.memo1)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+              this.memo1=-1;
+              this.memoWait=false;
+              });
+            timer.start(1400); // Le temps de voir les 2 cartes et après elles sont re retournées
+            if(this.memoTries==0){
+              document.getElementById("triesMemo")!.innerHTML = "You have lost ;( click on reset to start a new game!";
+              this.memoryPlaying=false;
+            }
+          }
+          else if (this.memoTries>0){  //Cartes pareil mais il reste des tries
+            this.memo1=-1;
+            this.memoWin++;
+            
+          }
+        }
+      }
+      if(this.memoWin>=this.memoCartes.length/2){
+        document.getElementById("triesMemo")!.innerHTML = "Congratulation you have won! You own 3 more carrots to feed your sheep with";
+        this.memoryPlaying=false;
+        this.cptFood+=3;
+        document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
+        this.Alert("You have "+this.cptFood+" carrots now, go feed your sheep!");
+      }
+    }
+  
+    Alert(message : string){
+      (document.getElementById("pop-up")! as HTMLDivElement).style.display = "block";
+      document.getElementById("pop-up-text")!.innerHTML = message;
+      const timer = new AdvancedTimer({timeout:8 ,contextObservable: this.scene.onBeforeRenderObservable}); 
+      timer.onTimerEndedObservable.add(() => {
+        (document.getElementById("pop-up")! as HTMLDivElement).style.display = "none";
+        });
+        timer.start(5000); // Le temps du mesage qui s'affiche
+    }
+  
+    // PENDU
+    async CreatePendu(): Promise<void>{
+      const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
+      plane.position.y = 2;
+      plane.position.x = -6;
+      plane.position.z = 0;
+      plane.rotate(new Vector3(0,0,0),-1.5708);
+  
+      const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
+  
+      const button1 = Button.CreateSimpleButton("but1", "Let's play !");
+      button1.width = 1;
+      button1.height = 0.4;
+      button1.color = "black";
+      button1.fontSize = 50;
+      button1.background = "pink";
+      button1.onPointerUpObservable.add(() => this.ClickPendu(this));
+      advancedTexture2.addControl(button1);
+    }
+    
+  
+  
+    ClickPendu(self : App):void{
+      
+      (document.querySelector("#modal-wrapper-pendu") as HTMLDivElement).style.display="block";  
+      (document.querySelector("#modal-close-pendu") as HTMLDivElement).addEventListener("click", hide);
+      refresh();
+  
+      function hide() {
+        (document.querySelector("#modal-wrapper-pendu") as HTMLDivElement).style.display = "none";  
+      }
+  
+  
+  
+  document.getElementById("pendu-reset")!.addEventListener("click", refresh);
+  
+  document.getElementById(String.fromCharCode(65))!.addEventListener("click", ()=>testLettre(String.fromCharCode(65)));
+  document.getElementById(String.fromCharCode(66))!.addEventListener("click", ()=>testLettre(String.fromCharCode(66)));
+  document.getElementById(String.fromCharCode(67))!.addEventListener("click", ()=>testLettre(String.fromCharCode(67)));
+  document.getElementById(String.fromCharCode(68))!.addEventListener("click", ()=>testLettre(String.fromCharCode(68)));
+  document.getElementById(String.fromCharCode(69))!.addEventListener("click", ()=>testLettre(String.fromCharCode(69)));
+  document.getElementById(String.fromCharCode(70))!.addEventListener("click", ()=>testLettre(String.fromCharCode(70)));
+  document.getElementById(String.fromCharCode(71))!.addEventListener("click", ()=>testLettre(String.fromCharCode(71)));
+  document.getElementById(String.fromCharCode(72))!.addEventListener("click", ()=>testLettre(String.fromCharCode(72)));
+  document.getElementById(String.fromCharCode(73))!.addEventListener("click", ()=>testLettre(String.fromCharCode(73)));
+  document.getElementById(String.fromCharCode(74))!.addEventListener("click", ()=>testLettre(String.fromCharCode(74)));
+  document.getElementById(String.fromCharCode(75))!.addEventListener("click", ()=>testLettre(String.fromCharCode(75)));
+  document.getElementById(String.fromCharCode(76))!.addEventListener("click", ()=>testLettre(String.fromCharCode(76)));
+  document.getElementById(String.fromCharCode(77))!.addEventListener("click", ()=>testLettre(String.fromCharCode(77)));
+  document.getElementById(String.fromCharCode(78))!.addEventListener("click", ()=>testLettre(String.fromCharCode(78)));
+  document.getElementById(String.fromCharCode(79))!.addEventListener("click", ()=>testLettre(String.fromCharCode(79)));
+  document.getElementById(String.fromCharCode(80))!.addEventListener("click", ()=>testLettre(String.fromCharCode(80)));
+  document.getElementById(String.fromCharCode(81))!.addEventListener("click", ()=>testLettre(String.fromCharCode(81)));
+  document.getElementById(String.fromCharCode(82))!.addEventListener("click", ()=>testLettre(String.fromCharCode(82)));
+  document.getElementById(String.fromCharCode(83))!.addEventListener("click", ()=>testLettre(String.fromCharCode(83)));
+  document.getElementById(String.fromCharCode(84))!.addEventListener("click", ()=>testLettre(String.fromCharCode(84)));
+  document.getElementById(String.fromCharCode(85))!.addEventListener("click", ()=>testLettre(String.fromCharCode(85)));
+  document.getElementById(String.fromCharCode(86))!.addEventListener("click", ()=>testLettre(String.fromCharCode(86)));
+  document.getElementById(String.fromCharCode(87))!.addEventListener("click", ()=>testLettre(String.fromCharCode(87)));
+  document.getElementById(String.fromCharCode(88))!.addEventListener("click", ()=>testLettre(String.fromCharCode(88)));
+  document.getElementById(String.fromCharCode(89))!.addEventListener("click", ()=>testLettre(String.fromCharCode(89)));
+  document.getElementById(String.fromCharCode(90))!.addEventListener("click", ()=>testLettre(String.fromCharCode(90)));
+  
+  
+  
+  
+  
+  //fonction pour initialiser le jeu
+  function newGame(){
+      console.log("in new gamme");
+      const chiffre = Math.floor(Math.random()*self.dico.length);
+      self.motadecouvrir = self.dico[chiffre];
+      console.log(self.motadecouvrir);
+      for(let i=0; i<self.motadecouvrir.length ; i++){
+          self.currentmot.push("_");
+          self.currentmotjoli.push((" _"));
+      }
+      console.log(self.currentmot.join(""));
+      document.getElementById("motad")!.textContent = self.currentmotjoli.join("");
+      document.getElementById("pendu-text")!.textContent = "Find the word before the sheep becomes nude";
+    }
+  
+    //tester les entrées clavier
+    function testLettreClavier(l:string, evt:Event){
+      if(!self.enjeu){
+        return 
+      }
+        let lettre = false;
+        for(let i=0; i<26; i++){
+            if(String.fromCharCode(97+i)==l){
+                lettre = true;
+            }
+        }
+        if(lettre){
+            testLettre(l);
+        }
+        //si le caractère n'est pas une lettre
+        else{
+            self.Alert("Veuillez entrer une lettre");
+            evt.stopImmediatePropagation();
+        }
+    }
+  
+  
+  
+    //fonction qui test les lettres
+    function testLettre(lettre:string){  
+        if(!self.enjeu){
+          return 
+        }  
+        const value = lettre.toUpperCase();
+        //si la lettre n'est pas dans le mot 
+        if(self.motadecouvrir.includes(value)==false){
+            self.nberreurs+=1;
+            
+            if(self.nberreurs>=self.limiteerreurs){
+                document.getElementById("pendu-text")!.textContent = "You lost, try again "; 
+                document.getElementById(value)!.style.background= "rgb(100, 34, 66)";
+                self.enjeu=false; 
+            }
+            else{
+                document.getElementById(value)!.style.background = "rgb(100, 34, 66)";   
+                document.getElementById("pendu-text")!.textContent = "Il vous reste "+(10-self.nberreurs)+" tentatives";
+            }
+  
+        }
+        //si la lettre est dans le mot 
+        else{
+            let nbtirets = 0;
+            document.getElementById(value)!.style.background="rgb(255, 131, 173)";
+            for(let i=0; i<self.motadecouvrir.length; i++){
+                if(value==self.motadecouvrir[i]){
+                    self.currentmot[i] = value;
+                    self.currentmotjoli[i] = value;
+                }
+                if(self.currentmot[i]=="_"){
+                    nbtirets+=1;
+                }
+            }
+            document.getElementById("motad")!.innerText = self.currentmotjoli.join(""); 
+            if(nbtirets==0){
+              document.getElementById("pendu-text")!.textContent = "You just won 3 carrots to feed the sheeps ";
+              self.enjeu = false;
+              self.cptFood+=3;
+              document.getElementById("cptFood")!.innerHTML = self.cptFood+"" ;
+            }
+        }
+        
+        updateImage(); 
+    }
+  
+  
+    //fonction pour update l'image 
+    function updateImage(){
+        document.getElementById("img")!.setAttribute('src','./pendu/mouton'+self.nberreurs+'.png');
+    } 
+  
+  
+  
+    function refresh(){
+            //reinitialiser les variables du jeu:
+            self.nberreurs = 1;
+            self.currentmot = [];
+            self.currentmotjoli = [];
+            self.motadecouvrir = "";
+            self.enjeu = true;
+  
+            //reinitialiser les lettres:
+            for(let i=0; i<26; i++){
+              document.getElementById((String.fromCharCode(65+i).toUpperCase()))!.style.background = "rgb(197, 34, 66)";
+            }
+            //reinitialiser le dessin
+            updateImage();
+  
+            //cacher les modales
+            //document.getElementById("modal-gagner")!.style.display = "none";
+            //document.getElementById("modal-perdre")!.style.display = "none";
+            document.getElementById("pendu-text")!.textContent = "Il vous reste "+(10-self.nberreurs)+" tentatives";
+            newGame();
+  
+        
+    }
+  
+    
+    window.addEventListener('keydown', function (e) {
+        testLettreClavier(e.key, e)
+      }, false);
+  
+      
     }
 }
 class Mouton{
