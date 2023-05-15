@@ -750,6 +750,9 @@ Waiting(self : App,mouton : Mouton) : void{
       timer1.start(50);
       this.heroMesh.position=this.heroMesh.position.add(new Vector3(-0.1,0,0));
       i++;
+      if(i%30==0){
+        this.PersoAnim[2].play();
+      }
     }
   }
 
@@ -801,7 +804,7 @@ Waiting(self : App,mouton : Mouton) : void{
       // FIN DU RUNWAY
       (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
       self.AfterCutScene(self,FreeCam);
-      this.heroMesh.position = new Vector3(-10,2,-31);
+      this.heroMesh.position = new Vector3(-10,0,-31);
       this.runwayMusic.pause();
       this.background.play();
       this.PersoAnim[1].stop();
