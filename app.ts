@@ -117,12 +117,12 @@ export class App {
       this.CreateCharacter("init.glb",Vector3.Zero());
     }
     
-    //if (localStorage.getItem("alreadyRunwayOutfit")){
-      //this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
-    //}
-    //else{
+    if (localStorage.getItem("alreadyRunwayOutfit")){
+      this.alreadyRunwayOutfit=JSON.parse(localStorage.getItem("alreadyRunwayOutfit"));
+    }
+    else{
       this.alreadyRunwayOutfit = [];
-    //}
+    }
 
     
     if (localStorage.getItem("cptFashion")){
@@ -601,7 +601,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
 
     if(!alreadyWorn){
       this.alreadyRunwayOutfit.push(this.currentoutfit);
-      //localStorage.setItem("alreadyRunwayOutfit",JSON.stringify(this.alreadyRunwayOutfit));
+      localStorage.setItem("alreadyRunwayOutfit",JSON.stringify(this.alreadyRunwayOutfit));
       console.log("pas worn", this.cptFashion,"already warn :",alreadyWorn);
       this.cptFashion+=1;
       localStorage.setItem("cptFashion",JSON.stringify(this.cptFashion));
