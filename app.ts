@@ -434,16 +434,32 @@ async CreateMouton(mouton : Mouton): Promise<void> {
     mesh.actionManager = new ActionManager(this.scene);
     mesh.actionManager.registerAction(
       new ExecuteCodeAction({trigger: ActionManager.OnPickTrigger},(evt) => this.Mouton1OnClick(this,mouton)));  //Quand on click sur la boule ca lance Mouton1OnClick
-
+      //console.log(mesh);
   })
+  /*
+  const moutonAudio = new Sound("mouton","./audio/mouton.mp3",this.scene,null,{
+    loop: true,
+    autoplay: true,
+  });
 
- 
+  moutonAudio.setDirectionalCone(90, 180, 0);
+  moutonAudio.setLocalDirectionToMesh(new Vector3(1, 0, 0));
+  moutonAudio.attachToMesh(meshes[2]);
+  */
+  
+  
+  //const f = new Vector4(0,0, 1 , 1); // front image = half the whole image along the width 
+  //const b = new Vector4(1,0, 1, 1); // back image = second half along the width
+  
+  //const plane = MeshBuilder.CreatePlane("plane", {frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE});
   mouton.plane.parent = meshes[1];
   mouton.plane.position.y = 2;
   mouton.plane.scaling.x=4;
   mouton.plane.scaling.y=1;
   mouton.plane.rotate(new Vector3(0,1,0),-1.5708);
-  mouton.plane.material = this.matcollect;
+  const matFood = new StandardMaterial("",this.scene);
+  matFood.diffuseTexture = new Texture("./textures/timer/food.png");
+  mouton.plane.material = matFood;
 }
 
 Mouton1OnClick(self : App, mouton : Mouton):void{
@@ -456,43 +472,53 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
     document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
     mouton.available=false;
-    console.log("Juste avant timer");
-    //button.textBlock!.text = "Please wait to collect your yarn";
+    const matFood = new StandardMaterial("",this.scene);
+    matFood.diffuseTexture = new Texture("./textures/timer/food.png");
+    mouton.plane.material = matFood;
+  }
+
+  else if(self.cptFood>=1&&!mouton.load){ // On a assez de laine pour lancer le chargement et il est pas déjà en train de charger
+    self.cptFood-=1;
+    mouton.load=true;
+    document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
     const timer = new AdvancedTimer({timeout:10,contextObservable: self.scene.onBeforeRenderObservable});  //Timer à 0 jsp pk mais j'ai pas vu de changements en fonctions des valeurs
     timer.onTimerEndedObservable.add((evt) => self.Timer(self,mouton));
     timer.onEachCountObservable.add((evt) => self.Waiting(self,mouton));   /// CA FAIT UN PTN DE NB DE FOIS ALEATOIRE
     //timer.start(self.timersec*1000); //La durée du timer
     timer.start(5000); //La durée du timer
+
   }
-  self.textBox.addControl(self.text);
+  //self.textBox.addControl(self.text);
 
 }
 
 
-  Timer(self :App,mouton : Mouton) : void{
-    mouton.available=true;
-    //button.textBlock!.text = this.available1 ;
-    mouton.plane.material = self.matcollect ;
-    mouton.timer=0;
-    mouton.avancement = 1 ;
-  }
+Timer(self : App,mouton : Mouton) : void{
+  //mouton.available=true;
+  //button.textBlock!.text = this.available1 ;
+  mouton.plane.material = self.matcollect ;
+  mouton.timer=0;
+  mouton.avancement = 1 ;
+  mouton.available=true;
+  mouton.load=false;
+}
 
-  Waiting(self : App,mouton : Mouton) : void{
-    mouton.available=false;
-    console.log("le Timer ???");
-    if (mouton.timer%(Math.trunc(self.timersec*1000/340))==0&&mouton.avancement<=17){
-      const matbarre = new StandardMaterial("",this.scene);
-      matbarre.diffuseTexture = new Texture("./textures/timer/barre"+mouton.avancement+".png");
-      // mettre self.timersec/340 en entier 
-      mouton.plane.material = matbarre ;
-      //console.log("la valeur : "+Math.trunc(self.timersec*1000/340));
-      mouton.avancement+=1;
-      //matbarre.diffuseTexture = new Texture("./textures/timer/barre1.png");
-      //button.textBlock!.text = `Wait ${self.timersec - (self.timing/(self.timersec*10))} seconds to collect your next yarn` ;
-    }
-    mouton.timer+=1;
-     
+Waiting(self : App,mouton : Mouton) : void{
+  mouton.available=false;
+  console.log("le Timer ???");
+  if (mouton.timer%(Math.trunc(self.timersec*1000/340))==0&&mouton.avancement<=17){
+    const matbarre = new StandardMaterial("",this.scene);
+    matbarre.diffuseTexture = new Texture("./textures/timer/barre"+mouton.avancement+".png");
+    // mettre self.timersec/340 en entier 
+    mouton.plane.material = matbarre ;
+    //console.log("la valeur : "+Math.trunc(self.timersec*1000/340));
+    mouton.avancement+=1;
+    //matbarre.diffuseTexture = new Texture("./textures/timer/barre1.png");
+    //button.textBlock!.text = `Wait ${self.timersec - (self.timing/(self.timersec*10))} seconds to collect your next yarn` ;
   }
+  mouton.timer+=1;
+   
+}
 
   async CreateEnvironment(): Promise<void> {
 
@@ -1291,24 +1317,29 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
       
     }
 }
+
 class Mouton{
   public timer : int;
   public avancement : int;
   public available : boolean;
   public path : string;
   public plane : Mesh;
-  //public matcollect : StandardMaterial;
+
+
+  public load : boolean;
 
   constructor(path : string){
     this.timer=0;
     this.avancement=1;
-    this.available=true;
+    this.available=false;
     this.path=path;
     const f = new Vector4(0,0, 1 , 1);
     this.plane = MeshBuilder.CreatePlane("plane", {frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE});
     //this.matcollect = new StandardMaterial("",this.scene);
     //this.matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");
-    
+
+
+    this.load = false;
   }
 }
 

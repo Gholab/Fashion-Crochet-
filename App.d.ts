@@ -81,6 +81,7 @@ declare class Mouton {
     available: boolean;
     path: string;
     plane: Mesh;
+    load: boolean;
     constructor(path: string);
 }
 declare class Cloth {
