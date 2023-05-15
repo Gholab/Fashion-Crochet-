@@ -68,7 +68,7 @@ export class App {
     light2.position = new Vector3(0, 1, 5);
     this.CreateSky();
     this.CreateEnvironment();
-    localStorage.clear();
+    //localStorage.clear();
 
     this.CreateChooseYourOutfit();
 
