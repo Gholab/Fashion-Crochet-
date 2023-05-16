@@ -643,7 +643,7 @@ Waiting(self : App,mouton : Mouton) : void{
         console.log("on va changer d'outfit");
       }
       else{
-        alert("You dont own that outfit for the moment :(");
+        this.Alert("You dont own that outfit for the moment :(");
       }
       evt.stopImmediatePropagation();
     }
