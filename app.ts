@@ -185,9 +185,9 @@ export class App {
     this.memoWin=0;
     if (localStorage.getItem("cptFood")){
       this.cptFood=JSON.parse(localStorage.getItem("cptFood"));
+      document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
       
-      //document.getElementById("cptLaineM")!.innerHTML = this.cptLaine+"" ;
-      //document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
+      
     }
     else{
       this.cptFood = 0;
@@ -922,13 +922,16 @@ Waiting(self : App,mouton : Mouton) : void{
         if(isOwned(name) && (self.currentoutfit.indexOf(name)==-1)){
           if(name=="bob"){
               self.cptLaine +=1;
+              localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
               self.text.text = "laine : "+self.cptLaine;
           }
           else{
               self.cptLaine +=3;
-                  self.text.text = "laine : "+self.cptLaine;
+              localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
+              self.text.text = "laine : "+self.cptLaine;
           }
           self.wardrobe = self.wardrobe.filter((cloth)=>cloth.name!=name);
+          localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));
           self.Alert("you just recycled "+name);
           document.getElementsByClassName(name)[0].classList.add("notOwned");
           if(isOwned("bob") && name!="bob"){
@@ -959,6 +962,7 @@ Waiting(self : App,mouton : Mouton) : void{
           const cloth = new Cloth(name, price);
           if((self.cptLaine >= cloth.price)){
             self.cptLaine = self.cptLaine-cloth.price;
+            localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
             document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
