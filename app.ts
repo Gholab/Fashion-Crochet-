@@ -191,6 +191,7 @@ export class App {
     }
     else{
       this.cptFood = 0;
+      //test de changement
     }
     // PENDU
     this.nberreurs=1;
