@@ -1063,7 +1063,22 @@ Waiting(self : App,mouton : Mouton) : void{
       document.querySelector("#memo11")!.addEventListener("click",() => this.Memory(11));
       //Affichier la page de départ avec les regles/explication
       
-      console.log((document.getElementById("memo1") as HTMLImageElement).src,"he oh");
+      //console.log((document.getElementById("memo1") as HTMLImageElement).src,"he oh");
+      document.querySelector(".modal-close-restart")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-restart") as HTMLDivElement).style.display = "none";
+      });
+      document.querySelector("#buttonCancel")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-restart") as HTMLDivElement).style.display = "none";
+      });
+      document.querySelector("#restart")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-restart") as HTMLDivElement).style.display = "block";
+      });
+      document.querySelector("#restartbtn")!.addEventListener("click",() => {
+        // HAJAR
+        localStorage.clear();
+        location.reload();
+      });
+    
     }
 
     CreateMemoryPlane():void {
