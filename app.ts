@@ -1105,53 +1105,55 @@ Waiting(self : App,mouton : Mouton) : void{
     }
   
     Memory(position : int){
-      console.log((document.getElementById(this.memoCartes[0]) as HTMLImageElement).src);
-      if (!this.memoryPlaying){ //Le debut du jeu, on met random les images
-        const shuffle = (array: any[]) => {
-        array.sort(() => Math.random() - 0.5);
+      //console.log((document.getElementById(this.memoCartes[0]) as HTMLImageElement).src);
+      if ((document.getElementById("memo"+position)! as HTMLImageElement).src == (document.getElementById("cartes") as HTMLImageElement).src){
+        if (!this.memoryPlaying){ //Le debut du jeu, on met random les images
+          const shuffle = (array: any[]) => {
+          array.sort(() => Math.random() - 0.5);
+          }
+          shuffle(this.memoCartes);
+          this.memoryPlaying=true;
         }
-        shuffle(this.memoCartes);
-        this.memoryPlaying=true;
-      }
-      if(!this.memoWait&&this.memoWin<this.memoCartes.length/2&&this.memoTries>0){
-        if (this.memo1==-1){ //On est en train de choisir la 1ere carte
-          this.memo1=position;
-          (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
-        }
-        else if (position!=this.memo1){ //On est en train de choisir la 2ere carte qui n'est pas la meme que la 1ere
-          //this.memo2=position;
-          (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
-          if (this.memoCartes[position]!=this.memoCartes[this.memo1]){ //C'est pas les mm et il nous reste des tries
-            this.memoTries--; //tentative qui diminue
-            this.memoWait=true;  //pour empecher de cliquer autre part pendant que nos 2 cartes sont retournées
-            document.getElementById("triesMemo")!.innerHTML = "You have "+this.memoTries+" tries left" ;
-            const timer = new AdvancedTimer({timeout:8 ,contextObservable: this.scene.onBeforeRenderObservable}); 
-            timer.onTimerEndedObservable.add(() => {
-              (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
-              (document.getElementById("memo"+this.memo1)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+        if(!this.memoWait&&this.memoWin<this.memoCartes.length/2&&this.memoTries>0){
+          if (this.memo1==-1){ //On est en train de choisir la 1ere carte
+            this.memo1=position;
+            (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
+          }
+          else if (position!=this.memo1){ //On est en train de choisir la 2ere carte qui n'est pas la meme que la 1ere
+            //this.memo2=position;
+            (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById(this.memoCartes[position]) as HTMLImageElement).src;
+            if (this.memoCartes[position]!=this.memoCartes[this.memo1]){ //C'est pas les mm et il nous reste des tries
+              this.memoTries--; //tentative qui diminue
+              this.memoWait=true;  //pour empecher de cliquer autre part pendant que nos 2 cartes sont retournées
+              document.getElementById("triesMemo")!.innerHTML = "You have "+this.memoTries+" tries left" ;
+              const timer = new AdvancedTimer({timeout:8 ,contextObservable: this.scene.onBeforeRenderObservable}); 
+              timer.onTimerEndedObservable.add(() => {
+                (document.getElementById("memo"+position)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+                (document.getElementById("memo"+this.memo1)! as HTMLImageElement).src = (document.getElementById("cartes") as HTMLImageElement).src;
+                this.memo1=-1;
+                this.memoWait=false;
+                });
+              timer.start(1400); // Le temps de voir les 2 cartes et après elles sont re retournées
+              if(this.memoTries==0){
+                document.getElementById("triesMemo")!.innerHTML = "You have lost ;( click on reset to start a new game!";
+                this.memoryPlaying=false;
+              }
+            }
+            else if (this.memoTries>0){  //Cartes pareil mais il reste des tries
               this.memo1=-1;
-              this.memoWait=false;
-              });
-            timer.start(1400); // Le temps de voir les 2 cartes et après elles sont re retournées
-            if(this.memoTries==0){
-              document.getElementById("triesMemo")!.innerHTML = "You have lost ;( click on reset to start a new game!";
-              this.memoryPlaying=false;
+              this.memoWin++;
+              
             }
           }
-          else if (this.memoTries>0){  //Cartes pareil mais il reste des tries
-            this.memo1=-1;
-            this.memoWin++;
-            
-          }
         }
-      }
-      if(this.memoWin>=this.memoCartes.length/2){
-        document.getElementById("triesMemo")!.innerHTML = "Congratulation you have won! You own 3 more carrots to feed your sheep with";
-        this.memoryPlaying=false;
-        this.cptFood+=3;
-        localStorage.setItem("cptFood",JSON.stringify(this.cptFood));
-        document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
-        this.Alert("You have "+this.cptFood+" carrots now, go feed your sheep!");
+        if(this.memoWin>=this.memoCartes.length/2){
+          document.getElementById("triesMemo")!.innerHTML = "Congratulation you have won! You own 3 more carrots to feed your sheep with";
+          this.memoryPlaying=false;
+          this.cptFood+=3;
+          localStorage.setItem("cptFood",JSON.stringify(this.cptFood));
+          document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
+          this.Alert("You have "+this.cptFood+" carrots now, go feed your sheep!");
+        }
       }
     }
   
