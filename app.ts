@@ -1078,6 +1078,19 @@ Waiting(self : App,mouton : Mouton) : void{
         localStorage.clear();
         location.reload();
       });
+
+      document.querySelector("#flecheU")!.addEventListener("click",() => {
+        this.up=!this.up;
+      });
+      document.querySelector("#flecheL")!.addEventListener("click",() => {
+        this.left=!this.left;
+      });
+      document.querySelector("#flecheD")!.addEventListener("click",() => {
+        this.down=!this.down;
+      });
+      document.querySelector("#flecheR")!.addEventListener("click",() => {
+        this.right=!this.right;
+      });
     
     }
 
