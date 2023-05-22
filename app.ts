@@ -853,6 +853,9 @@ Waiting(self : App,mouton : Mouton) : void{
     
     this.scene.activeCamera = this.camera;
     this.camera.attachControl();
+
+    this.heroMesh.rotate(Vector3.Up(), -Math.PI/2);
+    this.rotation = 0;
     
     // HAJAR RAJOUE CA
     if (self.cptFashion == 12 ){
