@@ -185,7 +185,7 @@ export class App {
     this.memoWait=false;
     this.memoWin=0;
 
-    this.heroRotationSpeed = 0.15;
+    this.heroRotationSpeed = 0.05;
 
 
     if (localStorage.getItem("cptFood")){
@@ -732,12 +732,12 @@ Waiting(self : App,mouton : Mouton) : void{
     // ---- Orientation
     if (this.rotation<0){
       for (let i=0;i>this.rotation;i--){
-        this.heroMesh.rotate(Vector3.Up(), -this.heroRotationSpeed);
+        this.heroMesh.rotate(Vector3.Up(), this.heroRotationSpeed);
       }
     }
     if (this.rotation>0){
       for (let i=0;i<this.rotation;i++){
-        this.heroMesh.rotate(Vector3.Up(), this.heroRotationSpeed);
+        this.heroMesh.rotate(Vector3.Up(), -this.heroRotationSpeed);
       }
     }
 
