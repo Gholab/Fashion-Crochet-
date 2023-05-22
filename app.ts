@@ -49,6 +49,7 @@ export class App {
   dico :string[];
 
   rotation : int;
+  heroRotationSpeed : int;
 
 
   constructor(private canvas: HTMLCanvasElement) {
@@ -183,6 +184,10 @@ export class App {
     this.memoTries=10;
     this.memoWait=false;
     this.memoWin=0;
+
+    this.heroRotationSpeed = 0.15;
+
+
     if (localStorage.getItem("cptFood")){
       this.cptFood=JSON.parse(localStorage.getItem("cptFood"));
       document.getElementById("cptFood")!.innerHTML = this.cptFood+"" ;
@@ -320,6 +325,8 @@ export class App {
       this.scene
     );
   }
+
+
   async CreateCharacter(path:string, pos:Vector3){
     // Keyboard events
   const inputMap: { [id: string] : boolean} = {}
@@ -347,7 +354,7 @@ export class App {
 
   const heroSpeed = 0.15;
   const heroSpeedBackwards = 0.15;
-  const heroRotationSpeed = 0.05;
+  //const heroRotationSpeed = 0.05;
   this.PersoAnim=animationGroups;
 
   const idle=this.PersoAnim[1]; 
@@ -375,12 +382,12 @@ export class App {
           keydown = true;
       }
       if (inputMap["a"]||this.left||inputMap["q"]) {
-          this.heroMesh.rotate(Vector3.Up(), -heroRotationSpeed);
+          this.heroMesh.rotate(Vector3.Up(), -this.heroRotationSpeed);
           keydown = true;
           this.rotation--;
       }
       if (inputMap["d"]||this.right) {
-          this.heroMesh.rotate(Vector3.Up(), heroRotationSpeed);
+          this.heroMesh.rotate(Vector3.Up(), this.heroRotationSpeed);
           keydown = true;
           this.rotation++;
       }
@@ -722,6 +729,20 @@ Waiting(self : App,mouton : Mouton) : void{
     timer1.onTimerEndedObservable.add(() => this.Move1(i));
     timer1.start(14);
 
+    // ---- Orientation
+    if (this.rotation<0){
+      for (let i=0;i>this.rotation;i--){
+        this.heroMesh.rotate(Vector3.Up(), -this.heroRotationSpeed);
+      }
+    }
+    if (this.rotation>0){
+      for (let i=0;i<this.rotation;i++){
+        this.heroMesh.rotate(Vector3.Up(), this.heroRotationSpeed);
+      }
+    }
+
+    this.heroMesh.rotate(Vector3.Up(), -Math.PI/2);
+
 
     // ------ Manip camera cut scene -----
     const FreeCam=new FreeCamera("FreeCam", new Vector3(0, 10, 0), this.scene);
@@ -833,6 +854,10 @@ Waiting(self : App,mouton : Mouton) : void{
     this.scene.activeCamera = this.camera;
     this.camera.attachControl();
     
+    // HAJAR RAJOUE CA
+    if (self.cptFashion == 12 ){
+      (document.querySelector("#.modal-wrapper-end") as HTMLDivElement).style.display="block";
+    }
 
   }
 
@@ -1081,15 +1106,31 @@ Waiting(self : App,mouton : Mouton) : void{
 
       document.querySelector("#flecheU")!.addEventListener("click",() => {
         this.up=!this.up;
+        console.log("up");
       });
       document.querySelector("#flecheL")!.addEventListener("click",() => {
         this.left=!this.left;
+        console.log("left");
       });
       document.querySelector("#flecheD")!.addEventListener("click",() => {
         this.down=!this.down;
+        console.log("down",this.down);
       });
       document.querySelector("#flecheR")!.addEventListener("click",() => {
         this.right=!this.right;
+        console.log("right",this.right);
+      });
+
+       // Pour page fin :
+      document.querySelector(".modal-close-end")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-end") as HTMLDivElement).style.display = "none";
+      });
+      document.querySelector("#buttonCancelEnd")!.addEventListener("click",() => {
+        (document.querySelector(".modal-wrapper-end") as HTMLDivElement).style.display = "none";
+      });
+      document.querySelector("#restartbtnEnd")!.addEventListener("click",() => {
+        localStorage.clear();
+        location.reload();
       });
     
     }

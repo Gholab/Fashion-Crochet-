@@ -44,6 +44,7 @@ export declare class App {
     enjeu: boolean;
     dico: string[];
     rotation: int;
+    heroRotationSpeed: int;
     constructor(canvas: HTMLCanvasElement);
     run(): void;
     CreateScene(): Scene;
