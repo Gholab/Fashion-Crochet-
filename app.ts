@@ -859,7 +859,7 @@ Waiting(self : App,mouton : Mouton) : void{
     
     // HAJAR RAJOUE CA
     if (self.cptFashion == 12 ){
-      (document.querySelector("#.modal-wrapper-end") as HTMLDivElement).style.display="block";
+      (document.querySelector(".modal-wrapper-end") as HTMLDivElement).style.display="block";
     }
 
   }
