@@ -112,7 +112,7 @@ export class App {
     this.avancement = 1;
     this.timersec = 5;
     const f = new Vector4(0, 0, 1, 1);
-    this.plane = MeshBuilder.CreatePlane("plane", { frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE });
+    //this.plane = MeshBuilder.CreatePlane("plane", { frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE });
     this.matcollect = new StandardMaterial("", this.scene);
     this.matcollect.diffuseTexture = new Texture("./textures/timer/collect.png");
 
@@ -927,19 +927,7 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementsByClassName("recycle")[3].addEventListener("click",(evt)=>recycle("long_blanc",self,evt));
         document.getElementsByClassName("recycle")[4].addEventListener("click",(evt)=>recycle("long_marron",self,evt));
         document.getElementsByClassName("recycle")[5].addEventListener("click",(evt)=>recycle("bob",self,evt));
-      /*
-        document.getElementById("./image/horizontal/manche.png")!.addEventListener("click", (evt)=>wear("manche",evt));
-        document.getElementById("./image/horizontal/manche_bob.png")!.addEventListener("click", (evt)=>wear("manche_bob",evt));
-        document.getElementById("./image/horizontal/long_blanc.png")!.addEventListener("click", (evt)=>wear("long_blanc",evt));
-        document.getElementById("./image/horizontal/fleur_blanc.png")!.addEventListener("click", (evt)=>wear("fleur_blanc",evt));
-        document.getElementById("./image/horizontal/fleur_blanc_bob.png")!.addEventListener("click", (evt)=>wear("fleur_blanc_bob",evt));
-        document.getElementById("./image/horizontal/fleur_bleu.png")!.addEventListener("click", (evt)=>wear("fleur_bleu",evt));
-        document.getElementById("./image/horizontal/fleur_bleu_bob.png")!.addEventListener("click", (evt)=>wear("fleur_bleu_bob",evt));
-        document.getElementById("./image/horizontal/long_blanc_bob.png")!.addEventListener("click", (evt)=>wear("long_blanc_bob",evt));
-        document.getElementById("./image/horizontal/long_marron_bob.png")!.addEventListener("click", (evt)=>wear("long_marron_bob",evt));
-        document.getElementById("./image/horizontal/long_marron.png")!.addEventListener("click", (evt)=>wear("long_marron",evt));
-        document.getElementById("./image/horizontal/initial_bob.png")!.addEventListener("click", (evt)=>wear("bob",evt));
-*/
+      
         
       function hide() {
           (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
@@ -995,6 +983,8 @@ Waiting(self : App,mouton : Mouton) : void{
             document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
             cloth.owned = true;
             self.wardrobe.push(cloth);
+            localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));
+
             self.Alert("You just bought "+cloth.name);
             }
            
