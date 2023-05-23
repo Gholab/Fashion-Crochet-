@@ -75,9 +75,9 @@ export class App {
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 10;
     this.camera.wheelDeltaPercentage = 0.01;
-    this.camera.lowerBetaLimit = -Math.PI / 2.7;
-    this.camera.upperBetaLimit = Math.PI / 2.7;
-    console.log("camera est changee 2.7");
+    this.camera.lowerBetaLimit = -Math.PI / 2.3;
+    this.camera.upperBetaLimit = Math.PI / 2.3;
+    console.log("camera est changee 2.3");
     const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
     light.intensity = 0.6;
     light.specular = Color3.Black();
@@ -360,7 +360,7 @@ export class App {
   
   this.heroMesh.position=pos;
   //console.log(pos);
-  this.heroMesh.scaling.scaleInPlace(2.5);
+  this.heroMesh.scaling.scaleInPlace(2);
   this.camera.lockedTarget=this.heroMesh;
 
   const heroSpeed = 0.15;
