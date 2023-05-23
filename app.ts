@@ -75,8 +75,8 @@ export class App {
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 10;
     this.camera.wheelDeltaPercentage = 0.01;
-    this.camera.lowerBetaLimit = -Math.PI / 2;
-    this.camera.upperBetaLimit = Math.PI / 2;
+    this.camera.lowerBetaLimit = -Math.PI / 4;
+    this.camera.upperBetaLimit = Math.PI / 4;
 
     //this.CreateController();
     const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
