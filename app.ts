@@ -75,8 +75,8 @@ export class App {
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 10;
     this.camera.wheelDeltaPercentage = 0.01;
-    this.camera.lowerBetaLimit = -Math.PI / 2.5;
-    this.camera.upperBetaLimit = Math.PI / 2.5;
+    this.camera.lowerBetaLimit = -Math.PI / 2.7;
+    this.camera.upperBetaLimit = Math.PI / 2.7;
     console.log("camera est changee 2.5");
     const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
     light.intensity = 0.6;
@@ -86,7 +86,6 @@ export class App {
     light2.position = new Vector3(0, 1, 5);
     this.CreateSky();
     this.CreateEnvironment();
-    //localStorage.clear();
 
     this.CreateChooseYourOutfit();
 
