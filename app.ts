@@ -58,7 +58,7 @@ export class App {
 
     this.scene = this.CreateScene();
 
-    this.CreateEnvironment();
+    //this.CreateEnvironment();
     this.CreateSky();
     this.heroMesh;
     
@@ -85,7 +85,7 @@ export class App {
     const light2 = new DirectionalLight("dir01", new Vector3(0, -0.5, -1.0), this.scene);
     light2.position = new Vector3(0, 1, 5);
     this.CreateSky();
-    this.CreateEnvironment();
+    //this.CreateEnvironment();
 
     this.CreateChooseYourOutfit();
 
@@ -210,11 +210,11 @@ export class App {
     this.rotation=0;
 
 
-    this.CreateMouton(new Mouton("moutonGwen.glb"));
+    /*this.CreateMouton(new Mouton("moutonGwen.glb"));
     this.CreateMouton(new Mouton("moutonGwen2.glb"));
     this.CreateMouton(new Mouton("moutonGwen3.glb"));
     this.CreateMouton(new Mouton("moutonGwen4.glb"));
-    this.CreateMouton(new Mouton("moutonGwen5.glb"));
+    this.CreateMouton(new Mouton("moutonGwen5.glb"));*/
 
     
 
@@ -225,12 +225,25 @@ export class App {
     this.SoundMouton();
     this.background = new Sound("background","./audio/background.mp3",this.scene,null,{volume:0.3, autoplay : true});
     this.runwayMusic = new Sound("runway", "./audio/runway.mp3", this.scene,null,{volume:0.6});
-    this.CreateMamie(); //Laisser ça comme le dernier pour l'ecran de chargement
+    //this.CreateMamie(); //Laisser ça comme le dernier pour l'ecran de chargement
     
     this.EndOfLoading();
+    this.LoadMeshes();
 
 
   }
+
+  async LoadMeshes(){
+    await this.CreateMamie();
+    await this.CreateEnvironment();
+    await this.CreateMouton(new Mouton("moutonGwen.glb"));
+    await this.CreateMouton(new Mouton("moutonGwen2.glb"));
+    await this.CreateMouton(new Mouton("moutonGwen3.glb"));
+    await this.CreateMouton(new Mouton("moutonGwen4.glb"));
+    await this.CreateMouton(new Mouton("moutonGwen5.glb"));
+    this.engine.hideLoadingUI();
+  }
+
   run() {
     this.engine.runRenderLoop(() => {
       this.scene.render();
@@ -905,7 +918,7 @@ Waiting(self : App,mouton : Mouton) : void{
     meshes[0].position = new Vector3(-40,0,25);
     meshes[0].scaling = new Vector3(2,2,2);
 
-    this.engine.hideLoadingUI(); //la page a fini de charger
+    //this.engine.hideLoadingUI(); //la page a fini de charger
   }
   Shop(self : App){
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP

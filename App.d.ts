@@ -46,6 +46,7 @@ export declare class App {
     rotation: int;
     heroRotationSpeed: int;
     constructor(canvas: HTMLCanvasElement);
+    LoadMeshes(): Promise<void>;
     run(): void;
     CreateScene(): Scene;
     SoundMamie(): void;
