@@ -2,7 +2,11 @@
 <html>
 
     <head>
-        
+        <style>
+          img{
+            display :none;
+          }
+        </style>
     </head>
 
     <body>
@@ -839,6 +843,9 @@ button:focus-visible{
   border: 5px solid rgba(255, 255, 255, 0);
   border-radius: 20px;
 }
+.etoile{
+  display : block;
+}
 .etoileObtenue{
   display : none;
 }
@@ -972,7 +979,7 @@ button:focus-visible{
   padding: 20px;
   margin: auto;
   margin-top: 20px;
-  height: 80%;
+  height: 310px;
   border-radius: 5px;
   position: relative;
   overflow:scroll;
@@ -1145,14 +1152,15 @@ button:focus-visible{
 }
 
 #modal-pendu{
-    width:90%;
-    height: 86%;
+    width:82%;
+    height: 311px;
     border-radius: 5px;
     background: rgb(183, 194, 207);
     position: relative;
     padding: 20px;
-    margin: 1% auto;
+    margin: 2% auto;
     text-align: center;
+    overflow-y: scroll;
 }
 
 #pendu-reset{
@@ -1306,7 +1314,6 @@ button:focus-visible{
 
 /* FIN PENDU */
 
-
 #restart{
   color: white;
   border-radius: 5px;
@@ -1402,6 +1409,86 @@ button:focus-visible{
   margin-left:5%;
 }
 
+/* Page de fin */
+
+.modal-wrapper-end {
+  background: rgba(0, 0, 0, 0.508);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+
+.modal-end {
+  text-align: center;
+  width: 630px;
+  background: rgb(183, 194, 207);
+  padding: 20px;
+  margin: auto;
+  margin-top: 20px;
+  height: 310px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal-close-end {
+  color: red;
+  border: 1px solid black;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  width: 20px;
+  border-radius: 5px;
+}
+
+.modal-content-end{
+  z-index: 1;
+  font-size: smaller;
+}
+
+#end-Title{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  grid-row:1; 
+  margin: auto;
+  margin-bottom: 6px;
+  color: rgb(109, 12, 32);
+  font-size: xx-large;
+  padding : 10px;
+}
+
+#btnYesCancelEnd{
+  grid-template : 1fr / 1fr 1fr;
+  margin-top: 20px;
+  display :grid;
+  text-align : center;
+}
+
+
+
+#restartbtnEnd{
+  color: white;
+  border-radius: 5px;
+  height: 3%;
+  font-family: "Henny Penny", cursive;
+  font-size: large; 
+  margin-left:74%;
+}
+
+#buttonCancelEnd{
+  color: white;
+  border-radius: 5px;
+  height: 3%;
+  font-family: "Henny Penny", cursive;
+  font-size: large; 
+  margin-left:5%;
+}
+
+.endText{
+  margin:0px;
+}
 }
 
 
@@ -1780,6 +1867,10 @@ button:focus-visible{
   grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
   border: 5px solid rgba(255, 255, 255, 0);
   border-radius: 20px;
+}
+
+.etoile{
+  display : block;
 }
 .etoileObtenue{
   display : none;

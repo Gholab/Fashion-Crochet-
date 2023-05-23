@@ -77,7 +77,7 @@ export class App {
     this.camera.wheelDeltaPercentage = 0.01;
     this.camera.lowerBetaLimit = -Math.PI / 2.7;
     this.camera.upperBetaLimit = Math.PI / 2.7;
-    console.log("camera est changee 2.5");
+    console.log("camera est changee 2.7");
     const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
     light.intensity = 0.6;
     light.specular = Color3.Black();
