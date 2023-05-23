@@ -203,7 +203,7 @@ export class App {
     this.currentmotjoli =[];
     this.limiteerreurs =10;
     this.enjeu = false;
-    this.dico = ["WOOL","CROCHET","FASHION"];
+    this.dico = ["WOOL","CROCHET","FASHION","HOOK","HANDMADE","GREEN","SUSTAINABLE","RUNWAY","CATWALK","STAR","SHEEP","CLOTHES"];
     this.CreatePendu();
 
     //rotation
