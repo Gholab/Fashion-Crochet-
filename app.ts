@@ -662,7 +662,13 @@ Waiting(self : App,mouton : Mouton) : void{
         self.new_path=id+".glb";
         var confirm= document.getElementById("confirm");
         confirm.addEventListener("click",()=>{
-          self.ChangePerso(self.new_path);
+          if (self.currentoutfit+".glb"!=self.new_path){
+            self.ChangePerso(self.new_path);
+            hide();
+            }
+          else{
+            self.Alert("you are already wearg this outfit");
+          }
           console.log("on va changer d'outfit");
         });
 
