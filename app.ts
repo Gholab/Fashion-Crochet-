@@ -622,7 +622,7 @@ Waiting(self : App,mouton : Mouton) : void{
   ClickOutfit(self : App):void{
     (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
     
-    (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
+    (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide, {once:true});  //Clique de la croix once TEST
       document.getElementById("./image/horizontal/manche.png")!.addEventListener("click", (evt)=>wear("manche",evt));
       document.getElementById("./image/horizontal/manche_bob.png")!.addEventListener("click", (evt)=>wear("manche_bob",evt));
       document.getElementById("./image/horizontal/long_blanc.png")!.addEventListener("click", (evt)=>wear("long_blanc",evt));
