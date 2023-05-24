@@ -681,6 +681,7 @@ Waiting(self : App,mouton : Mouton) : void{
   
 
     function hide() {
+        console.log("i'm hidiing");
         self.ChangePerso(self.new_path);
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
         }
