@@ -663,18 +663,18 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+outfitDisplay+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
-        document.getElementById("Save_manche").addEventListener("click",SaveOutfit)!;
-        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_bob").addEventListener("click",SaveOutfit)!
-        document.getElementById("Save_initial").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_manche").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_bob").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_initial").addEventListener("click",SaveOutfit,{once:true})!
         
     
       }
