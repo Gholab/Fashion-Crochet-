@@ -22,6 +22,7 @@ export class App {
   cptFashion: int;
   wardrobe: Cloth[];
   currentoutfit: string;
+  new_path: string;
   alreadyRunwayOutfit :string[];
   heroMesh:AbstractMesh;
   up: boolean;
@@ -64,7 +65,7 @@ export class App {
     
     this.PersoAnim;
 
-    
+    this.new_path;
     
     
     //this.scene.debugLayer.show();
@@ -654,10 +655,11 @@ Waiting(self : App,mouton : Mouton) : void{
         self.currentoutfit = id;
         localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
         console.log(self.currentoutfit);
-        document.getElementById("imgoutfit")!.setAttribute('src', self.currentoutfit );
+        document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+self.currentoutfit+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
-        const new_path=id+".glb";
-        self.ChangePerso(new_path);
+        self.new_path=id+".glb";
+
+        
         console.log("on va changer d'outfit");
       }
       else{
@@ -679,6 +681,7 @@ Waiting(self : App,mouton : Mouton) : void{
   
 
     function hide() {
+        self.ChangePerso(self.new_path);
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
         }
 
