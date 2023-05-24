@@ -32,6 +32,7 @@ export class App {
   PersoAnim: AnimationGroup[];
   runwayMusic : Sound;
   background : Sound;
+  id: string;
 
   memoryPlaying : boolean;
   memoCartes : any[];
@@ -64,6 +65,7 @@ export class App {
     this.heroMesh;
     
     this.PersoAnim;
+    this.id;
 
     this.new_path;
     
@@ -642,8 +644,8 @@ Waiting(self : App,mouton : Mouton) : void{
       document.getElementById("./image/horizontal/initial.png")!.addEventListener("click", (evt)=>wear("init",evt));
     
     // fonction pour changer d'outfit 
-
     function wear(id:string,evt:Event){
+      self.id=id;
       const outfit = [];
       const clothes = ["bob", "manche", "fleur_blanc", "fleur_bleu", "long_blanc", "long_marron"];
       for(let i=0; i<clothes.length; i++){
@@ -686,7 +688,7 @@ Waiting(self : App,mouton : Mouton) : void{
     function SaveOutfit(){
         if (self.currentoutfit+".glb"!=self.new_path){
           self.Alert("You have changed your outfit")
-          self.currentoutfit = this.id;
+          self.currentoutfit = self.id;
           localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
           console.log("on va changer d'outfit");
           self.ChangePerso(self.new_path);

@@ -30,6 +30,7 @@ export declare class App {
     PersoAnim: AnimationGroup[];
     runwayMusic: Sound;
     background: Sound;
+    id: string;
     memoryPlaying: boolean;
     memoCartes: any[];
     memo1: int;
