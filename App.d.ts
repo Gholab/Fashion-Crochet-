@@ -20,6 +20,7 @@ export declare class App {
     cptFashion: int;
     wardrobe: Cloth[];
     currentoutfit: string;
+    new_path: string;
     alreadyRunwayOutfit: string[];
     heroMesh: AbstractMesh;
     up: boolean;
