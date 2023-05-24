@@ -587,7 +587,8 @@ Waiting(self : App,mouton : Mouton) : void{
         }, () => this.ClickMamie(this)));
   }
   ClickMamie(self: App) {
-    self.engine.exitPointerlock();
+    self.engine.exitPointerlock(); 
+    console.log("im supposed to be exiting the pointer lock");
     console.log(document.getElementById("modal-wrapper"));
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
     (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
@@ -659,8 +660,7 @@ Waiting(self : App,mouton : Mouton) : void{
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
 
-        
-        console.log("on va changer d'outfit");
+    
       }
       else{
         self.Alert("You dont own that outfit for the moment :(");
@@ -683,6 +683,7 @@ Waiting(self : App,mouton : Mouton) : void{
     function hide() {
         console.log("i'm hidiing");
         self.ChangePerso(self.new_path);
+        console.log("on va changer d'outfit");
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
         }
 
