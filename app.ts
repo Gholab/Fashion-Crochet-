@@ -1323,7 +1323,7 @@ Waiting(self : App,mouton : Mouton) : void{
         }
         //si le caractère n'est pas une lettre
         else{
-            self.Alert("Veuillez entrer une lettre");
+            self.Alert("Please enter a letter");
             evt.stopImmediatePropagation();
         }
     }
@@ -1347,7 +1347,7 @@ Waiting(self : App,mouton : Mouton) : void{
             }
             else{
                 document.getElementById(value)!.style.background = "rgb(100, 34, 66)";   
-                document.getElementById("pendu-text")!.textContent = "Il vous reste "+(10-self.nberreurs)+" tentatives";
+                document.getElementById("pendu-text")!.textContent = "You have "+(10-self.nberreurs)+" tries left";
             }
   
         }
@@ -1400,10 +1400,7 @@ Waiting(self : App,mouton : Mouton) : void{
             //reinitialiser le dessin
             updateImage();
   
-            //cacher les modales
-            //document.getElementById("modal-gagner")!.style.display = "none";
-            //document.getElementById("modal-perdre")!.style.display = "none";
-            document.getElementById("pendu-text")!.textContent = "Il vous reste "+(10-self.nberreurs)+" tentatives";
+            document.getElementById("pendu-text")!.textContent = "You have "+(10-self.nberreurs)+" tries left";
             newGame();
   
         
