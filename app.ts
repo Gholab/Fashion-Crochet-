@@ -639,7 +639,7 @@ Waiting(self : App,mouton : Mouton) : void{
       document.getElementById("./image/horizontal/long_marron_bob.png")!.addEventListener("click", (evt)=>wear("long_marron_bob",evt));
       document.getElementById("./image/horizontal/long_marron.png")!.addEventListener("click", (evt)=>wear("long_marron",evt));
       document.getElementById("./image/horizontal/initial_bob.png")!.addEventListener("click", (evt)=>wear("bob",evt));
-
+      document.getElementById("./image/horizontal/initial.png")!.addEventListener("click", (evt)=>wear("init",evt));
     
     // fonction pour changer d'outfit 
 
@@ -663,18 +663,19 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+outfitDisplay+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
-        var confirm= document.getElementById("confirm");
-        confirm.addEventListener("click",()=>{
-          if (self.currentoutfit+".glb"!=self.new_path){
-            self.currentoutfit = id;
-            localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
-            console.log("on va changer d'outfit");
-            self.ChangePerso(self.new_path);
-            hide();
-            }
-          
-        });
-
+        document.getElementById("Save_manche").addEventListener("click",SaveOutfit)!;
+        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_bob").addEventListener("click",SaveOutfit)!
+        document.getElementById("Save_initial").addEventListener("click",SaveOutfit)!
+        
     
       }
       else{
@@ -682,7 +683,15 @@ Waiting(self : App,mouton : Mouton) : void{
       }
       evt.stopImmediatePropagation();
     }
-
+    function SaveOutfit(){
+        if (self.currentoutfit+".glb"!=self.new_path){
+          self.currentoutfit = this.id;
+          localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
+          console.log("on va changer d'outfit");
+          self.ChangePerso(self.new_path);
+          hide();
+          }
+    }
     
     //fonction pour voir si on possède un habit
     function isOwned(name: string){
