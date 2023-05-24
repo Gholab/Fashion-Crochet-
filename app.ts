@@ -101,7 +101,7 @@ export class App {
       document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
     }
     else{
-      this.cptLaine = 0;
+      this.cptLaine = 100;
     }
     console.log("local Storage "+localStorage.getItem("cptLaine"));
     console.log("compteur de laine:"+this.cptLaine);
