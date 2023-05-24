@@ -654,8 +654,7 @@ Waiting(self : App,mouton : Mouton) : void{
         }
       }
       if(wearable == true){
-        self.currentoutfit = id;
-        localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
+        
         console.log(self.currentoutfit);
         document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+self.currentoutfit+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
@@ -663,13 +662,16 @@ Waiting(self : App,mouton : Mouton) : void{
         var confirm= document.getElementById("confirm");
         confirm.addEventListener("click",()=>{
           if (self.currentoutfit+".glb"!=self.new_path){
+            self.currentoutfit = id;
+            localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
+            console.log("on va changer d'outfit");
             self.ChangePerso(self.new_path);
             hide();
             }
           else{
             self.Alert("you are already wearg this outfit");
           }
-          console.log("on va changer d'outfit");
+          
         });
 
     
