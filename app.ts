@@ -685,6 +685,7 @@ Waiting(self : App,mouton : Mouton) : void{
     }
     function SaveOutfit(){
         if (self.currentoutfit+".glb"!=self.new_path){
+          self.Alert("You have changed your outfit")
           self.currentoutfit = this.id;
           localStorage.setItem("currentoutfit",JSON.stringify(self.currentoutfit));
           console.log("on va changer d'outfit");
