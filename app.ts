@@ -102,6 +102,8 @@ export class App {
     }
     else{
       this.cptLaine = 100;
+      document.getElementById("cptLaineM")!.innerHTML = this.cptLaine+"" ;
+      document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
     }
     console.log("local Storage "+localStorage.getItem("cptLaine"));
     console.log("compteur de laine:"+this.cptLaine);
@@ -621,6 +623,8 @@ Waiting(self : App,mouton : Mouton) : void{
   }
 
   ClickOutfit(self : App):void{
+    self.engine.exitPointerlock(); 
+    console.log("im supposed to be exiting the pointer lock");
     (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
     
     (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  
@@ -654,9 +658,9 @@ Waiting(self : App,mouton : Mouton) : void{
         }
       }
       if(wearable == true){
-        
-        console.log(self.currentoutfit);
-        document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+self.currentoutfit+'.png');
+        var outfitDisplay=id;
+        console.log(outfitDisplay);
+        document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+outfitDisplay+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
         var confirm= document.getElementById("confirm");
@@ -668,9 +672,6 @@ Waiting(self : App,mouton : Mouton) : void{
             self.ChangePerso(self.new_path);
             hide();
             }
-          else{
-            self.Alert("you are already wearg this outfit");
-          }
           
         });
 
@@ -696,6 +697,8 @@ Waiting(self : App,mouton : Mouton) : void{
 
     function hide() {
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+        self.engine.enterPointerlock(); 
+        console.log("im supposed to be entering the pointer lock");
         }
 
     
