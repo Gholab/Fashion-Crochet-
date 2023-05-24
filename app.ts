@@ -224,7 +224,8 @@ export class App {
     //partie son
     this.SoundMamie();
     this.SoundMouton();
-    this.background = new Sound("background","./audio/background.mp3",this.scene,null,{volume:0.3, autoplay : true});
+    this.background = new Sound("background","./audio/background.mp3",this.scene,null,{volume:0.3, autoplay : true, loop:true}); // HajarTEST j'ai fait loop le sound pour
+    // pas que ca s'arrete en pleine session.
     this.runwayMusic = new Sound("runway", "./audio/runway.mp3", this.scene,null,{volume:0.6});
     //this.CreateMamie(); //Laisser ça comme le dernier pour l'ecran de chargement
     
@@ -622,7 +623,7 @@ Waiting(self : App,mouton : Mouton) : void{
   ClickOutfit(self : App):void{
     (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
     
-    (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide, {once:true});  //Clique de la croix once TEST
+    (document.querySelector(".modal-close-outfit") as HTMLDivElement).addEventListener("click", hide);  
       document.getElementById("./image/horizontal/manche.png")!.addEventListener("click", (evt)=>wear("manche",evt));
       document.getElementById("./image/horizontal/manche_bob.png")!.addEventListener("click", (evt)=>wear("manche_bob",evt));
       document.getElementById("./image/horizontal/long_blanc.png")!.addEventListener("click", (evt)=>wear("long_blanc",evt));
