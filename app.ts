@@ -660,6 +660,11 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+self.currentoutfit+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
+        var confirm= document.getElementById("confirm");
+        confirm.addEventListener("click",()=>{
+          self.ChangePerso(self.new_path);
+          console.log("on va changer d'outfit");
+        });
 
     
       }
@@ -682,9 +687,6 @@ Waiting(self : App,mouton : Mouton) : void{
   
 
     function hide() {
-        console.log("i'm hidiing");
-        self.ChangePerso(self.new_path);
-        console.log("on va changer d'outfit");
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
         }
 
