@@ -48,6 +48,7 @@ export declare class App {
     rotation: int;
     heroRotationSpeed: int;
     constructor(canvas: HTMLCanvasElement);
+    ChangePerspective(): void;
     LoadMeshes(): Promise<void>;
     run(): void;
     CreateScene(): Scene;

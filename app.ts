@@ -210,20 +210,11 @@ export class App {
     this.enjeu = false;
     this.dico = ["WOOL","CROCHET","FASHION","HOOK","HANDMADE","GREEN","SUSTAINABLE","RUNWAY","CATWALK","STAR","SHEEP","CLOTHES"];
     this.CreatePendu();
-
+    
+    //this.ChangePerspective();
     //rotation
     this.rotation=0;
 
-
-    /*this.CreateMouton(new Mouton("moutonGwen.glb"));
-    this.CreateMouton(new Mouton("moutonGwen2.glb"));
-    this.CreateMouton(new Mouton("moutonGwen3.glb"));
-    this.CreateMouton(new Mouton("moutonGwen4.glb"));
-    this.CreateMouton(new Mouton("moutonGwen5.glb"));*/
-
-    
-
-    //this.CreateCutScene();
     this.CreateStartRunway();
     //partie son
     this.SoundMamie();
@@ -238,7 +229,12 @@ export class App {
 
 
   }
-
+  ChangePerspective(){
+    if ((this.heroMesh.position.x<(-37))&&(this.heroMesh.position.x>=(-33))&&(this.heroMesh.position.z<(20))&&(this.heroMesh.position.z>=(18.9))){
+      this.Alert("je rentre dans le shop");
+    }
+  
+  }
   async LoadMeshes(){
     await this.CreateMamie();
     await this.CreateEnvironment();
@@ -384,10 +380,7 @@ export class App {
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
       let keydown = false;
-      //this.heroMesh.position.y=0;
-      //console.log("position:"+this.heroMesh.position);
-      //console.log("positioneny "+this.heroMesh.position.y);
-      //Manage the movements of the character (e.g. position, direction)
+      //console.log(this.heroMesh.position);
       
       if (inputMap["w"]||this.up||inputMap["z"]) {
           this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(heroSpeed));
@@ -476,22 +469,7 @@ async CreateMouton(mouton : Mouton): Promise<void> {
       new ExecuteCodeAction({trigger: ActionManager.OnPickTrigger},(evt) => this.Mouton1OnClick(this,mouton)));  //Quand on click sur la boule ca lance Mouton1OnClick
       //console.log(mesh);
   })
-  /*
-  const moutonAudio = new Sound("mouton","./audio/mouton.mp3",this.scene,null,{
-    loop: true,
-    autoplay: true,
-  });
-
-  moutonAudio.setDirectionalCone(90, 180, 0);
-  moutonAudio.setLocalDirectionToMesh(new Vector3(1, 0, 0));
-  moutonAudio.attachToMesh(meshes[2]);
-  */
-  
-  
-  //const f = new Vector4(0,0, 1 , 1); // front image = half the whole image along the width 
-  //const b = new Vector4(1,0, 1, 1); // back image = second half along the width
-  
-  //const plane = MeshBuilder.CreatePlane("plane", {frontUVs: f, backUVs: f, sideOrientation: Mesh.DOUBLESIDE});
+ 
   mouton.plane.parent = meshes[1];
   mouton.plane.position.y = 2;
   mouton.plane.scaling.x=4;
@@ -505,7 +483,7 @@ async CreateMouton(mouton : Mouton): Promise<void> {
 Mouton1OnClick(self : App, mouton : Mouton):void{
   if (mouton.available){
     self.cptLaine+=1;
-    //localStorage
+    
     localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
     console.log("local Storage "+localStorage.getItem("cptLaine"));
 
@@ -529,7 +507,7 @@ Mouton1OnClick(self : App, mouton : Mouton):void{
     timer.start(5000); //La durée du timer
 
   }
-  //self.textBox.addControl(self.text);
+  
 
 }
 
@@ -566,7 +544,7 @@ Waiting(self : App,mouton : Mouton) : void{
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
-      "withRunway.glb",
+      "all2.glb",
       this.scene
     );
 
@@ -664,20 +642,8 @@ Waiting(self : App,mouton : Mouton) : void{
         document.getElementById("imgoutfit")!.setAttribute('src', './image/outfit/'+outfitDisplay+'.png');
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
-        document.getElementById("Save_manche").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_bob").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_initial").addEventListener("click",SaveOutfit,{once:true})!;
-        
-    
+        document.getElementById("save").addEventListener("click",SaveOutfit,{once:true})!;
+      
       }
       else{
         self.Alert("You dont own that outfit for the moment :(");
@@ -1299,32 +1265,32 @@ Waiting(self : App,mouton : Mouton) : void{
   
   document.getElementById("pendu-reset")!.addEventListener("click", refresh);
   
-  document.getElementById(String.fromCharCode(65))!.addEventListener("click", ()=>testLettre(String.fromCharCode(65)));
-  document.getElementById(String.fromCharCode(66))!.addEventListener("click", ()=>testLettre(String.fromCharCode(66)));
-  document.getElementById(String.fromCharCode(67))!.addEventListener("click", ()=>testLettre(String.fromCharCode(67)));
-  document.getElementById(String.fromCharCode(68))!.addEventListener("click", ()=>testLettre(String.fromCharCode(68)));
-  document.getElementById(String.fromCharCode(69))!.addEventListener("click", ()=>testLettre(String.fromCharCode(69)));
-  document.getElementById(String.fromCharCode(70))!.addEventListener("click", ()=>testLettre(String.fromCharCode(70)));
-  document.getElementById(String.fromCharCode(71))!.addEventListener("click", ()=>testLettre(String.fromCharCode(71)));
-  document.getElementById(String.fromCharCode(72))!.addEventListener("click", ()=>testLettre(String.fromCharCode(72)));
-  document.getElementById(String.fromCharCode(73))!.addEventListener("click", ()=>testLettre(String.fromCharCode(73)));
-  document.getElementById(String.fromCharCode(74))!.addEventListener("click", ()=>testLettre(String.fromCharCode(74)));
-  document.getElementById(String.fromCharCode(75))!.addEventListener("click", ()=>testLettre(String.fromCharCode(75)));
-  document.getElementById(String.fromCharCode(76))!.addEventListener("click", ()=>testLettre(String.fromCharCode(76)));
-  document.getElementById(String.fromCharCode(77))!.addEventListener("click", ()=>testLettre(String.fromCharCode(77)));
-  document.getElementById(String.fromCharCode(78))!.addEventListener("click", ()=>testLettre(String.fromCharCode(78)));
-  document.getElementById(String.fromCharCode(79))!.addEventListener("click", ()=>testLettre(String.fromCharCode(79)));
-  document.getElementById(String.fromCharCode(80))!.addEventListener("click", ()=>testLettre(String.fromCharCode(80)));
-  document.getElementById(String.fromCharCode(81))!.addEventListener("click", ()=>testLettre(String.fromCharCode(81)));
-  document.getElementById(String.fromCharCode(82))!.addEventListener("click", ()=>testLettre(String.fromCharCode(82)));
-  document.getElementById(String.fromCharCode(83))!.addEventListener("click", ()=>testLettre(String.fromCharCode(83)));
-  document.getElementById(String.fromCharCode(84))!.addEventListener("click", ()=>testLettre(String.fromCharCode(84)));
-  document.getElementById(String.fromCharCode(85))!.addEventListener("click", ()=>testLettre(String.fromCharCode(85)));
-  document.getElementById(String.fromCharCode(86))!.addEventListener("click", ()=>testLettre(String.fromCharCode(86)));
-  document.getElementById(String.fromCharCode(87))!.addEventListener("click", ()=>testLettre(String.fromCharCode(87)));
-  document.getElementById(String.fromCharCode(88))!.addEventListener("click", ()=>testLettre(String.fromCharCode(88)));
-  document.getElementById(String.fromCharCode(89))!.addEventListener("click", ()=>testLettre(String.fromCharCode(89)));
-  document.getElementById(String.fromCharCode(90))!.addEventListener("click", ()=>testLettre(String.fromCharCode(90)));
+  document.getElementById(String.fromCharCode(65))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(65),evt));
+  document.getElementById(String.fromCharCode(66))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(66),evt));
+  document.getElementById(String.fromCharCode(67))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(67),evt));
+  document.getElementById(String.fromCharCode(68))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(68),evt));
+  document.getElementById(String.fromCharCode(69))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(69),evt));
+  document.getElementById(String.fromCharCode(70))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(70),evt));
+  document.getElementById(String.fromCharCode(71))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(71),evt));
+  document.getElementById(String.fromCharCode(72))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(72),evt));
+  document.getElementById(String.fromCharCode(73))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(73),evt));
+  document.getElementById(String.fromCharCode(74))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(74),evt));
+  document.getElementById(String.fromCharCode(75))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(75),evt));
+  document.getElementById(String.fromCharCode(76))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(76),evt));
+  document.getElementById(String.fromCharCode(77))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(77),evt));
+  document.getElementById(String.fromCharCode(78))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(78),evt));
+  document.getElementById(String.fromCharCode(79))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(79),evt));
+  document.getElementById(String.fromCharCode(80))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(80),evt));
+  document.getElementById(String.fromCharCode(81))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(81),evt));
+  document.getElementById(String.fromCharCode(82))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(82),evt));
+  document.getElementById(String.fromCharCode(83))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(83),evt));
+  document.getElementById(String.fromCharCode(84))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(84),evt));
+  document.getElementById(String.fromCharCode(85))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(85),evt));
+  document.getElementById(String.fromCharCode(86))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(86),evt));
+  document.getElementById(String.fromCharCode(87))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(87),evt));
+  document.getElementById(String.fromCharCode(88))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(88),evt));
+  document.getElementById(String.fromCharCode(89))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(89),evt));
+  document.getElementById(String.fromCharCode(90))!.addEventListener("click", (evt)=>testLettre(String.fromCharCode(90),evt));
   
   
   
@@ -1357,7 +1323,7 @@ Waiting(self : App,mouton : Mouton) : void{
             }
         }
         if(lettre){
-            testLettre(l);
+            testLettre(l,evt);
         }
         //si le caractère n'est pas une lettre
         else{
@@ -1369,7 +1335,7 @@ Waiting(self : App,mouton : Mouton) : void{
   
   
     //fonction qui test les lettres
-    function testLettre(lettre:string){  
+    function testLettre(lettre:string,evt:Event){  
         if(!self.enjeu){
           return 
         }  
@@ -1377,7 +1343,7 @@ Waiting(self : App,mouton : Mouton) : void{
         //si la lettre n'est pas dans le mot 
         if(self.motadecouvrir.includes(value)==false){
             self.nberreurs+=1;
-            
+            console.log(self.nberreurs);
             if(self.nberreurs>=self.limiteerreurs){
                 document.getElementById("pendu-text")!.textContent = "You lost, try again "; 
                 document.getElementById(value)!.style.background= "rgb(100, 34, 66)";
@@ -1413,6 +1379,7 @@ Waiting(self : App,mouton : Mouton) : void{
         }
         
         updateImage(); 
+        evt.stopImmediatePropagation();
     }
   
   
@@ -1437,8 +1404,6 @@ Waiting(self : App,mouton : Mouton) : void{
             }
             //reinitialiser le dessin
             updateImage();
-  
-            document.getElementById("pendu-text")!.textContent = "You have "+(10-self.nberreurs)+" tries left";
             newGame();
   
         
