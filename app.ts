@@ -544,7 +544,7 @@ Waiting(self : App,mouton : Mouton) : void{
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
-      "all2.glb",
+      "all_compressed.glb",
       this.scene
     );
 
