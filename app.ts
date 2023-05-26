@@ -666,17 +666,17 @@ Waiting(self : App,mouton : Mouton) : void{
         console.log(document.getElementById("imgoutfit")!.getAttribute("src"));
         self.new_path=id+".glb";
         document.getElementById("Save_manche").addEventListener("click",SaveOutfit,{once:true})!;
-        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_bob").addEventListener("click",SaveOutfit,{once:true})!
-        document.getElementById("Save_initial").addEventListener("click",SaveOutfit,{once:true})!
+        document.getElementById("Save_fleur_bleu").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_fleur_blanc").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_fleur_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_long_blanc").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_manche_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_fleur_bleu_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_long_blanc_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_long_marron_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_long_marron").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_bob").addEventListener("click",SaveOutfit,{once:true})!;
+        document.getElementById("Save_initial").addEventListener("click",SaveOutfit,{once:true})!;
         
     
       }
@@ -686,6 +686,7 @@ Waiting(self : App,mouton : Mouton) : void{
       evt.stopImmediatePropagation();
     }
     function SaveOutfit(){
+      console.log("je rentre dans SaveOutfit");
         if (self.currentoutfit+".glb"!=self.new_path){
           self.Alert("You have changed your outfit")
           self.currentoutfit = self.id;
