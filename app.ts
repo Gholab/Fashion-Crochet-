@@ -131,12 +131,12 @@ export class App {
     if(localStorage.getItem("currentoutfit")){
       this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
       this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
-      //this.CreateCharacter("init.glb",Vector3.Zero());
+      
       console.log("currentoutfit "+this.currentoutfit.toString());
     }
     else{
       this.currentoutfit = "";
-      this.CreateCharacter("init.glb",Vector3.Zero());
+      this.CreateCharacter("initial.glb",Vector3.Zero());
     }
     
     if (localStorage.getItem("alreadyRunwayOutfit")){
@@ -641,7 +641,7 @@ Waiting(self : App,mouton : Mouton) : void{
       document.getElementById("./image/horizontal/long_marron_bob.png")!.addEventListener("click", (evt)=>wear("long_marron_bob",evt));
       document.getElementById("./image/horizontal/long_marron.png")!.addEventListener("click", (evt)=>wear("long_marron",evt));
       document.getElementById("./image/horizontal/initial_bob.png")!.addEventListener("click", (evt)=>wear("bob",evt));
-      document.getElementById("./image/horizontal/initial.png")!.addEventListener("click", (evt)=>wear("init",evt));
+      document.getElementById("./image/horizontal/initial.png")!.addEventListener("click", (evt)=>wear("initial",evt));
     
     // fonction pour changer d'outfit 
     function wear(id:string,evt:Event){
