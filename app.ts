@@ -2,7 +2,7 @@
 import { Scene, Engine, SceneLoader, FreeCamera, Vector3, HemisphericLight, SceneInstrumentation, MeshBuilder, AbstractMesh, Constants, Mesh, ActionManager, ExecuteCodeAction, PhysicsImpostor, int, AdvancedTimer, StandardMaterial, Texture, Vector4, Color3, Color4, Animation, CubeTexture, PhotoDome, ArcRotateCamera, DirectionalLight, CannonJSPlugin, Sound, AnimationGroup } from "babylonjs";
 import "babylonjs-loaders";
 import "babylonjs-gui";
-import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, TextBlock } from "babylonjs-gui";
+import { AdvancedDynamicTexture, Button, Control, GUI3DManager, MeshButton3D, SelectionPanel, SelectorGroup, Slider3D, TextBlock } from "babylonjs-gui";
 //import setAndStartTimer from "@babylonjs/Misc/timer";
 import * as CANNON from "cannon";
 export class App {
@@ -592,8 +592,7 @@ Waiting(self : App,mouton : Mouton) : void{
         }, () => this.ClickMamie(this)));
   }
   ClickMamie(self: App) {
-    self.engine.exitPointerlock(); 
-    console.log("im supposed to be exiting the pointer lock");
+    console.log("je suis dans click mamie");
     console.log(document.getElementById("modal-wrapper"));
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
     (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
@@ -601,7 +600,7 @@ Waiting(self : App,mouton : Mouton) : void{
 
     function hide() {
       (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
-      self.engine.enterPointerlock();
+  
     }
   }
   CreateChooseYourOutfit():void {
@@ -944,7 +943,8 @@ Waiting(self : App,mouton : Mouton) : void{
        mesh.checkCollisions=true;
       mesh.actionManager = new ActionManager(this.scene);
       mesh.actionManager.registerAction(
-        new ExecuteCodeAction({trigger: ActionManager.OnPickTrigger},() => this.Shop(this)));  //Quand on click sur la boule ca lance Mouton1OnClick
+        new ExecuteCodeAction({trigger: ActionManager.OnPickTrigger},() => this.Shop(this)));  
+        
     })
     //meshes[0].rotate(Vector3.Up(),Math.PI/2);
     meshes[0].position = new Vector3(-40,0,25);
@@ -953,6 +953,8 @@ Waiting(self : App,mouton : Mouton) : void{
     //this.engine.hideLoadingUI(); //la page a fini de charger
   }
   Shop(self : App){
+    self.engine.exitPointerlock();
+    console.log("je suis dans le shop");
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
         (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
 
@@ -974,6 +976,7 @@ Waiting(self : App,mouton : Mouton) : void{
         
       function hide() {
           (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
+          self.engine.enterPointerlock();
           }
 
       // RECYCLE
@@ -1055,6 +1058,7 @@ Waiting(self : App,mouton : Mouton) : void{
         (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
       });
       document.querySelector(".modal-close-memo")!.addEventListener("click",() => {
+        this.engine.enterPointerlock();
         (document.querySelector(".modal-wrapper-memo") as HTMLDivElement).style.display = "none";
         (document.querySelector("#memo-right") as HTMLDivElement).style.display = "none";
         (document.querySelector("#triesMemo") as HTMLDivElement).style.display = "none";
@@ -1187,6 +1191,7 @@ Waiting(self : App,mouton : Mouton) : void{
       button1.fontSize = 50;
       button1.background = "pink";
       button1.onPointerUpObservable.add(() => {
+        this.engine.exitPointerlock();
         (document.querySelector(".modal-wrapper-memo") as HTMLDivElement)!.style.display ="block";
         this.memoryPlaying=false;
       });
@@ -1280,12 +1285,13 @@ Waiting(self : App,mouton : Mouton) : void{
   
   
     ClickPendu(self : App):void{
-      
+      self.engine.exitPointerlock();
       (document.querySelector("#modal-wrapper-pendu") as HTMLDivElement).style.display="block";  
       (document.querySelector("#modal-close-pendu") as HTMLDivElement).addEventListener("click", hide);
       refresh();
   
       function hide() {
+        self.engine.enterPointerlock();
         (document.querySelector("#modal-wrapper-pendu") as HTMLDivElement).style.display = "none";  
       }
   
