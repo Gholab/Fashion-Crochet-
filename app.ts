@@ -78,15 +78,15 @@ export class App {
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 10;
     this.camera.wheelDeltaPercentage = 0.01;
-    this.camera.lowerBetaLimit = -Math.PI / 2.3;
-    this.camera.upperBetaLimit = Math.PI / 2.3;
+    this.camera.lowerBetaLimit = -Math.PI / 2.1;
+    this.camera.upperBetaLimit = Math.PI / 2.1;
     console.log("camera est changee 2.3");
-    const light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
+    const light = new HemisphericLight("light1", new Vector3(0, 2, 0), this.scene);
     light.intensity = 0.6;
     light.specular = Color3.Black();
 
-    const light2 = new DirectionalLight("dir01", new Vector3(0, -0.5, -1.0), this.scene);
-    light2.position = new Vector3(0, 1, 5);
+    const light2 = new HemisphericLight("light1", new Vector3(10, 2, 10), this.scene);
+    const light3 = new HemisphericLight("light1", new Vector3(1, 2, 25), this.scene);
     this.CreateSky();
     //this.CreateEnvironment();
 
@@ -540,14 +540,38 @@ Waiting(self : App,mouton : Mouton) : void{
 }
 
   async CreateEnvironment(): Promise<void> {
+   
 
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
-      "all_compressed.glb",
+      "ground+fences.glb",
       this.scene
     );
-
+    await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "room.glb",
+      this.scene
+    );
+    await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "runway.glb",
+      this.scene
+    );
+    await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "shop.glb",
+      this.scene
+    );
+    await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "tiles.glb",
+      this.scene
+    );
     //apply collisions to every mesh in the model
     //.map goes through every mesh
     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
@@ -584,7 +608,7 @@ Waiting(self : App,mouton : Mouton) : void{
   CreateChooseYourOutfit():void {
     const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
     plane.position.y = 2;
-    plane.position.x = -45;
+    plane.position.x = -40;
     plane.position.z = 28;
     plane.rotate(new Vector3(0,1,0),-1.5708);
 
