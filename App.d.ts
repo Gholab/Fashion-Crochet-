@@ -39,6 +39,7 @@ export declare class App {
     memoWin: int;
     cptFood: int;
     cptShop: int;
+    cptRoom: int;
     nberreurs: int;
     motadecouvrir: string;
     currentmot: string[];
@@ -49,6 +50,7 @@ export declare class App {
     rotation: int;
     heroRotationSpeed: int;
     constructor(canvas: HTMLCanvasElement);
+    ChangePerspectiveRoom(): void;
     ChangePerspectiveShop(): void;
     LoadMeshes(): Promise<void>;
     run(): void;

@@ -42,6 +42,7 @@ export class App {
   memoWin : int;
   cptFood :int;
   cptShop:int;
+  cptRoom:int;
 
   nberreurs :int;
   motadecouvrir :string;
@@ -71,7 +72,7 @@ export class App {
     this.new_path;
     
     this.cptShop=0; //compte le nb de fois quon rentre/sort du shop
-    
+    this.cptRoom=0;
     
     //this.scene.debugLayer.show();
     
@@ -232,6 +233,34 @@ export class App {
 
 
   }
+  ChangePerspectiveRoom(){
+    const RoomCam=new ArcRotateCamera("ShopCam",0,0,5,new Vector3(4.3,3.5,32),this.scene);
+    RoomCam.lowerBetaLimit = -Math.PI / 3;
+    RoomCam.upperBetaLimit = Math.PI /3;
+    RoomCam.detachControl;
+    if((this.heroMesh.position._x>=(4.3))&&(this.heroMesh.position._x<(6.5))&&(this.heroMesh.position._z<(23))&&(this.heroMesh.position._z>=(22))){
+      console.log(this.cptRoom);
+      this.cptRoom++;
+      //console.log(this.cptShop);
+      if (this.cptRoom%2==0 && this.cptRoom!=0){
+        //sort du shop
+        this.heroMesh.position=new Vector3(4.2,0,21);
+        RoomCam.detachControl();
+        this.scene.activeCamera=this.camera;
+        this.camera.attachControl();
+      }
+      else if (!(this.cptRoom%2==0)){
+        //rentre dans le shop
+        this.Alert("move your mouse");
+        this.heroMesh.position=new Vector3(4.2,0,23);
+        this.scene.activeCamera = RoomCam;
+        this.camera.detachControl();
+        RoomCam.attachControl();
+        
+      }
+    }
+    }  
+  
   ChangePerspectiveShop(){
     //console.log(this.heroMesh.position);
     if((this.heroMesh.position._x>=(-37))&&(this.heroMesh.position._x<(-33))&&(this.heroMesh.position._z<(20.5))&&(this.heroMesh.position._z>=(18.9))){
@@ -422,8 +451,9 @@ export class App {
   collect.stop();
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
-      console.log(this.heroMesh.position);
+      //console.log(this.heroMesh.position);
       this.ChangePerspectiveShop();
+      this.ChangePerspectiveRoom();
       let keydown = false;
       //console.log(this.heroMesh.position);
       
@@ -1300,8 +1330,8 @@ async CreateEnvironment(): Promise<void> {
     CreateMemoryPlane():void {
       const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
       plane.position.y = 2;
-      plane.position.x = 20;
-      plane.position.z = 28;
+      plane.position.x = -1;
+      plane.position.z = 36;
       plane.rotate(new Vector3(0,1,0),-1.5708);
   
       const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
@@ -1388,15 +1418,15 @@ async CreateEnvironment(): Promise<void> {
     async CreatePendu(): Promise<void>{
       const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
       plane.position.y = 2;
-      plane.position.x = 5.5;
-      plane.position.z = 28;
+      plane.position.x = -2;
+      plane.position.z = 27.5;
       plane.rotation=new Vector3(0,-Math.PI/2,0);
       
       
       
       const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
   
-      const button1 = Button.CreateSimpleButton("but1", "Let's play !");
+      const button1 = Button.CreateSimpleButton("but1", "Play Hangman");
       button1.width = 1;
       button1.height = 0.4;
       button1.color = "black";
