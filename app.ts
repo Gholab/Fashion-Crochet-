@@ -41,6 +41,7 @@ export class App {
   memoWait :boolean;
   memoWin : int;
   cptFood :int;
+  cptShop:int;
 
   nberreurs :int;
   motadecouvrir :string;
@@ -68,6 +69,8 @@ export class App {
     this.id;
 
     this.new_path;
+    
+    this.cptShop=0; //compte le nb de fois quon rentre/sort du shop
     
     
     //this.scene.debugLayer.show();
@@ -229,15 +232,47 @@ export class App {
 
 
   }
-  ChangePerspective(){
-    console.log(this.heroMesh.position);
+  ChangePerspectiveShop(){
+    //console.log(this.heroMesh.position);
     if((this.heroMesh.position._x>=(-37))&&(this.heroMesh.position._x<(-33))&&(this.heroMesh.position._z<(20.5))&&(this.heroMesh.position._z>=(18.9))){
-      this.Alert("je rentre dans le shop");
+      //this.Alert("je rentre dans le shop");
+      this.cptShop++;
+      console.log(this.cptShop);
+      if (this.cptShop%2==0 && this.cptShop!=0){
+        //sort du shop
+        this.heroMesh.position=new Vector3(-35,0,18.5);
+        this.scene.activeCamera=this.camera;
+        this.camera.attachControl();
+      }
+      
+      else if (!(this.cptShop%2==0)){
+        //rentre dans le shop
+        this.heroMesh.position=new Vector3(-35,0,20.7);
+        this.Shop(this);
+        this.camera.detachControl();
+        const ShopCam=new FreeCamera("ShopCam",new Vector3(-31,4,34),this.scene);
+        ShopCam.detachControl();
+        this.scene.activeCamera = ShopCam;
+        ShopCam.rotation = new Vector3(Math.PI/12,Math.PI+Math.PI/8,0)
+      }
     }
+    }
+    
+    
+    /*this.camera.detachControl();
+      const ShopCam=new FreeCamera("ShopCam",new Vector3(-40,5,36),this.scene);
+      ShopCam.rotation
+      ShopCam.detachControl();
+      this.scene.activeCamera = ShopCam;
+      ShopCam.rotation = new Vector3(Math.PI/8,-Math.PI,0);*/
+    //else{
+      //(document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";
+    //}
   
-  }
+  
   async LoadMeshes(){
     await this.CreateMamie();
+    //await this.CreateMamie2();
     //await this.CreateGround();
     //await this.CreateRunway();
     await this.CreateRoom();
@@ -284,7 +319,7 @@ export class App {
       spatialSound: true,
       maxDistance:10,
     });
-    music.setPosition(new Vector3(-20, 0, 25));
+    music.setPosition(new Vector3(-40, 0, 25));
   }
 
   SoundMouton(){
@@ -387,7 +422,8 @@ export class App {
   collect.stop();
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
-      this.ChangePerspective();
+      console.log(this.heroMesh.position);
+      this.ChangePerspectiveShop();
       let keydown = false;
       //console.log(this.heroMesh.position);
       
@@ -698,11 +734,11 @@ async CreateEnvironment(): Promise<void> {
   }
   CreateChooseYourOutfit():void {
     const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
-    plane.position.y = 2;
-    plane.position.x = -20;
+    plane.position.y = 2.2;
+    plane.position.x = 10.5;
     plane.position.z = 28;
-    plane.rotate(new Vector3(0,1,0),-1.5708);
-
+    //plane.rotate(new Vector3(0,1,0),-1.5708);
+    plane.rotation=new Vector3(0,Math.PI/2,0);
     const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
 
     const button1 = Button.CreateSimpleButton("but1", "Choose your outfit");
@@ -1028,16 +1064,17 @@ async CreateEnvironment(): Promise<void> {
         
     })
     //meshes[0].rotate(Vector3.Up(),Math.PI/2);
-    meshes[0].position = new Vector3(-20,0,25);
+    meshes[0].position = new Vector3(-37,0.3,31.5);
     meshes[0].scaling = new Vector3(2,2,2);
 
     //this.engine.hideLoadingUI(); //la page a fini de charger
   }
+ 
   Shop(self : App){
     self.engine.exitPointerlock();
     console.log("je suis dans le shop");
     (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "block";  //AFFICHE LA PAGE SHOP
-        (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
+      (document.querySelector(".modal-close") as HTMLDivElement).addEventListener("click", hide);  //Clique de la croix ?
 
 
         document.getElementById("manche")!.addEventListener("click",(evt) => buy("manche",self,evt));  //buy cloth1
@@ -1351,10 +1388,12 @@ async CreateEnvironment(): Promise<void> {
     async CreatePendu(): Promise<void>{
       const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
       plane.position.y = 2;
-      plane.position.x = -6;
-      plane.position.z = 0;
-      plane.rotate(new Vector3(0,0,0),-1.5708);
-  
+      plane.position.x = 5.5;
+      plane.position.z = 28;
+      plane.rotation=new Vector3(0,-Math.PI/2,0);
+      
+      
+      
       const advancedTexture2 = AdvancedDynamicTexture.CreateForMesh(plane);
   
       const button1 = Button.CreateSimpleButton("but1", "Let's play !");
