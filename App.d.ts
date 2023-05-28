@@ -62,6 +62,11 @@ export declare class App {
     Timer(self: App, mouton: Mouton): void;
     Waiting(self: App, mouton: Mouton): void;
     CreateEnvironment(): Promise<void>;
+    CreateGround(): Promise<void>;
+    CreateRoom(): Promise<void>;
+    CreateRunway(): Promise<void>;
+    CreateShop(): Promise<void>;
+    CreateTiles(): Promise<void>;
     CreateActions(obj: AbstractMesh): void;
     ClickMamie(self: App): void;
     CreateChooseYourOutfit(): void;

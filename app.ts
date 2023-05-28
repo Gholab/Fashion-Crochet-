@@ -81,12 +81,12 @@ export class App {
     this.camera.lowerBetaLimit = -Math.PI / 2.1;
     this.camera.upperBetaLimit = Math.PI / 2.1;
     console.log("camera est changee 2.3");
-    const light = new HemisphericLight("light1", new Vector3(0, 2, 0), this.scene);
+    const light = new HemisphericLight("light1", new Vector3(0, 10, 0), this.scene);
     light.intensity = 0.6;
     light.specular = Color3.Black();
 
-    const light2 = new HemisphericLight("light1", new Vector3(10, 2, 10), this.scene);
-    const light3 = new HemisphericLight("light1", new Vector3(1, 2, 25), this.scene);
+    const light2 = new HemisphericLight("light1", new Vector3(25, 10, 10), this.scene);
+    
     this.CreateSky();
     //this.CreateEnvironment();
 
@@ -211,7 +211,7 @@ export class App {
     this.dico = ["WOOL","CROCHET","FASHION","HOOK","HANDMADE","GREEN","SUSTAINABLE","RUNWAY","CATWALK","STAR","SHEEP","CLOTHES"];
     this.CreatePendu();
     
-    //this.ChangePerspective();
+    
     //rotation
     this.rotation=0;
 
@@ -230,13 +230,19 @@ export class App {
 
   }
   ChangePerspective(){
-    if ((this.heroMesh.position.x<(-37))&&(this.heroMesh.position.x>=(-33))&&(this.heroMesh.position.z<(20))&&(this.heroMesh.position.z>=(18.9))){
+    console.log(this.heroMesh.position);
+    if((this.heroMesh.position._x>=(-37))&&(this.heroMesh.position._x<(-33))&&(this.heroMesh.position._z<(20.5))&&(this.heroMesh.position._z>=(18.9))){
       this.Alert("je rentre dans le shop");
     }
   
   }
   async LoadMeshes(){
     await this.CreateMamie();
+    //await this.CreateGround();
+    //await this.CreateRunway();
+    await this.CreateRoom();
+    //await this.CreateShop();
+    await this.CreateTiles();
     await this.CreateEnvironment();
     await this.CreateMouton(new Mouton("moutonGwen.glb"));
     await this.CreateMouton(new Mouton("moutonGwen2.glb"));
@@ -256,13 +262,13 @@ export class App {
     const scene = new Scene(this.engine);
     //const light = new HemisphericLight("light", new Vector3(0, 1, 0), this.scene);
 
-    scene.onPointerDown=(evt)=>{
+    /*scene.onPointerDown=(evt)=>{
       //for the mouse settings, 0:left click,1:middle mouse button,2:right click
       if (getComputedStyle(document.querySelector("#laineMobile")! as HTMLDivElement).display=="none"){ //On est pas en version mobile
         if (evt.button===0) this.engine.enterPointerlock();
         if (evt.button===1) this.engine.exitPointerlock();
       }
-  }
+  }*/
    
     scene.collisionsEnabled = true;
 
@@ -278,7 +284,7 @@ export class App {
       spatialSound: true,
       maxDistance:10,
     });
-    music.setPosition(new Vector3(-40, 0, 25));
+    music.setPosition(new Vector3(-20, 0, 25));
   }
 
   SoundMouton(){
@@ -342,6 +348,7 @@ export class App {
 
   async CreateCharacter(path:string, pos:Vector3){
     // Keyboard events
+  
   const inputMap: { [id: string] : boolean} = {}
   this.scene.actionManager = new ActionManager(this.scene);
   this.scene.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnKeyDownTrigger, function (evt) {
@@ -353,6 +360,7 @@ export class App {
 
   const{meshes,animationGroups}=await SceneLoader.ImportMeshAsync("","./animated/",path);
   this.heroMesh=meshes[0];
+  
   console.log(this.heroMesh);
   //this.heroMesh.showBoundingBox=true;
   //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
@@ -379,6 +387,7 @@ export class App {
   collect.stop();
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
+      this.ChangePerspective();
       let keydown = false;
       //console.log(this.heroMesh.position);
       
@@ -538,17 +547,37 @@ Waiting(self : App,mouton : Mouton) : void{
   mouton.timer+=1;
    
 }
-
-  async CreateEnvironment(): Promise<void> {
+async CreateEnvironment(): Promise<void> {
    
-
+  
+  const { meshes } = await SceneLoader.ImportMeshAsync(
+    "",
+    "./models/",
+    "withRunway.glb",
+    this.scene
+  );
+  
+  meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
+    mesh.checkCollisions = true;
+  })
+}
+  
+  
+  async CreateGround(): Promise<void> {
+   
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
       "ground+fences.glb",
       this.scene
     );
-    await SceneLoader.ImportMeshAsync(
+    /*const { meshes } = await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "withRunway.glb",
+      this.scene
+    );
+    /*await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
       "room.glb",
@@ -571,7 +600,7 @@ Waiting(self : App,mouton : Mouton) : void{
       "./models/",
       "tiles.glb",
       this.scene
-    );
+    ); */
     //apply collisions to every mesh in the model
     //.map goes through every mesh
     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
@@ -579,6 +608,68 @@ Waiting(self : App,mouton : Mouton) : void{
     })
 
   }
+  async CreateRoom(): Promise<void> {
+    
+   const { meshes } = await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "room.glb",
+      this.scene
+    );
+    
+    //apply collisions to every mesh in the model
+    //.map goes through every mesh
+    meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
+      mesh.checkCollisions = true;
+    })
+  }
+  async CreateRunway(): Promise<void> {
+    
+    const { meshes } = await SceneLoader.ImportMeshAsync(
+       "",
+       "./models/",
+       "runway.glb",
+       this.scene
+     );
+     
+     //apply collisions to every mesh in the model
+     //.map goes through every mesh
+     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
+       mesh.checkCollisions = true;
+     })
+   }
+   async CreateShop(): Promise<void> {
+    
+    const { meshes } = await SceneLoader.ImportMeshAsync(
+       "",
+       "./models/",
+       "shop.glb",
+       this.scene
+     );
+     
+     //apply collisions to every mesh in the model
+     //.map goes through every mesh
+     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
+       mesh.checkCollisions = true;
+     })
+   }
+   async CreateTiles(): Promise<void> {
+    
+    const { meshes } = await SceneLoader.ImportMeshAsync(
+       "",
+       "./models/",
+       "tiles.glb",
+       this.scene
+     );
+     
+     //apply collisions to every mesh in the model
+     //.map goes through every mesh
+     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
+       mesh.checkCollisions = false;
+     })
+   }
+
+
 
   
 
@@ -608,7 +699,7 @@ Waiting(self : App,mouton : Mouton) : void{
   CreateChooseYourOutfit():void {
     const plane = Mesh.CreatePlane("plane",3,this.scene); //plane, le plan 2D sur lequel on va cliquer, 2=size
     plane.position.y = 2;
-    plane.position.x = -40;
+    plane.position.x = -20;
     plane.position.z = 28;
     plane.rotate(new Vector3(0,1,0),-1.5708);
 
@@ -699,7 +790,7 @@ Waiting(self : App,mouton : Mouton) : void{
 
     function hide() {
         (document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";  //Enlève la page shop
-        self.engine.enterPointerlock(); 
+        //self.engine.enterPointerlock(); 
         console.log("im supposed to be entering the pointer lock");
         }
 
@@ -937,7 +1028,7 @@ Waiting(self : App,mouton : Mouton) : void{
         
     })
     //meshes[0].rotate(Vector3.Up(),Math.PI/2);
-    meshes[0].position = new Vector3(-40,0,25);
+    meshes[0].position = new Vector3(-20,0,25);
     meshes[0].scaling = new Vector3(2,2,2);
 
     //this.engine.hideLoadingUI(); //la page a fini de charger
@@ -966,7 +1057,7 @@ Waiting(self : App,mouton : Mouton) : void{
         
       function hide() {
           (document.querySelector(".modal-wrapper") as HTMLDivElement).style.display = "none";  //Enlève la page shop
-          self.engine.enterPointerlock();
+          //self.engine.enterPointerlock();
           }
 
       // RECYCLE
@@ -1022,6 +1113,10 @@ Waiting(self : App,mouton : Mouton) : void{
             localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));
 
             self.Alert("You just bought "+cloth.name);
+            document.getElementsByClassName(name)[0].classList.remove("notOwned");
+            if(isOwned("bob") && name!="bob"){
+              document.getElementsByClassName(name+"_bob")[0].classList.remove("notOwned");
+            }
             }
            
           else{
@@ -1048,7 +1143,7 @@ Waiting(self : App,mouton : Mouton) : void{
         (document.querySelector(".modal-wrapper-beginning") as HTMLDivElement).style.display = "none";
       });
       document.querySelector(".modal-close-memo")!.addEventListener("click",() => {
-        this.engine.enterPointerlock();
+        //this.engine.enterPointerlock();
         (document.querySelector(".modal-wrapper-memo") as HTMLDivElement).style.display = "none";
         (document.querySelector("#memo-right") as HTMLDivElement).style.display = "none";
         (document.querySelector("#triesMemo") as HTMLDivElement).style.display = "none";
@@ -1281,7 +1376,7 @@ Waiting(self : App,mouton : Mouton) : void{
       refresh();
   
       function hide() {
-        self.engine.enterPointerlock();
+        //self.engine.enterPointerlock();
         (document.querySelector("#modal-wrapper-pendu") as HTMLDivElement).style.display = "none";  
       }
   
