@@ -109,7 +109,7 @@ export class App {
       document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
     }
     else{
-      this.cptLaine = 100;
+      this.cptLaine = 0;
       document.getElementById("cptLaineM")!.innerHTML = this.cptLaine+"" ;
       document.getElementById("cptLaineO")!.innerHTML = this.cptLaine+"" ;
     }
@@ -253,7 +253,7 @@ export class App {
       }
       else if (!(this.cptRoom%2==0)){
         //rentre dans le shop
-        this.Alert("move your mouse");
+        this.Alert("position the camera sideways in order to click on the planes");
         this.heroMesh.position=new Vector3(4.2,0.15,25);
         this.scene.activeCamera = RoomCam;
         this.camera.detachControl();
@@ -442,8 +442,8 @@ export class App {
   this.heroMesh.scaling.scaleInPlace(2);
   this.camera.lockedTarget=this.heroMesh;
 
-  const heroSpeed = 0.15;
-  const heroSpeedBackwards = 0.15;
+  const heroSpeed = 0.2;
+  const heroSpeedBackwards = 0.2;
   //const heroRotationSpeed = 0.05;
   this.PersoAnim=animationGroups;
 
@@ -1005,7 +1005,7 @@ async CreateEnvironment(): Promise<void> {
       // FIN DU RUNWAY
       (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
       self.AfterCutScene(self,FreeCam);
-      this.heroMesh.position = new Vector3(-10,0.2,-31);
+      this.heroMesh.position = new Vector3(-25,0.2,-16);
       this.runwayMusic.pause();
       this.background.play();
       this.PersoAnim[3].stop();
@@ -1469,7 +1469,7 @@ async CreateEnvironment(): Promise<void> {
       console.log("in new gamme");
       const chiffre = Math.floor(Math.random()*self.dico.length);
       self.motadecouvrir = self.dico[chiffre];
-      console.log(self.motadecouvrir);
+      //console.log(self.motadecouvrir);
       for(let i=0; i<self.motadecouvrir.length ; i++){
           self.currentmot.push("_");
           self.currentmotjoli.push((" _"));
