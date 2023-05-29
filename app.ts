@@ -33,7 +33,7 @@ export class App {
   runwayMusic : Sound;
   background : Sound;
   id: string;
-
+  runwayCinematic: boolean;
   memoryPlaying : boolean;
   memoCartes : any[];
   memo1 : int;
@@ -59,6 +59,8 @@ export class App {
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
     this.engine.displayLoadingUI(); //page de chargement
+    
+    this.runwayCinematic=false;
 
     this.scene = this.CreateScene();
 
@@ -134,13 +136,13 @@ export class App {
 
     if(localStorage.getItem("currentoutfit")){
       this.currentoutfit=JSON.parse(localStorage.getItem("currentoutfit"));
-      this.CreateCharacter(this.currentoutfit+".glb",Vector3.Zero());
+      this.CreateCharacter(this.currentoutfit+".glb",new Vector3(0,0.15,0));
       
       console.log("currentoutfit "+this.currentoutfit.toString());
     }
     else{
       this.currentoutfit = "";
-      this.CreateCharacter("initial.glb",Vector3.Zero());
+      this.CreateCharacter("initial.glb",new Vector3(0,0.15,0));
     }
     
     if (localStorage.getItem("alreadyRunwayOutfit")){
@@ -234,9 +236,9 @@ export class App {
 
   }
   ChangePerspectiveRoom(){
-    const RoomCam=new ArcRotateCamera("ShopCam",0,0,5,new Vector3(4.3,3.5,32),this.scene);
-    RoomCam.lowerBetaLimit = -Math.PI / 3;
-    RoomCam.upperBetaLimit = Math.PI /3;
+    const RoomCam=new ArcRotateCamera("RoomCam",0,0,5,new Vector3(4.3,4,32),this.scene);
+    RoomCam.lowerBetaLimit = Math.PI/3;
+    RoomCam.upperBetaLimit = Math.PI/3;
     RoomCam.detachControl;
     if((this.heroMesh.position._x>=(4.3))&&(this.heroMesh.position._x<(6.5))&&(this.heroMesh.position._z<(23))&&(this.heroMesh.position._z>=(22))){
       console.log(this.cptRoom);
@@ -244,7 +246,7 @@ export class App {
       //console.log(this.cptShop);
       if (this.cptRoom%2==0 && this.cptRoom!=0){
         //sort du shop
-        this.heroMesh.position=new Vector3(4.2,0,21);
+        this.heroMesh.position=new Vector3(4.2,0.15,20);
         RoomCam.detachControl();
         this.scene.activeCamera=this.camera;
         this.camera.attachControl();
@@ -252,7 +254,7 @@ export class App {
       else if (!(this.cptRoom%2==0)){
         //rentre dans le shop
         this.Alert("move your mouse");
-        this.heroMesh.position=new Vector3(4.2,0,23);
+        this.heroMesh.position=new Vector3(4.2,0.15,25);
         this.scene.activeCamera = RoomCam;
         this.camera.detachControl();
         RoomCam.attachControl();
@@ -262,6 +264,10 @@ export class App {
     }  
   
   ChangePerspectiveShop(){
+    const ShopCam=new ArcRotateCamera("ShopCam",0,0,5,new Vector3(-36,4,30),this.scene);
+    ShopCam.lowerBetaLimit = Math.PI/3;
+    ShopCam.upperBetaLimit = Math.PI/3;
+    ShopCam.detachControl();
     //console.log(this.heroMesh.position);
     if((this.heroMesh.position._x>=(-37))&&(this.heroMesh.position._x<(-33))&&(this.heroMesh.position._z<(20.5))&&(this.heroMesh.position._z>=(18.9))){
       //this.Alert("je rentre dans le shop");
@@ -269,20 +275,19 @@ export class App {
       console.log(this.cptShop);
       if (this.cptShop%2==0 && this.cptShop!=0){
         //sort du shop
-        this.heroMesh.position=new Vector3(-35,0,18.5);
+        this.heroMesh.position=new Vector3(-35,0.15,18.5);
+        ShopCam.detachControl();
         this.scene.activeCamera=this.camera;
         this.camera.attachControl();
       }
       
       else if (!(this.cptShop%2==0)){
         //rentre dans le shop
-        this.heroMesh.position=new Vector3(-35,0,20.7);
+        this.heroMesh.position=new Vector3(-35,0.5,20.7);
         this.Shop(this);
         this.camera.detachControl();
-        const ShopCam=new FreeCamera("ShopCam",new Vector3(-31,4,34),this.scene);
-        ShopCam.detachControl();
+        ShopCam.attachControl();
         this.scene.activeCamera = ShopCam;
-        ShopCam.rotation = new Vector3(Math.PI/12,Math.PI+Math.PI/8,0)
       }
     }
     }
@@ -302,7 +307,7 @@ export class App {
   async LoadMeshes(){
     await this.CreateMamie();
     //await this.CreateMamie2();
-    //await this.CreateGround();
+    await this.CreateGround();
     //await this.CreateRunway();
     await this.CreateRoom();
     //await this.CreateShop();
@@ -429,8 +434,8 @@ export class App {
   //this.heroMesh.showBoundingBox=true;
   //this.heroMesh.physicsImpostor = new PhysicsImpostor(this.heroMesh,PhysicsImpostor.BoxImpostor, { mass: 0.1 }, this.scene);
   
-  this.heroMesh.ellipsoid=new Vector3(1,0.1,1);
-  this.heroMesh.position=new Vector3(0,0.1,0);
+  this.heroMesh.ellipsoid=new Vector3(1.5,0.01,1.5);
+  //this.heroMesh.position=new Vector3(0,0.25,0);
   
   this.heroMesh.position=pos;
   //console.log(pos);
@@ -456,6 +461,7 @@ export class App {
       this.ChangePerspectiveRoom();
       let keydown = false;
       //console.log(this.heroMesh.position);
+      if (!(this.runwayCinematic)){
       
       if (inputMap["w"]||this.up||inputMap["z"]) {
           this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(heroSpeed));
@@ -512,12 +518,14 @@ export class App {
           //catWalking.start(true);
         //}
       }
+    }
   });
   
 
 }
 ChangePerso(new_path:string){
   const getPos=this.heroMesh.position;
+  this.rotation=0;
   console.log("c'est la nouvelle position :"+getPos);
   this.heroMesh.dispose();
   this.CreateCharacter(new_path,getPos);
@@ -634,41 +642,9 @@ async CreateEnvironment(): Promise<void> {
     const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
-      "ground+fences.glb",
+      "fences.glb",
       this.scene
     );
-    /*const { meshes } = await SceneLoader.ImportMeshAsync(
-      "",
-      "./models/",
-      "withRunway.glb",
-      this.scene
-    );
-    /*await SceneLoader.ImportMeshAsync(
-      "",
-      "./models/",
-      "room.glb",
-      this.scene
-    );
-    await SceneLoader.ImportMeshAsync(
-      "",
-      "./models/",
-      "runway.glb",
-      this.scene
-    );
-    await SceneLoader.ImportMeshAsync(
-      "",
-      "./models/",
-      "shop.glb",
-      this.scene
-    );
-    await SceneLoader.ImportMeshAsync(
-      "",
-      "./models/",
-      "tiles.glb",
-      this.scene
-    ); */
-    //apply collisions to every mesh in the model
-    //.map goes through every mesh
     meshes.map(mesh => { //for each mesh apply collisions donc c'est comme un for i in list par exemple
       mesh.checkCollisions = true;
     })
@@ -865,6 +841,7 @@ async CreateEnvironment(): Promise<void> {
   
   CreateCutScene(self : App):void{
     // ------ partie etoiles  -----
+    self.runwayCinematic=true;
     console.log("dans cutscene", this.cptFashion);
     let alreadyWorn = false;
     for(let i=0; i<=this.alreadyRunwayOutfit.length; i++){
@@ -1028,7 +1005,7 @@ async CreateEnvironment(): Promise<void> {
       // FIN DU RUNWAY
       (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
       self.AfterCutScene(self,FreeCam);
-      this.heroMesh.position = new Vector3(-10,0,-31);
+      this.heroMesh.position = new Vector3(-10,0.2,-31);
       this.runwayMusic.pause();
       this.background.play();
       this.PersoAnim[3].stop();
@@ -1039,6 +1016,7 @@ async CreateEnvironment(): Promise<void> {
   }
 
   AfterCutScene(self: App,FreeCam : FreeCamera) {
+    self.runwayCinematic=false;
     
     this.scene.activeCamera = this.camera;
     this.camera.attachControl();
@@ -1133,12 +1111,14 @@ async CreateEnvironment(): Promise<void> {
           if(name=="bob"){
               self.cptLaine +=1;
               localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
-              self.text.text = "laine : "+self.cptLaine;
+              document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
+              document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
           }
           else{
               self.cptLaine +=3;
               localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
-              self.text.text = "laine : "+self.cptLaine;
+              document.getElementById("cptLaineM")!.innerHTML = self.cptLaine+"" ;
+              document.getElementById("cptLaineO")!.innerHTML = self.cptLaine+"" ;
           }
           self.wardrobe = self.wardrobe.filter((cloth)=>cloth.name!=name);
           localStorage.setItem("wardrobe",JSON.stringify(self.wardrobe));

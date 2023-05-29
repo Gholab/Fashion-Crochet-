@@ -31,6 +31,7 @@ export declare class App {
     runwayMusic: Sound;
     background: Sound;
     id: string;
+    runwayCinematic: boolean;
     memoryPlaying: boolean;
     memoCartes: any[];
     memo1: int;
