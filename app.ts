@@ -91,7 +91,7 @@ export class App {
     light.intensity = 0.6;
     light.specular = Color3.Black();
 
-    const light2 = new HemisphericLight("light1", new Vector3(25, 10, 10), this.scene);
+    const light2 = new HemisphericLight("light1", new Vector3(-25, 7, -16), this.scene);
     
     this.CreateSky();
     //this.CreateEnvironment();
@@ -462,7 +462,7 @@ export class App {
       let keydown = false;
       //console.log(this.heroMesh.position);
       if (!(this.runwayCinematic)){
-      
+      //console.log(this.heroMesh.position);
       if (inputMap["w"]||this.up||inputMap["z"]) {
           this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(heroSpeed));
           keydown = true;
@@ -627,7 +627,7 @@ async CreateEnvironment(): Promise<void> {
   const { meshes } = await SceneLoader.ImportMeshAsync(
     "",
     "./models/",
-    "withRunway.glb",
+    "withRunway2.glb",
     this.scene
   );
   
@@ -655,7 +655,7 @@ async CreateEnvironment(): Promise<void> {
    const { meshes } = await SceneLoader.ImportMeshAsync(
       "",
       "./models/",
-      "room.glb",
+      "room2.glb",
       this.scene
     );
     
