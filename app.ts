@@ -268,7 +268,7 @@ export class App {
     ShopCam.lowerBetaLimit = Math.PI/3;
     ShopCam.upperBetaLimit = Math.PI/3;
     ShopCam.detachControl();
-    //console.log(this.heroMesh.position);
+    
     if((this.heroMesh.position._x>=(-37))&&(this.heroMesh.position._x<(-33))&&(this.heroMesh.position._z<(20.5))&&(this.heroMesh.position._z>=(18.9))){
       //this.Alert("je rentre dans le shop");
       this.cptShop++;
@@ -292,17 +292,7 @@ export class App {
     }
     }
     
-    
-    /*this.camera.detachControl();
-      const ShopCam=new FreeCamera("ShopCam",new Vector3(-40,5,36),this.scene);
-      ShopCam.rotation
-      ShopCam.detachControl();
-      this.scene.activeCamera = ShopCam;
-      ShopCam.rotation = new Vector3(Math.PI/8,-Math.PI,0);*/
-    //else{
-      //(document.querySelector(".modal-wrapper-outfit") as HTMLDivElement).style.display = "none";
-    //}
-  
+   
   
   async LoadMeshes(){
     await this.CreateMamie();
@@ -456,13 +446,13 @@ export class App {
   collect.stop();
   idle.start();
   this.scene.onBeforeRenderObservable.add(() => {
-      //console.log(this.heroMesh.position);
+      
       this.ChangePerspectiveShop();
       this.ChangePerspectiveRoom();
       let keydown = false;
-      //console.log(this.heroMesh.position);
+      
       if (!(this.runwayCinematic)){
-      //console.log(this.heroMesh.position);
+      console.log(this.heroMesh.position);
       if (inputMap["w"]||this.up||inputMap["z"]) {
           this.heroMesh.moveWithCollisions(this.heroMesh.forward.scaleInPlace(heroSpeed));
           keydown = true;
@@ -1005,7 +995,7 @@ async CreateEnvironment(): Promise<void> {
       // FIN DU RUNWAY
       (document.querySelector("#overlay") as HTMLImageElement).style.display = "block" ;
       self.AfterCutScene(self,FreeCam);
-      this.heroMesh.position = new Vector3(-25,0.2,-16);
+      this.heroMesh.position = new Vector3(-25,0.2,-19.4);
       this.runwayMusic.pause();
       this.background.play();
       this.PersoAnim[3].stop();
@@ -1107,7 +1097,7 @@ async CreateEnvironment(): Promise<void> {
 
       // RECYCLE
       function recycle(name:string, self: App,evt:Event){
-        if(isOwned(name) && (self.currentoutfit.indexOf(name)==-1)){
+        if(isOwned(name) && (self.currentoutfit.indexOf(name)==-1)&&(name!=this.currentoutfit)){
           if(name=="bob"){
               self.cptLaine +=1;
               localStorage.setItem("cptLaine",JSON.stringify(self.cptLaine));
