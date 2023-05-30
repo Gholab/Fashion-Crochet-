@@ -91,7 +91,7 @@ export class App {
     light.intensity = 0.6;
     light.specular = Color3.Black();
 
-    const light2 = new HemisphericLight("light1", new Vector3(-25, 7, -16), this.scene);
+    const light2 = new HemisphericLight("light1", new Vector3(-25, 3, -16), this.scene);
     
     this.CreateSky();
     //this.CreateEnvironment();
@@ -617,7 +617,7 @@ async CreateEnvironment(): Promise<void> {
   const { meshes } = await SceneLoader.ImportMeshAsync(
     "",
     "./models/",
-    "withRunway2.glb",
+    "withRunway3.glb",
     this.scene
   );
   
